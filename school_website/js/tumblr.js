@@ -1,7 +1,7 @@
 var tumblr_api_read = null;
 $(document).ready(function() {	
 	$.tumblr = {};
-	$.tumblr.url = "http://subinsebastien.tumblr.com/api/read/json?callback=?";
+	$.tumblr.url = "http://openapster.tumblr.com/api/read/json?callback=?";
 	$.tumblr.numPostsToDisplay = 3;
 	$.tumblr.postMaxDescriptionLength = -1;
 	$.tumblr.videoWidth='200';
