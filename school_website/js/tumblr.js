@@ -58,7 +58,7 @@ function parseTumblrJSON(post) {
 	switch(post.type)	{		    	
     	case "regular":	{
 			$("#tumblrFeed").append("<table style='width: 100%;'><tr><td width='18px'>" + "<a href='" + post.url + "' target='_blank'>" + "<img class='icon' src='" + $.tumblr.imagePath + "regular.gif'/></a></td><td><div class='date'>" + dateFmt + "</div></td></table>");
-			$("#tumblrFeed").append("<a class='title' href='" + post.url + "' target='_blank'>" + post["regular-title"] + "</a>");
+			$("#tumblrFeed").append("<a class='title' href='" + post.url + "' target='_blank'><h3>" + post["regular-title"] + "</h3></a>");
 			$("#tumblrFeed").append("<div class='body expandable'>" + post["regular-body"] + "</div>");
 			break;
 		}
