@@ -16,6 +16,37 @@
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-panels.min.js"></script>
 		<script src="js/init.js"></script>
+		<script src="js/jquery.validate.min.js"></script>
+		
+		<script type="text/javascript">
+    
+            $(document).ready(function () {
+
+                $('#contact-form').validate({ // initialize the plugin
+                    rules: {
+                        name: {
+                            required: true,
+                            minlength: 5
+                        },
+                        email: {
+                            required: true,
+                            email: true
+                        },
+                        message: {
+                            required: true,
+                            minlength: 10
+                        }
+                    },
+                    submitHandler: function (form) { // for demo
+                        alert('valid form submitted'); // for demo
+                        return false; // for demo
+                    }
+                });
+
+            });
+
+        </script>
+		
 		<noscript>
 			<link rel="stylesheet" href="css/skel-noscript.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -185,14 +216,14 @@
 							donec curae mus. Eleifend id porttitor ac ultricies lobortis sem nunc 
 							orci ridiculus faucibus a consectetur. Porttitor curae mauris urna mi dolor.</p>
 							
-							<form method="post" action="#">
+							<form method="post" action="#" id="contact-form">
 								<div class="row half">
-									<div class="6u"><input type="text" class="text" name="name" placeholder="Name" /></div>
-									<div class="6u"><input type="text" class="text" name="email" placeholder="Email" /></div>
+									<div class="6u"><input type="text" class="text" name="name" placeholder="Name"/></div>
+									<div class="6u"><input type="text" class="text" name="email" placeholder="Email"/></div>
 								</div>
 								<div class="row half">
 									<div class="12u">
-										<textarea name="message" placeholder="Message"></textarea>
+										<textarea name="message" placeholder="Message" id="message"></textarea>
 									</div>
 								</div>
 								<div class="row">
@@ -215,7 +246,7 @@
 						<p>&copy; 2013 Subin Sebastian. All rights reserved.</p>
 						<ul class="menu">
 							<li>Website Design: <a href="http://html5up.net">HTML5 UP</a></li>
-							<li>Images: <a href="http://ineedchemicalx.deviantart.com">Creative Commons</a></li>
+							<li>Images: <a href="http://ineedchemicalx.deviantart.com">CC</a></li>
 						</ul>
 					</div>
 				
