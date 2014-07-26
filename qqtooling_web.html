@@ -37,24 +37,25 @@
 	//Parse Section
 	
 	Parse.initialize("rlAMqnODhkE8gz9qpQD8Cyli4CMRbYS2mjlXI3gp", "WTwkqx0XRXCjEh9Wr746OzyFWTuSv49Z1gMPWSRX");
-    
-	var Locations = Parse.Object.extend("Locations");
-	var query = new Parse.Query(Locations);
+	var Shop = Parse.Object.extend("Shop");
+	var query = new Parse.Query(Shop);
+	
 	query.find({
 		success: function(result) {
 			for(var i = 0; i < result.length; i++) {
-				var location = result[i];
+				var shop = result[i];
+				var geoPoint = shop.get("location");
+				console.log(geopoint.toJSON());
 				
-				
-				var latlong = new google.maps.LatLng(location.get("latitude"), location.get("longitude"));
-				var marker = new google.maps.Marker({
-					position: latlong,
-					map: map,
-				});
+				// var latlong = new google.maps.LatLng(location.get("latitude"), location.get("longitude"));
+// 				var marker = new google.maps.Marker({
+// 					position: latlong,
+// 					map: map,
+// 				});
 			}
 		},
 		error: function(error) {
-			/*console.log("Error fetching objects");*/
+			console.log("Error fetching objects");
 		}
 	});
 	
