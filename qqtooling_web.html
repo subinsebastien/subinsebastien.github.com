@@ -48,11 +48,11 @@
 				console.log(geoPoint.toJSON().latitude);
 				console.log(geoPoint.toJSON().longitude);
 				
-				// var latlong = new google.maps.LatLng(location.get("latitude"), location.get("longitude"));
-// 				var marker = new google.maps.Marker({
-// 					position: latlong,
-// 					map: map,
-// 				});
+				var latlong = new google.maps.LatLng(geoPoint.toJSON().latitude, geoPoint.toJSON().longitude);
+				var marker = new google.maps.Marker({
+					position: latlong,
+					map: map,
+				});
 			}
 		},
 		error: function(error) {
