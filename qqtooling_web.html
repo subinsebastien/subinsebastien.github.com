@@ -45,7 +45,8 @@
 			for(var i = 0; i < result.length; i++) {
 				var shop = result[i];
 				var geoPoint = shop.get("location");
-				console.log(geoPoint.toJSON());
+				console.log(geoPoint.toJSON().latitude);
+				console.log(geoPoint.toJSON().longitude);
 				
 				// var latlong = new google.maps.LatLng(location.get("latitude"), location.get("longitude"));
 // 				var marker = new google.maps.Marker({
