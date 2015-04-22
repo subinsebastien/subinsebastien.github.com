@@ -6,12 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Napster's Experiments with Freedome</title>
-  <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
-">
+  <title>Demoivre's Theorm</title>
+  <meta name="description" content="Prove that">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://yourdomain.com/">
+  <link rel="canonical" href="http://yourdomain.com/jekyll/update/2015/03/25/demoivres-theorm.html">
   <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedome" href="http://yourdomain.com/feed.xml" />
   
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.css">
@@ -61,40 +60,86 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <div class="home">
+        <div class="post">
 
-  <h1 class="page-heading">Posts</h1>
+	<header class="post-header">
+		<h1 class="post-title">Demoivre's Theorm</h1>
+		<p class="post-meta">Mar 25, 2015</p>
+	</header>
 
-  <ul class="post-list">
+	<article class="post-content">
+		<p>Prove that</p>
+
+<script type="math/tex; mode=display">\left[\frac{1 + \sin\theta + i \cos\theta}{1 + \sin\theta - i \cos\theta}\right]^n = \cos\left[\frac{n\pi}{2} - n\theta\right] + i\sin\left[\frac{n\pi}{2} - n\theta\right]\tag1</script>
+
+<p>Demoivre’s law says that
+<script type="math/tex">\left(\cos\theta + i\sin\theta\right)^n = \cos{n\theta} + i\sin{n\theta} \tag2</script></p>
+
+<p>Therefor, the RHS of equation (1) becomes,</p>
+
+<p><script type="math/tex">% <![CDATA[
+\begin{align} \mathcal RHS & = \cos{n\left[\frac\pi2-\theta\right]} + i\sin{n\left[\frac\pi2 -\theta\right]}\tag3 \\ & = \cos{n\left[P\right]} + i\sin{n\left[P\right]} \\ & = \left(\cos{P} + i\sin{P}\right)^n \tag4 \end{align} %]]></script>
+Now, lets simplify the LHS,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align} LHS & = \left[\frac{1 + \sin\theta + i \cos\theta}{1 + \sin\theta - i \cos\theta}\right]^n \\ & = \left[\frac{1 + i\left(-i\sin\theta + \cos\theta\right)}{1 - i\left(i\sin\theta+\cos\theta\right)}\right]^n \\ & = \left[\frac{1 + i\left(\cos\theta -i\sin\theta \right)}{1 - i\left(\cos\theta+i\sin\theta\right)}\right]^n \\ & = \left[\frac{1+ie^{-i\theta}}{1-ie^{i\theta}}\right]^n \tag5 \end{align} %]]></script>
+
+<p>Now, compare LHS and RHS and take \(n^{th}\) root on both sides</p>
+
+<script type="math/tex; mode=display">\left[\frac{1+ie^{-i\theta}}{1-ie^{i\theta}}\right] = \left(\cos{P} + i\sin{P}\right) \\
+\left[\frac{1+ie^{-i\theta}}{1-ie^{i\theta}}\right] = \left[\cos{\left(\frac{\pi}{2}-\theta\right)} + i\sin{\left(\frac{\pi}{2}-\theta\right)}\right]</script>
+
+<p>Therefore,
+<script type="math/tex">\left[\frac{1+ie^{-i\theta}}{1-ie^{i\theta}}\right] = e^{i{\left(\frac{\pi}{2}-\theta\right)}} \tag6</script></p>
+
+<p>Now lets assume, \(K = ie^{i\theta}\) and take natural log on both sides.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align} ln(K) & = ln\left(ie^{i\theta}\right) \\ & = ln(i) + ln(e^{i\theta}) \\ & = ln(i) + i\theta.ln(e) \\ & = i\frac{\pi}{2} + i\theta \tag7 \\ & = i\left(\frac{\pi}{2}+\theta\right)\\  e^{ln(K)} & =  e^{i\left(\frac{\pi}{2}+\theta\right)} \\ K & =  e^{i\left(\frac{\pi}{2}+\theta\right)} \tag8 \end{align} %]]></script>
+
+<p>Similarly,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align} ln(M) & = ln\left(ie^{-i\theta}\right) \\ M & = e^{i\left(\frac{\pi}{2}-\theta\right)}\tag9\end{align} %]]></script>
+
+<p>Substitute these values back to equation (6)</p>
+
+<script type="math/tex; mode=display">\frac{1+ e^{i\left(\frac{\pi}{2}-\theta\right)}}{1- e^{i\left(\frac{\pi}{2}+\theta\right)}} = e^{i{\left(\frac{\pi}{2}-\theta\right)}}</script>
+
+<p>Multiply both sides by the denominator of the LHS</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align} 1+e^{i\left(\frac{\pi}{2}-\theta\right)} & = e^{i{\left(\frac{\pi}{2}-\theta\right)}} * \left(1- e^{i\left(\frac{\pi}{2}+\theta\right)}\right) \\ & = e^{i{\left(\frac{\pi}{2}-\theta\right)}} - e^{i{\left(\frac{\pi}{2}-\theta\right)}} *  e^{i\left(\frac{\pi}{2}+\theta\right)} \\ & = e^{i{\left(\frac{\pi}{2}-\theta\right)}} - e^{i\left(\frac{\pi}{2} - \theta + \frac{\pi}{2} +\theta\right)} \\ & = e^{i{\left(\frac{\pi}{2}-\theta\right)}} - e^{i\pi} \\ & = e^{i{\left(\frac{\pi}{2}-\theta\right)}} + 1 \\ & = LHS \end{align} %]]></script>
+
+<p>Thus proved. On equation (7), we used the equality,  \(ln(i) = i\frac{\pi}{2}\) Following is the reason.</p>
+
+<script type="math/tex; mode=display">e^{i\theta} = \cos\theta + i\sin\theta \\
+e^{i\frac{\pi}{2}} = \cos{\frac{\pi}{2}} + i\sin{\frac{\pi}{2}} \\
+e^{i\frac{\pi}{2}} = 0 + i \\
+ln(e^{i\frac{\pi}{2}}) = ln(i) \\
+{i\frac{\pi}{2}} ln(e) = ln(i) \\
+{i\frac{\pi}{2}} = ln(i)</script>
+
+<p>This was used in equation (7)</p>
+
+		<!-- Disqus comments -->
+		
+			<div id="disqus_thread"></div>	
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES * * */
+// Required: on line below, replace text in quotes with your forum shortname
+var disqus_shortname = 'subinsebastien';
     
-      <li>
-        <span class="post-meta">Mar 25, 2015</span>
-
-        <h2>
-          <a class="post-link" href="/jekyll/update/2015/03/25/welcome-to-jekyll.html">Welcome to Jekyll!</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Mar 25, 2015</span>
-
-        <h2>
-          <a class="post-link" href="/jekyll/update/2015/03/25/how-to-configure-your-own-mail-server.html">How to configure your own mail server</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Mar 25, 2015</span>
-
-        <h2>
-          <a class="post-link" href="/jekyll/update/2015/03/25/demoivres-theorm.html">Demoivre's Theorm</a>
-        </h2>
-      </li>
-    
-  </ul>
-
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
-
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+		
+	</article>
 </div>
 
       </div>
