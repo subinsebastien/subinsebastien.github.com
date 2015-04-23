@@ -4,10 +4,10 @@
     <title>Napster&#39;s Experiments with Freedom</title>
     <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
 </description>
-    <link>/</link>
-    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 23 Apr 2015 09:33:19 +0530</pubDate>
-    <lastBuildDate>Thu, 23 Apr 2015 09:33:19 +0530</lastBuildDate>
+    <link>http://xtel.in/</link>
+    <atom:link href="http://xtel.in/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 23 Apr 2015 09:34:09 +0530</pubDate>
+    <lastBuildDate>Thu, 23 Apr 2015 09:34:09 +0530</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -28,8 +28,8 @@
 
 </description>
         <pubDate>Wed, 25 Mar 2015 03:11:24 +0530</pubDate>
-        <link>/jekyll/update/2015/03/25/welcome-to-jekyll.html</link>
-        <guid isPermaLink="true">/jekyll/update/2015/03/25/welcome-to-jekyll.html</guid>
+        <link>http://xtel.in/jekyll/update/2015/03/25/welcome-to-jekyll.html</link>
+        <guid isPermaLink="true">http://xtel.in/jekyll/update/2015/03/25/welcome-to-jekyll.html</guid>
         
         
         <category>jekyll</category>
@@ -109,8 +109,8 @@ virtual_gid_maps = static:5000
 &lt;p&gt;Finally, the navigation drawer itself. Its a simple fragment. I have omitted the details of the drawer selection and such stuff. You can use your own content in the drawer menu and implement appropriate behaviour for the same. A simple list of top-level components are suggested in the guidelines. Give particular attention to the setUp() method in the following code.&lt;/p&gt;
 </description>
         <pubDate>Wed, 25 Mar 2015 03:11:24 +0530</pubDate>
-        <link>/jekyll/update/2015/03/25/how-to-configure-your-own-mail-server.html</link>
-        <guid isPermaLink="true">/jekyll/update/2015/03/25/how-to-configure-your-own-mail-server.html</guid>
+        <link>http://xtel.in/jekyll/update/2015/03/25/how-to-configure-your-own-mail-server.html</link>
+        <guid isPermaLink="true">http://xtel.in/jekyll/update/2015/03/25/how-to-configure-your-own-mail-server.html</guid>
         
         
         <category>jekyll</category>
@@ -176,8 +176,8 @@ ln(e^{i\frac{\pi}{2}}) = ln(i) \\
 &lt;p&gt;This was used in equation (7)&lt;/p&gt;
 </description>
         <pubDate>Wed, 25 Mar 2015 03:11:24 +0530</pubDate>
-        <link>/jekyll/update/2015/03/25/demoivres-theorm.html</link>
-        <guid isPermaLink="true">/jekyll/update/2015/03/25/demoivres-theorm.html</guid>
+        <link>http://xtel.in/jekyll/update/2015/03/25/demoivres-theorm.html</link>
+        <guid isPermaLink="true">http://xtel.in/jekyll/update/2015/03/25/demoivres-theorm.html</guid>
         
         
         <category>jekyll</category>
