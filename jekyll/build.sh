@@ -6,3 +6,4 @@ git add .
 git commit -m "Blog updates"
 git push -u origin master
 cd ~/Downloads/Personal\ Blog/blog/
+rm -rf output
