@@ -5,15 +5,13 @@
     <description>Hello visitor, this is my personal blog. You may find articles of different types here. Some are purely based on my thought process, some are based on events or other articles and general things I learn these days. Some are tutorial kind, which may be helpful to some of you. Feel free to drop me an email if you have some feedback or something. Everything you see on this website is purely my opinion.</description>
     <link>http://xtel.in/</link>
     <atom:link href="http://xtel.in/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 09 May 2015 10:55:41 +0530</pubDate>
-    <lastBuildDate>Sat, 09 May 2015 10:55:41 +0530</lastBuildDate>
+    <pubDate>Sat, 09 May 2015 10:57:35 +0530</pubDate>
+    <lastBuildDate>Sat, 09 May 2015 10:57:35 +0530</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
         <title>Running Galaxy Nexus i9250 on Android Lollipop 5.0</title>
         <description>&lt;p&gt;&lt;em&gt;Reading Time : Less than 10 Minutes&lt;/em&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
 
 &lt;p&gt;Everybody kind of forgot about the best Android phone ever to be produced, the &lt;a href=&quot;http://www.gsmarena.com/samsung_galaxy_nexus_i9250-4219.php&quot;&gt;Galaxy Nexus&lt;/a&gt;, after Google abandoned it with Android 4.4 OTA update. There will not be another update from Google for Galaxy Nexus in the future due to some driver portability issues for its TI OMAP core. But recently someone from the community managed to build AOSP Android 5.0 for Galaxy Nexus bringing it back from the grave. I was kind of happy to see this as I’m still a proud owner of one of them, and didn’t have a budget to spend on new gadgets every other week. So, I decided to flash my Nexus with Lollipop and this is just a brief post about it. The following steps just worked for me pretty well.&lt;/p&gt;
 
