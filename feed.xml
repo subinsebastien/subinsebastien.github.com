@@ -5,9 +5,67 @@
     <description>Hello visitor, this is my personal blog. You may find articles of different types here. Some are purely based on my thought process, some are based on events or other articles and general things I learn these days. Some are tutorial kind, which may be helpful to some of you. Feel free to drop me an email if you have some feedback or something. Everything you see on this website is purely my opinion.</description>
     <link>http://xtel.in/</link>
     <atom:link href="http://xtel.in/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 23 Apr 2015 18:04:29 +0530</pubDate>
-    <lastBuildDate>Thu, 23 Apr 2015 18:04:29 +0530</lastBuildDate>
+    <pubDate>Sat, 09 May 2015 10:55:41 +0530</pubDate>
+    <lastBuildDate>Sat, 09 May 2015 10:55:41 +0530</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Running Galaxy Nexus i9250 on Android Lollipop 5.0</title>
+        <description>&lt;p&gt;&lt;em&gt;Reading Time : Less than 10 Minutes&lt;/em&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Everybody kind of forgot about the best Android phone ever to be produced, the &lt;a href=&quot;http://www.gsmarena.com/samsung_galaxy_nexus_i9250-4219.php&quot;&gt;Galaxy Nexus&lt;/a&gt;, after Google abandoned it with Android 4.4 OTA update. There will not be another update from Google for Galaxy Nexus in the future due to some driver portability issues for its TI OMAP core. But recently someone from the community managed to build AOSP Android 5.0 for Galaxy Nexus bringing it back from the grave. I was kind of happy to see this as I’m still a proud owner of one of them, and didn’t have a budget to spend on new gadgets every other week. So, I decided to flash my Nexus with Lollipop and this is just a brief post about it. The following steps just worked for me pretty well.&lt;/p&gt;
+
+&lt;p&gt;Please note that the entire process was not 100% successful. So, if you are planning to do this on your primary phone, rather look out for something else like &lt;em&gt;&lt;a href=&quot;https://www.google.co.in/search?safe=off&amp;amp;biw=1258&amp;amp;bih=850&amp;amp;q=Cyanogenmod&amp;amp;spell=1&amp;amp;sa=X&amp;amp;ei=nV1NVbjQBcOiugTG-IGoBw&amp;amp;ved=0CBkQvwUoAA&quot;&gt;Cyanogenmod 11&lt;/a&gt;&lt;/em&gt;. And please note that, this ROM works only for Galaxy Nexus GSM International with baseband version I9250XXLJ1.&lt;/p&gt;
+
+&lt;h2 id=&quot;step-1--installing-android-debug-bridge-adb-and-fastboot&quot;&gt;Step 1 : Installing Android Debug Bridge (ADB) and Fastboot&lt;/h2&gt;
+&lt;p&gt;Both adb and fastboot are small and quite useful tools which comes bundled with the Android SDK. If you are an Android developer or something you will already have this on your machine. If not, goto &lt;a href=&quot;https://developer.android.com/sdk/index.html#Other&quot;&gt;SDK Download Website&lt;/a&gt; and download the appropriate version for your PC. On some operating systems, you will also need a USB driver to enable debugging on your device to be able to use with ADB. Once adb is setup correctly, enable USB debugging on your device. You can find more details about adb and enabled debugging on your device &lt;a href=&quot;http://developer.android.com/tools/help/adb.html&quot;&gt;here&lt;/a&gt;. Both adb and fastboot comes in the same package. You can verify adb and fastboot are correctly setup by trying out the following commands.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$adb&lt;/span&gt; version
+&lt;span class=&quot;nv&quot;&gt;$fastboot&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;step-2--flashing-a-custom-recovery-software&quot;&gt;Step 2 : Flashing a custom recovery software&lt;/h2&gt;
+&lt;p&gt;You cannot flash anything other than the stock android ROMs on your phones with the stock recovery software. You need to first flash a custom recovery software on your phone to do this. There are two major recovery tools available publicly. One is &lt;a href=&quot;https://www.clockworkmod.com/&quot;&gt;ClockWorkMod&lt;/a&gt; and the other is &lt;a href=&quot;https://twrp.me/&quot;&gt;TWRP&lt;/a&gt;. Even though ClockWorkMod is quite popular, I would suggest you to use TWRP. It has a better interface and it is less buggy as I learned from XDA. Download the recovery software image from the TWRP website for Galaxy Nexus i9250. Now reboot into bootloader mode and execute the following commands to flash the TWRP recovery image.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$adb&lt;/span&gt; reboot bootloader &lt;span class=&quot;c&quot;&gt;# This will reboot your device into bootloader&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$fastboot&lt;/span&gt; flash recovery &amp;lt;path_to_recovery.img&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now press the volume up &amp;amp; down keys to navigate to Recovery and then press the power button to enter the recovery mode, which is now the TWRP. If TWRP is not correctly installed, you will enter into the stock recovery or may be have soft bricked the device. Soft bricking unlike hardware bricking, is not something to be panicked about. Try flashing the TWRP recovery again.&lt;/p&gt;
+
+&lt;h2 id=&quot;step-3--wiping-the-device-clean-using-twrp&quot;&gt;Step 3 : Wiping the device clean using TWRP&lt;/h2&gt;
+&lt;p&gt;You can navigate using the touch screen with TWRP. Thats a nice touch anyway. Navigate to Wipe &amp;gt; Advance Wipe and then select every folder except &lt;strong&gt;System&lt;/strong&gt; and &lt;strong&gt;Data&lt;/strong&gt;. I have tried to wipe these two, and eventually run into problems soft bricking the device again. You might not be able to flash this particular ROM if you wipe these two folders. Once you have wiped the device properly proceed to the next step.&lt;/p&gt;
+
+&lt;h2 id=&quot;step-4--download-and-flash-the-fml-aosp-50-rom-for-nexus&quot;&gt;Step 4 : Download and flash the FML AOSP 5.0 ROM for Nexus&lt;/h2&gt;
+&lt;p&gt;You can download the ROM image from &lt;a href=&quot;http://get.xda-developers.com/GATymndDiXaqPwdu0lNFLQ/1431141162/4/3/5/2/FML-AOSP-5.0-20141109-maguro.zip&quot;&gt;here&lt;/a&gt;. Its about 162MBs. Now move the ROM image to the device’s SD card root folder. Use the following command.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$adb&lt;/span&gt; push &amp;lt;path_to_rom_file.zip&amp;gt; /sdcard/&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;It takes a moment or so. After successfully moving the image file, press the home button on the device running TWRP. Click &lt;strong&gt;Install&lt;/strong&gt; and then select the zip file from the sdcard folder. Confirm flash, and wait for about 5 minutes while the flash is in progress. If you are planning to install Google apps, proceed to step 5 or otherwise just reboot your device into Android 5.0.&lt;/p&gt;
+
+&lt;h2 id=&quot;step-5--optional-installing-google-apps&quot;&gt;Step 5 : (Optional) Installing Google Apps&lt;/h2&gt;
+&lt;p&gt;Download the Google Apps bundle from &lt;a href=&quot;http://get.xda-developers.com/l1PfxxIAP3_gilN4kw2aHA/1431143828/1/0/9/8/FML-GApps-5.0-20141109.zip&quot;&gt;here&lt;/a&gt;. Push the zip file using add into &lt;code&gt;/sdcard/&lt;/code&gt; just like we did in Step 4. Again, click &lt;strong&gt;Install&lt;/strong&gt; and select the Google apps zip file from the &lt;code&gt;/sdcard&lt;/code&gt; folder. Once completed, simply reboot the device from TWRP.&lt;/p&gt;
+
+&lt;h2 id=&quot;results--notes&quot;&gt;Results &amp;amp; Notes&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;I was able to run Andorid 5.0 on my Galaxy Nexus. But the &lt;em&gt;phone&lt;/em&gt; part of the device is not working yet. I tried flashing the radio image (the software part that manages the RF module) from the stock Android image for my device. It didn’t work either. So basically, this process rendered my device unusable for telephonic needs.&lt;/li&gt;
+  &lt;li&gt;The camera is not working at all. So you cannot take new photographs with your device anymore. Yep, yet another important feature not working.&lt;/li&gt;
+  &lt;li&gt;Thirdly, the camera flash light is not working either. This is directly linked with the camera issue I have mentioned above. Since the flash light control is a part of the camera API, I guess these two issues will be fixed together in the future, if they are getting fixed at all.&lt;/li&gt;
+  &lt;li&gt;I was not able to setup my device with Google at first. I had to factory reset again to enter into the setup mode. After the factory reset, the device tried to activate the cellular for quite some time with no luck at all.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Thanks for reading the post. Hope you would find it useful if you own a Nexus too. Good luck in not bricking your phone. Happy hacking.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 08 May 2015 14:11:24 +0530</pubDate>
+        <link>http://xtel.in/jekyll/update/2015/05/08/android-lollipop-on-galaxy-nexus.html</link>
+        <guid isPermaLink="true">http://xtel.in/jekyll/update/2015/05/08/android-lollipop-on-galaxy-nexus.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+        <category>update</category>
+        
+      </item>
     
       <item>
         <title>Demoivre&#39;s Theorm</title>
