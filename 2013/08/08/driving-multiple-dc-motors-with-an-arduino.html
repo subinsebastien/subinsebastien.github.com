@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Napster's Experiments with Freedom</title>
+  <meta name="viewport" content="width=device-width">
+
+  <!-- syntax highlighting CSS -->
+  <link rel="stylesheet" href="/css/syntax.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic|Open+Sans:400italic,600italic,400,600' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Driving multiple DC Motors with an Arduino</title>
+  <meta name="description" content="Reading TIme : Less than 10 MinutesWell, it could be fairly easy for geeks, but not for kids who starts to learn electronics. I have been looking around for ...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/2013/08/08/driving-multiple-dc-motors-with-an-arduino.html">
+  <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
+  
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.css">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.js"></script>
+  
+  <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  
+</head>
+
+<header style="background-image: url();">
+  <div class="container post-container">
+    <a href="/" class="home_button"></a>
+    <div class="inner-container">
+      <h1>Driving multiple DC Motors with an Arduino</h1>
+      <ul class="meta">
+        <li>
+          <span>
+            Published
+          </span>
+          08 Aug 2013
+        </li>
+        <li>
+          <span>
+            Category
+          </span>
+          
+        </li>
+      </ul>      
+    </div>
+    <ul class="pagination">
+      
+        <li class="previous">
+          <a href="/2013/05/23/how-to-recover-files-from-a-deleted-or-even.html">
+            Previous
+          </a>
+        </li>
+      
+      
+      <li class="next">
+        <a href="/2013/08/15/decoding-infrared-codes.html">
+          Next
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+    <p>Reading TIme : Less than 10 Minutes
+Well, it could be fairly easy for geeks, but not for kids who starts to learn electronics. I have been looking around for a solution for driving DC motors with Arduino, eventhough I’m not a kid. I’m 24 by the way, and I’m not married! Ok, anyway I found out a number of motor driving setups either using dual H-Bridge ICs like L298 or L293D. They are still ofcourse elegant solutions if you want to drive just 1 or 2 motors using your Arduino. It gives you full control, so that you can drive the motor in either CW or CCW direction. The problem with this solution is that, you have to sacrifice a number of digital lines to work with these ICs. As you all know, most Arduinos have few number of pins to work with. Mine is Duemilanove, which has just 14 I/O pins. So this should be considered when you need to do something else with your remaining pins while the others driving motors.
+In the Arduino book, there was another solution using a MOSFET or something which I don’t clearly remember. So I can’t comment about that right now. On the other hand, here I have another solution which I found on a website. They showed, how to drive a power LED with PWM using an IC named ULN2003A. ULN200X are generally darlington pair arrays. So what is a darlington pair?</p>
+
+<p>Darlington pair is a circuit which consists of two transistors paired up together to drive higher currents. In simple words, for a transistor, the output current Ie = Ib * hFE, that means the output current is gain times higher than the input current. In some cases, like when driving heavy loads, the gain wont be enough that the required output current can’t be achieved by the limited input current Ib available. In such cases, another transistor is paired up with the first one as shown in the above figure. Anyway, I’m not sure about the details, but the circuit is quite intuitive. The first transistor is driven by the input current, and the second one is driven by the output of first. ULN2003 has 7 of such paired up channels, forming an array of darlington pairs. Here goes the block diagram for the same.</p>
+
+<p>To drive a motor, you can feed the output of your Arduino to one pin on the left and you will get the output of the same on the other side of the chip. I’m not quite sure if this is applicable to all of the ULN2003 package types.
+The basic idea in this circuit is that, we drive the load using only one PWM line from the Arduino. We feed it to any one channel on ULN2003 and we get one motor working. We have a total of 6 PWM lines on an Arduino Duemilenove. So, we can drive upto 6 motors consecutively using this circuit.</p>
+
+<p>The problem with this circuit is that, we cannot control the direction of the motor. We might need to use a relay or something to switch the direction. Yet, we can control the speed by varying pulse width, which can be easily done by a call to analogWrite(). The complete sketch for this project is given below.
+https://gist.github.com/subinsebastien/6203640
+This code is not yet 100% correct that you will definitely find rough edges. I will be updating this post or create a whole new post once this experiment is completed. You can read more about Arduino PWM here. And here is my prototype :) Take a look!</p>
+
+<p>Have a nice day kids!</p>
+
+	<div id="disqus_thread"></div>	
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES * * */
+// Required: on line below, replace text in quotes with your forum shortname
+var disqus_shortname = 'subinsebastien';
+    
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</article>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Napster's Experiments with Freedom</title>
+  <meta name="viewport" content="width=device-width">
+
+  <!-- syntax highlighting CSS -->
+  <link rel="stylesheet" href="/css/syntax.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic|Open+Sans:400italic,600italic,400,600' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Circular Linked List in Java</title>
+  <meta name="description" content="Reading time : Less than 10 minutesAs a part of an interview, the interviewer asked me to implement a circular linked list. The basic concept is nothing but ...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/2011/09/12/circular-linked-list-in-java.html">
+  <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
+  
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.css">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.js"></script>
+  
+  <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  
+</head>
+
+<header style="background-image: url();">
+  <div class="container post-container">
+    <a href="/" class="home_button"></a>
+    <div class="inner-container">
+      <h1>Circular Linked List in Java</h1>
+      <ul class="meta">
+        <li>
+          <span>
+            Published
+          </span>
+          12 Sep 2011
+        </li>
+        <li>
+          <span>
+            Category
+          </span>
+          
+        </li>
+      </ul>      
+    </div>
+    <ul class="pagination">
+      
+        <li class="previous">
+          <a href="/2011/09/05/how-to-hack-an-email-gatway.html">
+            Previous
+          </a>
+        </li>
+      
+      
+      <li class="next">
+        <a href="/2011/09/13/check-if-two-strings-are-anagrams-or-not-in-c.html">
+          Next
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+    <p>Reading time : Less than 10 minutes
+As a part of an interview, the interviewer asked me to implement a circular linked list. The basic concept is nothing but all the nodes in the list should be connected to the one before it and to the one next to it. Also, it should be circular, the tail should refer the head and the head should refer the tail. Ah, well since it is circular, we can say, just a referring pointer rather than head or tail, which looks more apt.</p>
+
+<p>Each of the elements in a linked list is typically called a Node. In the above figure, each node has two pointers - one the next pointer and the other is prev pointer. They points to next node and previous node respectively. Now in a circular node, there should not be a head or tail, rather we can make use of a pointer which is capable of pointing to any one of the node in a ring. In the above figure this pointer is colored green and marked H. If this pointer node loses its reference to any one of the node in the ring, we will lose the entire ring somewhere in the memory, and we will not be able to get it back ever! So try to avoid something like,</p>
+
+<p>node_pointer = null;</p>
+
+<p>Now lets code the application. For the sake of simplicity I’ve just used a single file for all of the classes. So lets not get confused that it is not possible to split the classes in different files, which is ofcourse easy for future developments around this code.
+First of all, we need a Node class which has necessary functionalities and attributes to handle all operations which will be used by other classes for manipulating a linked list using this class. So, lets define a node class.</p>
+
+<p>class Node    {    int value;    Node next;    Node prev;    Node(int initialValue)    {        value = initialValue;        next =  null;        prev = null;    }    public int getValue()    {        return this.value;    }}</p>
+
+<p>Pretty self descriptive huh? The constructor just uses its parameter to initialize the Node value. You can add methods like setNodeValue() or printNodeValue() etc if you wish. Now, the node class is ready. A node object can be created like</p>
+
+<p>Node myNode = new Node(10);</p>
+
+<p>So, lets create a node list class which can hold a reference to the circular linked list of nodes. The node list class should atleast provide functionality to insert nodes into the list and print the ring in either clockwise or anticlockwise. For future requirements I’ve also added an integer variable named nElements which always holds the number of elements in the ring. It should also handle conditions like inserting into the list when no elements are present. I’ve skipped removing a node from the linked list to keep it simple. Lets see the NodeList class</p>
+
+<p>class NodeList    {    Node pointer;    NodeList()    {        pointer = null;    }    public void insertNode(int nodeValue)    {        Node newNode = new Node(nodeValue);        if( pointer == null )    {            newNode.next = newNode;            newNode.prev = newNode;        }else if( pointer.next == null &amp;&amp; pointer.prev == null &amp;&amp; pointer != null )    {            newNode.next = pointer;            newNode.prev = pointer;            pointer.prev = newNode;            pointer.next = newNode;        }        else if( pointer != null )    {            newNode.next = pointer.next;            newNode.prev = pointer;            pointer.next.prev = newNode;            pointer.next = newNode;        }        pointer = newNode;        System.out.println(“Successfully inserted : ” + pointer.getValue());    }    public void printRing( boolean direction )    {        Node tempNode = pointer;        do    {            System.out.println( “Value = ” + tempNode.getValue() );            tempNode = direction ? tempNode.next : tempNode.prev;        } while( tempNode.value != pointer.value );        }    }</p>
+
+<p>The printAllinDir() method does nothing but print all of the nodes in clockwise direction if its argument holds true otherwise counterclockwise. Now, both of the adequate classes to manipulate the circular linked list is ready. Head on to the main class.</p>
+
+<p>class Circular    {    public static void main( String[] args )    {        NodeList myList = new NodeList();        myList.insertNode(10);        myList.insertNode(20);        myList.insertNode(30);        myList.insertNode(40);        myList.insertNode(50);        myList.printRing( true );    }}</p>
+
+<p>Hope this code is pretty clear. Note that the printAllinDir() makes use of node values to traverse through the ring. So if any two of the nodes have the same value, then this method will traverse from one to other with the same value in either direction, and may not go through all of the nodes in the ring.
+Compiling &amp; RunningNow, put all of the classes into a file and name it as Circular.java. You can compile this file using,</p>
+
+<p>javac Circular.java</p>
+
+<p>To run the compiled code use,</p>
+
+<p>java Circular</p>
+
+<p>The expected output for this code is,</p>
+
+<p>Successfully inserted : 10Successfully inserted : 20Successfully inserted : 30Successfully inserted : 40Successfully inserted : 50Value = 50Value = 10Value = 20Value = 30Value = 40</p>
+
+<p>//See you in the afterlife//Subin Sebastian</p>
+
+	<div id="disqus_thread"></div>	
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES * * */
+// Required: on line below, replace text in quotes with your forum shortname
+var disqus_shortname = 'subinsebastien';
+    
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</article>
+
+</body>
+</html>

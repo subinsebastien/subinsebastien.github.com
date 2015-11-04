@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Napster's Experiments with Freedom</title>
+  <meta name="viewport" content="width=device-width">
+
+  <!-- syntax highlighting CSS -->
+  <link rel="stylesheet" href="/css/syntax.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic|Open+Sans:400italic,600italic,400,600' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Simple Function Generator Circuit using XR2206</title>
+  <meta name="description" content="Reading Time : Less than 15 minutesThe function generator IC XR2206 from EXAR corporation is pretty popular among hobbyists. Although, it is popular, the com...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/2013/08/21/simple-function-generator-circuit-using-xr2206.html">
+  <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
+  
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.css">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.js"></script>
+  
+  <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  
+</head>
+
+<header style="background-image: url();">
+  <div class="container post-container">
+    <a href="/" class="home_button"></a>
+    <div class="inner-container">
+      <h1>Simple Function Generator Circuit using XR2206</h1>
+      <ul class="meta">
+        <li>
+          <span>
+            Published
+          </span>
+          21 Aug 2013
+        </li>
+        <li>
+          <span>
+            Category
+          </span>
+          
+        </li>
+      </ul>      
+    </div>
+    <ul class="pagination">
+      
+        <li class="previous">
+          <a href="/2013/08/15/decoding-infrared-codes.html">
+            Previous
+          </a>
+        </li>
+      
+      
+      <li class="next">
+        <a href="/2013/09/03/better-home-made-printed-circuit-boards.html">
+          Next
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+    <p>Reading Time : Less than 15 minutes
+The function generator IC XR2206 from EXAR corporation is pretty popular among hobbyists. Although, it is popular, the company stopped the production of this IC earlier in 2011. Yet, it is available in some local shops and of course on ebay. I have a few here in my home workshop, and I worked with one of them today to develop a small function generator for my personal use. The application circuit from the datasheet worked just fine. </p>
+
+<p>The timing capacitor and the variable resistor on the left hand side of the circuit determines the frequency of the output waveform. The following equation can be used for the calculation of appropriate values of R and C.</p>
+
+<p>F = 1 / RC</p>
+
+<p>F is the required frequency of the output signal. The variable resistor connected to pin number 3 determines the amplitude of the output signal. The relation between this resistor (R3) and the Vpp can be found in figure-3 on the datasheet. I used volume control type pot meters for these variable resistors so that I can turn it while the circuit is working, and see the output variations on the oscilloscope screen.</p>
+
+	<div id="disqus_thread"></div>	
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES * * */
+// Required: on line below, replace text in quotes with your forum shortname
+var disqus_shortname = 'subinsebastien';
+    
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</article>
+
+</body>
+</html>

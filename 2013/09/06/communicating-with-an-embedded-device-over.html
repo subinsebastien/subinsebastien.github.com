@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Napster's Experiments with Freedom</title>
+  <meta name="viewport" content="width=device-width">
+
+  <!-- syntax highlighting CSS -->
+  <link rel="stylesheet" href="/css/syntax.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic|Open+Sans:400italic,600italic,400,600' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Communicating with an Embedded Device over Bluetooth in Android</title>
+  <meta name="description" content="Reading Time : Less than 15 minutesMore and more modern day consumer electronic devices are becoming wireless. Say for example, keyboards, mouses, printers, ...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/2013/09/06/communicating-with-an-embedded-device-over.html">
+  <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
+  
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.css">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.js"></script>
+  
+  <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  
+</head>
+
+<header style="background-image: url();">
+  <div class="container post-container">
+    <a href="/" class="home_button"></a>
+    <div class="inner-container">
+      <h1>Communicating with an Embedded Device over Bluetooth in Android</h1>
+      <ul class="meta">
+        <li>
+          <span>
+            Published
+          </span>
+          06 Sep 2013
+        </li>
+        <li>
+          <span>
+            Category
+          </span>
+          
+        </li>
+      </ul>      
+    </div>
+    <ul class="pagination">
+      
+        <li class="previous">
+          <a href="/2013/09/03/better-home-made-printed-circuit-boards.html">
+            Previous
+          </a>
+        </li>
+      
+      
+      <li class="next">
+        <a href="/2013/09/10/ht12e-holteks-2-12-series-of-encoders.html">
+          Next
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+    <p>Reading Time : Less than 15 minutes
+More and more modern day consumer electronic devices are becoming wireless. Say for example, keyboards, mouses, printers, car-locks, point of sale equipment or almost anything that you can think of. I came across working on a POS application for Android which requires a mobile phone to talk to a ESC/POS  printer over Bluetooth. The Android Bluetooth stack requires both the parties in the communication, to be bonded (paired up) before starting to send data over the Bluetooth. Also, the new version of Android (4.1x) includes significant changes in the Bluetooth stack which makes the communication even restricted/secure.
+Communicating with an embedded device is somewhat different from communicating with a regular Bluetooth enabled telephony device. First of all, an embedded device might not have a keypad or a screen to indicate what is going on. We are either on a pure-guess-side or we should be correctly following the manufacturer datasheets. In my case I was dealing with AB-330M Mobile POS printer which follows the Epson ESC protocol. It just had two button on the front panel and not any other feature except an LED to blink in case of occurrence of an error.</p>
+
+<p>From the datasheets I got some basic information like the receive buffer size(2KiB) and the protocol followed by this mobile printer. In general when communicating with a normal phone or a tablet, we should always make pairing requests and should exclusively ask permissions from the user to enable and disable the Bluetooth adapter. In case of this application, asking connection request each time the user prints a receipt seemed to be an overhead. So, I just turned ON and OFF the Bluetooth adapter when required without explicitly informing the user. Each events in the Bluetooth communication process is broadcast by the system. The following are general events in a typical Bluetooth communication.
+ACTION_STATE_CHANGED - Represents the state change of the local Bluetooth adapter.
+ACTION_DISCOVERY_XXX - Represents the state of search process for nearby Bluetooth devices.
+ACTION_FOUND - Represents the discovery of a nearby Bluetooth device.
+The Bluetooth stack exposes a Bluetooth socket for communication, which includes a blocking method named connect() to connect with the other device. Once the socket is connected, it is ready for communication. The only remaining task is to get the output stream object from the socket and write ESC/POS commands to it. A set of commands to print a simple message on the printer would look like the following.</p>
+
+<p>ESC @        //Initialize the printerHello Printer!LF               //Do line feed</p>
+
+<p>The commands needs to be fed into the print buffer in ASCII format. So corresponding set of commands will look like the following when coded as hexadecimal.</p>
+
+<p>1B 40[The message as a byte array]0A</p>
+
+<p>The complete Android listing I used for this simple printing task over Bluetooth is attached below.
+https://gist.github.com/subinsebastien/6461685
+Have a nice day.</p>
+
+	<div id="disqus_thread"></div>	
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES * * */
+// Required: on line below, replace text in quotes with your forum shortname
+var disqus_shortname = 'subinsebastien';
+    
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</article>
+
+</body>
+</html>

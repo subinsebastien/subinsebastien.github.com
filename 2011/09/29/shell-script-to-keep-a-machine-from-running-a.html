@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Napster's Experiments with Freedom</title>
+  <meta name="viewport" content="width=device-width">
+
+  <!-- syntax highlighting CSS -->
+  <link rel="stylesheet" href="/css/syntax.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic|Open+Sans:400italic,600italic,400,600' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Shell Script to keep a machine from running a process</title>
+  <meta name="description" content="Reading time : Less than 5 minutesAs I was going through my daily routines, I just came across a simple issue. I’ve a Linux machine and it has about 20 to 30...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/2011/09/29/shell-script-to-keep-a-machine-from-running-a.html">
+  <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
+  
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.css">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.js"></script>
+  
+  <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  
+</head>
+
+<header style="background-image: url();">
+  <div class="container post-container">
+    <a href="/" class="home_button"></a>
+    <div class="inner-container">
+      <h1>Shell Script to keep a machine from running a process</h1>
+      <ul class="meta">
+        <li>
+          <span>
+            Published
+          </span>
+          29 Sep 2011
+        </li>
+        <li>
+          <span>
+            Category
+          </span>
+          
+        </li>
+      </ul>      
+    </div>
+    <ul class="pagination">
+      
+        <li class="previous">
+          <a href="/2011/09/13/handle-variable-number-of-arguments-in-c.html">
+            Previous
+          </a>
+        </li>
+      
+      
+      <li class="next">
+        <a href="/2011/12/01/creating-a-useful-application-with-qt.html">
+          Next
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+    <p>Reading time : Less than 5 minutes
+As I was going through my daily routines, I just came across a simple issue. I’ve a Linux machine and it has about 20 to 30 users who uses ssh to connect to the machine. I’m the root user and none of the other users have root privileges. I want to restrict the users from running nmap (a tool used for scanning networked machines) during a period of time. The conditions are as follows.
+At 6HRS all instances of the tool should be killed
+After 6HRS no users should be able to run the tool
+After 20HRS, everyone can start using the tool, no issue :)
+But make sure it wont continue after 6HRS next day!
+So, here is a simple script that can do the same. I used pkill for killing processes, so that I can avoid having the logic of finding instances and killing them. To reduce resource utilisation I used a sleep command in between(?). Take a look at the script.</p>
+
+<h1 id="binbashwhile-do-hdate-h-if--h--gt-5--then--if--h--lt-20--then---pkill-nmap--fi-fi-sleep-1done">!/bin/bashwhile :do    h=$(date +“%H”)    if [ $h -gt 5 ]; then        if [ $h -lt 20 ]; then            pkill nmap        fi    fi    sleep 1done</h1>
+
+<p>I have a copy in my current directory and I run it on my machine using ’./my_script.sh &amp;’ - so that I can use the prompt for my other works. Hope this post was useful.
+//See you in the afterlife…//Subin Sebastian</p>
+
+	<div id="disqus_thread"></div>	
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES * * */
+// Required: on line below, replace text in quotes with your forum shortname
+var disqus_shortname = 'subinsebastien';
+    
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</article>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Napster's Experiments with Freedom</title>
+  <meta name="viewport" content="width=device-width">
+
+  <!-- syntax highlighting CSS -->
+  <link rel="stylesheet" href="/css/syntax.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic|Open+Sans:400italic,600italic,400,600' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Simple example in Database programming with Qt</title>
+  <meta name="description" content="Most of the real world applications use databases to store data in a structured manner. Databases provide a very programmatic way to store and retrieve organ...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/2011/12/12/simple-example-in-database-programming-with-qt.html">
+  <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
+  
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.css">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.js"></script>
+  
+  <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  
+</head>
+
+<header style="background-image: url();">
+  <div class="container post-container">
+    <a href="/" class="home_button"></a>
+    <div class="inner-container">
+      <h1>Simple example in Database programming with Qt</h1>
+      <ul class="meta">
+        <li>
+          <span>
+            Published
+          </span>
+          12 Dec 2011
+        </li>
+        <li>
+          <span>
+            Category
+          </span>
+          
+        </li>
+      </ul>      
+    </div>
+    <ul class="pagination">
+      
+        <li class="previous">
+          <a href="/2011/12/01/getting-started-with-arduino.html">
+            Previous
+          </a>
+        </li>
+      
+      
+      <li class="next">
+        <a href="/2011/12/13/static-funtions-api-and-property-based-api.html">
+          Next
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+    <p>Most of the real world applications use databases to store data in a structured manner. Databases provide a very programmatic way to store and retrieve organised data. Qt, just like any other professional toolkit, provides rich set of database drivers and libraries to handle database functionality in a very managed way. It this, post, I would like to show you a simple example of how to use database with Qt. To begin with, create a console qt application and name it, say DBApp. Then add a reference to the project(.pro) file that we are going to use database in this project.</p>
+
+<p>QT       += sql</p>
+
+<p>You might have to rescan the project folder to refresh the changes. Now we have to define a database object and can use queries to fetch data from the database. For that, we have to create a database first. In this example, I’ve used MySQL database server for storing data. If you wish you can use other database servers as well.
+https://gist.github.com/5075241
+Now, the database is ready to be used with our application. Now take a look at the code.
+https://gist.github.com/5075227
+Though the code is pretty self descriptive, I would like to explain how it works. First we create a QSqlDatabase object using the addDatabase() function. The parameter to this function, specifies what type of Qt driver has to be used for this connection. The following few lines, sets the database options like username, password etc. Once it is opened using the function open() declare a QSqlQuery object named qry. The query used to fetch all data from the table is,</p>
+
+<p>select * from fruit;</p>
+
+<p>So, simply fetch the data from the database and print it to the debug console using the function, qDebug(). So, that’s all folks, you can look for more advanced examples in the Qt documentation here. Take a look at the output.</p>
+
+<p>//See you in the afterlife//Subin Sebastian</p>
+
+	<div id="disqus_thread"></div>	
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES * * */
+// Required: on line below, replace text in quotes with your forum shortname
+var disqus_shortname = 'subinsebastien';
+    
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</article>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Napster's Experiments with Freedom</title>
+  <meta name="viewport" content="width=device-width">
+
+  <!-- syntax highlighting CSS -->
+  <link rel="stylesheet" href="/css/syntax.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic|Open+Sans:400italic,600italic,400,600' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Handle variable number of arguments in C</title>
+  <meta name="description" content="Reading time : Less than 8 minutesIn many applications I had run into situations where I can’t predetermine the number of arguments while defining a function...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/2011/09/13/handle-variable-number-of-arguments-in-c.html">
+  <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
+  
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.css">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.js"></script>
+  
+  <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  
+</head>
+
+<header style="background-image: url();">
+  <div class="container post-container">
+    <a href="/" class="home_button"></a>
+    <div class="inner-container">
+      <h1>Handle variable number of arguments in C</h1>
+      <ul class="meta">
+        <li>
+          <span>
+            Published
+          </span>
+          13 Sep 2011
+        </li>
+        <li>
+          <span>
+            Category
+          </span>
+          
+        </li>
+      </ul>      
+    </div>
+    <ul class="pagination">
+      
+        <li class="previous">
+          <a href="/2011/09/13/check-if-two-strings-are-anagrams-or-not-in-c.html">
+            Previous
+          </a>
+        </li>
+      
+      
+      <li class="next">
+        <a href="/2011/09/29/shell-script-to-keep-a-machine-from-running-a.html">
+          Next
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+    <p>Reading time : Less than 8 minutes
+In many applications I had run into situations where I can’t predetermine the number of arguments while defining a function. Or even, some of you might be wondering how the printf() function works  fine any number of arguments if proper format string is provided. Suppose If I have to get the maximum value out of a number of variables, see If don’t know the number of variables to be handled, it will be a mess. We would rather use an array, but that is not a good idea when you really want to reflect the idea of handling multiple values in a function signature. It would be better if we can call the same function as either,</p>
+
+<p>max( 5, 35, 17, 22, 87, 11 );max( 3, 72, 33, 10 );</p>
+
+<p>It can reflect the context of the function call. In the above scenario, the first argument is the number of arguments to be handled in the function. The trailing arguments can be stepped through using a macro va_arg() from stdarg.h. Before starting coding, I would like to introduce a couple of other macros also.
+va_start( va_list ap, last );
+type va_arg( va_list ap, type );
+void va_end( va_list ap );
+The  va_start() macro initializes ap for subsequent use by va_arg() and va_end(), and it must be called first. va_arg() macro always expands to the next argument in the variable argument list. So if it is called consecutively, it will return two consecutive arguments from the list. The va_end() macro can be used to deference the argument list initialized by va_start(). It can be either a function or a macro. Lets see how can we define a variable argument function in C.</p>
+
+<h1 id="includestdiohincludestdarghint-max-int-count----valist-varlist-vastart-varlist-count--int-max--vaarg-varlist-int--val--0-forunsigned-int-i--1-i--count-i----val--vaarg-varlist-int---if-val--max----max--val--return-maxint-main--printf-d-max-4-74-33-54-16---printf-d-max-6-23-23-12-68-17-31---return-0">include<stdio.h>#include<stdarg.h>int max( int count, … )    {    va_list varList;    va_start( varList, count );    int max = va_arg( varList, int ), val = 0;    for(unsigned int i = 1; i &lt; count; i++ )    {        val = va_arg( varList, int );        if( val &gt; max )            max = val;    }    return max;}int main()    {    printf( “%d”, max( 4, 74, 33, 54, 16 ) );    printf( “%d”, max( 6, 23, 23, 12, 68, 17, 31 ) );    return 0;}</stdarg.h></stdio.h></h1>
+
+<p>//See you in the afterlife//Subin Sebastian</p>
+
+	<div id="disqus_thread"></div>	
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES * * */
+// Required: on line below, replace text in quotes with your forum shortname
+var disqus_shortname = 'subinsebastien';
+    
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</article>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Napster's Experiments with Freedom</title>
+  <meta name="viewport" content="width=device-width">
+
+  <!-- syntax highlighting CSS -->
+  <link rel="stylesheet" href="/css/syntax.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic|Open+Sans:400italic,600italic,400,600' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Creating a useful application with Qt</title>
+  <meta name="description" content="Reading time : Less than 20 minutesI would like to introduce you guys into another fruitful environment in application development. Apart from the mobile app...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/2011/12/01/creating-a-useful-application-with-qt.html">
+  <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
+  
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.css">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.js"></script>
+  
+  <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  
+</head>
+
+<header style="background-image: url();">
+  <div class="container post-container">
+    <a href="/" class="home_button"></a>
+    <div class="inner-container">
+      <h1>Creating a useful application with Qt</h1>
+      <ul class="meta">
+        <li>
+          <span>
+            Published
+          </span>
+          01 Dec 2011
+        </li>
+        <li>
+          <span>
+            Category
+          </span>
+          
+        </li>
+      </ul>      
+    </div>
+    <ul class="pagination">
+      
+        <li class="previous">
+          <a href="/2011/09/29/shell-script-to-keep-a-machine-from-running-a.html">
+            Previous
+          </a>
+        </li>
+      
+      
+      <li class="next">
+        <a href="/2011/12/01/getting-started-with-arduino.html">
+          Next
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+    <p>Reading time : Less than 20 minutes
+I would like to introduce you guys into another fruitful environment in application development. Apart from the mobile applications, we should think seriously about desktop application development also. So far, I have been using GTK+ and glade for creating simple applications. But it is for the first time I’m using Qt for doing the same. I feel farthermost advanced in creating useful applications. So, this time I’ll be posting something much more mature than a Hello World application. It would be a converter application, which will be capable of converting currencies and length among different units. So, lets begin with Qt Creator. Qt is a carefully designed application development framework. We will be get into an environment where we will get everything we would be expecting. Anyway, for a simple converter application, we don’t have to learn Qt very deeply. Lets begin with creating an empty project in Qt Creator.
+Open Qt Creator -&gt; File -&gt; New File or Project -&gt; Other Project -&gt; Empty Qt Project and click Choose</p>
+
+<p>Fill in the string Converter as project name and set some convenient place to hold your project, click Next and Finish! Now you have an empty project in your IDE. Now, we should add a main function to this project, remember every C++ program has a main() function which is the starting point for its execution. For that, right click on the project folder and select Add New… from the context menu. From the New File window, select C++ Source File and name it main.cpp. This file will be opened automatically as we have just added it to the project. If not, you can find the file under Sources virtual folder in the project directory. Add the following code to main.cpp and save.</p>
+
+<h1 id="includeqtguiint-mainint-argc-char-argv--qapplication-appargc-argv-return-appexec">include<qtgui>int main(int argc, char *argv[])    {    QApplication app(argc, argv);    return app.exec();}</qtgui></h1>
+
+<p>Theoretically, your first Qt application is ready to run. But even though you try to run it, you wont be seeing anything since you don’t have any widgets to be displayed. So, lets add a Main window to the project. From the New File window choose Qt/Qt Designer Form Class, and you will be greeted with something like in the below image. Select Main Window from it. Leave everything else default and press Next till the end and Finish. Now we can use Qt Designer to edit the GUI. For that, close the Qt Creator, browse through your project folder, find the file named mainwindow.ui and open it with Qt Designer. Now it is time to create a nice looking GUI. You can follow these two videos for doing this effectively.
+Creating UI with Qt Designer Part One
+Creating UI with Qt Designer Part Two
+I would have created a screen cast but, sorry that the resources are limited here. At the end of the GUI making process I got a UI looks like the below one.</p>
+
+<p>For the sake of simplicity I have added only three currencies for conversion - USD, INR and EUR. Now the GUI is ready to be used with the application. Lets code some login to the application. Close the Qt Designer and open the converter.pro file. In the Headers folder in Qt Creator, you can see a header file named mainwindow.h. Edit that file to look like the one below.</p>
+
+<h1 id="ifndef-mainwindowhdefine-mainwindowhinclude-qmainwindowincludeiostreamnamespace-ui--class-mainwindowclass-mainwindow--public-qmainwindow--qobjectpublic-explicit-mainwindowqwidget-parent--0-mainwindowprivate-float-currency33-float-length44-uimainwindow-uiprivate-slots-void-calculatecurrency-void-calculatelength-void-resetallcurrency-void-resetalllength-void-clearfieldscurrency-void-clearfieldslength-void-quitapplication-void-showaboutendif--mainwindowh">ifndef MAINWINDOW_H#define MAINWINDOW_H#include <qmainwindow>#include<iostream>namespace Ui   {    class MainWindow;}class MainWindow : public QMainWindow   {    Q_OBJECTpublic:    explicit MainWindow(QWidget *parent = 0);    ~MainWindow();private:    float currency[3][3];    float length[4][4];    Ui::MainWindow *ui;private slots:    void calculateCurrency();    void calculateLength();    void resetAllCurrency();    void resetAllLength();    void clearFieldsCurrency();    void clearFieldsLength();    void quitApplication();    void showAbout();};#endif // MAINWINDOW_H</iostream></qmainwindow></h1>
+
+<p>See in Qt, signals and slots are something which provides a connection between a GUI widget and the program logic. Also, signals and slots are normal functions just like every other function in a C++ program. For example, if you have to call a function doSomething() when a button widget named YourButton is  pressed, you can connect them using the connect function available with Qt using the following method.</p>
+
+<p>//connect( &amp;sender, SIGNAL( signal() ), &amp;reciever, SLOT( slot() ));connect( &amp;YourButton, SIGNAL( clicked() ), &amp;parentWindow, SLOT( doSomething() );</p>
+
+<p>For doing this, in the parentWindow class, the function doSomething() has to be declared and defined under private slots: and Q_OBJECT macro should be present in the class at the top. Similarly I’ve added all such slots which is used with our converter application to the MainWindow class. You can also connect GUI widget signals and slots without using the connect() function. This is done via the Qt Designer. For reducing number of lines of code, I’ve used that method to connect widgets and program logic.
+For this, open up the mainwindow.ui in Qt Designer and change the mode via Edit -&gt; Edit Signals/Slots or by pressing F4. Then click on each widget and drag to the ground (The main window). A window named Configure Connection will be popped up and you can associate widgets with corresponding slot names there. Once you have connected all required signals to corresponding slots, it is time for the debug release to make. Press Ctrl + R to run the application.</p>
+
+<p>Its working! Now, the application is ready for deployment. One of the most attractive feature of Qt is that, it is cross platform. Means you can run the exact same code on Windows, Linux or even Mac. For doing this, in this case, I have just moved the project folder to a Macbook and and opened the project using Qt Creator on it and pressed Ctrl + R! You can download full source code I’ve developed so far from here. You can work on it to complete the project or can extend it the way you like.
+//See you in the afterlife//Subin Sebastian</p>
+
+	<div id="disqus_thread"></div>	
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES * * */
+// Required: on line below, replace text in quotes with your forum shortname
+var disqus_shortname = 'subinsebastien';
+    
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</article>
+
+</body>
+</html>

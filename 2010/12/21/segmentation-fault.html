@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Napster's Experiments with Freedom</title>
+  <meta name="viewport" content="width=device-width">
+
+  <!-- syntax highlighting CSS -->
+  <link rel="stylesheet" href="/css/syntax.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic|Open+Sans:400italic,600italic,400,600' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Segmentation Fault</title>
+  <meta name="description" content="Reading time : Less than 5 minutesI came across developing a graphical user interface for a well known command line tool called identify. I figured out that,...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/2010/12/21/segmentation-fault.html">
+  <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
+  
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.css">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.js"></script>
+  
+  <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  
+</head>
+
+<header style="background-image: url();">
+  <div class="container post-container">
+    <a href="/" class="home_button"></a>
+    <div class="inner-container">
+      <h1>Segmentation Fault</h1>
+      <ul class="meta">
+        <li>
+          <span>
+            Published
+          </span>
+          21 Dec 2010
+        </li>
+        <li>
+          <span>
+            Category
+          </span>
+          
+        </li>
+      </ul>      
+    </div>
+    <ul class="pagination">
+      
+        <li class="previous">
+          <a href="/2010/12/16/mobile-operating-systems.html">
+            Previous
+          </a>
+        </li>
+      
+      
+      <li class="next">
+        <a href="/2010/12/21/possible-c.html">
+          Next
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+    <p>Reading time : Less than 5 minutes
+I came across developing a graphical user interface for a well known command line tool called identify. I figured out that, at a point in the code, using strcat is necessary. Gcc kept giving me executable code which makes Segmentation Fault and I was unable to find what was wrong. The code looked like,</p>
+
+<h1 id="include-stringhinclude-stdiohint-main--char-x--hello-char-y--guys-strcat-x--y--printf-s--x--return-0">include <string.h>#include <stdio.h>int main()  {    char* x = “Hello”;    char* y = “Guys”;    strcat( x , y );    printf( “%s” , x );    return 0;}</stdio.h></string.h></h1>
+
+<p>At first site, there was no room for error in this code. But the point here is that, a statement like</p>
+
+<p>char* x= “Hello”;</p>
+
+<p>will create a constant string which cannot be handled by strcat for concatenation. Because the signature for strcat is</p>
+
+<p>char *strcat( char *dest, const char *src )</p>
+
+<p>So, the destination string should be writeable. That means we have to create a non constant string and which should contain the value Hello. A probable solution I’ve found is using malloc function for allocating some writable memory. The new code which works perfectly for me looks like,</p>
+
+<h1 id="includestringhincludestdiohincludestdlibhint-main--char-x--charmalloc512-strcpy-x--hello--char-y--guys-strcat-x--y--printf-s--x--return-0">include<string.h>#include<stdio.h>#include<stdlib.h>int main()  {    char* x = (char*)malloc(512);    strcpy( x , ”Hello” );    char* y = ”Guys”;    strcat( x , y );    printf( “%s” , x );    return 0;}</stdlib.h></stdio.h></string.h></h1>
+
+<p>So, that was the end of the day for a lowlife programmer… :)
+See you in the afterlife…Subin Sebastian</p>
+
+	<div id="disqus_thread"></div>	
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES * * */
+// Required: on line below, replace text in quotes with your forum shortname
+var disqus_shortname = 'subinsebastien';
+    
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</article>
+
+</body>
+</html>

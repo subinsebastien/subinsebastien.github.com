@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Napster's Experiments with Freedom</title>
+  <meta name="viewport" content="width=device-width">
+
+  <!-- syntax highlighting CSS -->
+  <link rel="stylesheet" href="/css/syntax.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic|Open+Sans:400italic,600italic,400,600' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Developing a simple app for Ubuntu Phone OS</title>
+  <meta name="description" content="Its been just a day or two since Ubuntu Phone OS’s preview has been released. Along with a lot others, I installed it on my phone and it works pretty well. Y...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/2013/02/23/developing-a-simple-app-for-ubuntu-phone-os.html">
+  <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
+  
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.css">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.js"></script>
+  
+  <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  
+</head>
+
+<header style="background-image: url();">
+  <div class="container post-container">
+    <a href="/" class="home_button"></a>
+    <div class="inner-container">
+      <h1>Developing a simple app for Ubuntu Phone OS</h1>
+      <ul class="meta">
+        <li>
+          <span>
+            Published
+          </span>
+          23 Feb 2013
+        </li>
+        <li>
+          <span>
+            Category
+          </span>
+          
+        </li>
+      </ul>      
+    </div>
+    <ul class="pagination">
+      
+        <li class="previous">
+          <a href="/2012/02/08/setting-up-and-deploying-your-first-application.html">
+            Previous
+          </a>
+        </li>
+      
+      
+      <li class="next">
+        <a href="/2013/03/03/some-handy-functions-for-android-developers.html">
+          Next
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+    <p>Its been just a day or two since Ubuntu Phone OS’s preview has been released. Along with a lot others, I installed it on my phone and it works pretty well. You can find the whole documentation on how to install it on your device here. After a few hours of fiddling with the OS, I thought it will be a good idea to develop some quick apps for the phone. As such there is no official guides to develop your hello world apps for the phone at the moment, although the resource available on the Ubuntu site is just enough to pull out some idea and develop a test app for it. In this post, I present you a quick guide to develop a simple XKCD comic app for Ubuntu Phone OS. The expected features are listed below. You can add more features as you learn more.
+Have a title bar and show XKCD on it
+A button named Random
+On clicking Random it should load a random comic from xkcd.
+The features are simple enough for a hello world app. So first thing to consider is the API xkcd provides. Thankfully the xkcd API is also very simple to be used in our app. The xkcd API returns JSON document from which we get comic metadata such as image URL and comic search keyword strings. So that part is more or less fine. You can see the API details here.As with any projects, the next step is to create a mockup for the application. I use pencil here to create a mockup as shown in the image below.</p>
+
+<p>The language Ubuntu Phone OS prefers is Qt with QML. QML is a declarative UI markup language. You may find more details about QML from the Qt documentation website here. For developing apps for Phone OS, you need to install Qt5 and Qt-Creator with Ubuntu development plugins. You may find the full instruction for doing that here. Note that Ubuntu Phone SDK contains the whole Qt libs and editors. There are some dependency problems as of now, that we will consider later in this post. Once the SDK installed, open Qt-Creator, press Ctrl+N and select a new Ubuntu UI application.</p>
+
+<p>For now, name the project xkcd and press Finish. When opening Qt-Creator, you may see an error which says “Error : Plugin Load Failed” meaning that some Ubuntu components can’t be loaded. This is due to a missing dependency in the toolchain, and you can fix it by installing the package libbotan-1.10-0 (sudo apt-get install libbotan-1.10-0). Once the project is created, you may delete the file named avatar@8.png from the project folder which is not needed in our project for now. Although we need another image for this project, which will be used as a placeholder when the comic image is being loaded from the network. This image will simply say LOADING for now. You don’t actually need to use an image for this purpose, yet again, doing it this way for now to keep it simple. You can download and use an image which says loading, from the Internet. The only file we need to change is the xkcd.qml in this project. The following is the content of the file.
+https://gist.github.com/5020241
+Lets have a visit line by line. On line number 10 a simple JavaScript function is defined. JavaScript code can be integrated into QML apps and you can find more about it on the Qt website too. The function does nothing but return a random number between 0 and 1000. This just means that we will be loading any one of the thousand xkcd comics randomly. Again, it seemed more easier to do. On line number 14 a title is defined and it just says XKCD as the app title. On line number 23 a rectangle object is used as a wrapper to the image object to which the actual comic image is about to be loaded. The important attribute of the Image object is source, which can be a URL to be used to load the image from. On line number 37 a button which says Random is defined. In the click event for the button, the actual image loading happens. These are steps for loading the image from xkcd.
+[Line : 46] Load a placeholder image into the Image object
+[Line : 47] Prepare a network request object named doc
+[Line : 48] Declare a network request state-change listener
+[Line : 52] If the network request is DONE, find the img key from the JSON returned by XKCD API. This key holds the actual image URL to the comic. And finally set it as the image source for the Image object.
+Done! Our first Ubuntu Phone OS app is ready to be deployed. The device connectivity concept is slightly different in Ubuntu Phone OS. You need to connect the device to the LAN where the actual key pairing is done over the air. Once the device is detected in the device tab on the Qt-Creator, we can deploy the app directly into the device. Apparently, the preview release holds a remote qmlscene with which we can marely run the app. To deploy an app to a connected device, press Ctrl + F12 or you can do it via the menus. When developing apps for Ubuntu Phone OS platform, you may find several issues around the platform itself and the development environment. One of them is that multiple qmlscene instances running on the device with each deployment you do, which essentially makes the device slower. You can press Ctrl + Shift + F12 to kill all qmlscene instances on the device. Or alternatively, you can connect to the device over SSH, and use pkill. Another issues is with the app  debugging. Android’s debug bridge is hardly of any use at the moment, even though Canonical says we can use it officially. You can use console.log() for debugging purposes but you have to kill all the qmlscene on the device to see the messages back in the IDE. The console log data will go to the General Messages tab in Qt-Creator. Secondly, you may find the device getting disconnected so frequently when you are developing, which you need to go to device tab and detect the device again to reconnect. Also, remember that this is a preview release of the OS which means, not even the core apps are ready to be used in production. There are multiple bugs in the flashing process as well, so take care when you fiddle with your device. Your phone might turn into a chicken ;). These little issues are expected to be fixed very soon. So you may live with it for now, or wait for a few months, which I failed to do. :)Here is a screenshot of the application running on a device here. Not much polished, though good enough for a start.</p>
+
+<p>The full source for the app is available here. As you know, it is another open source initiative from Canonical. The important thing to do is, contributing back to the project. Whether it is a bug report or a word of mouth or whatever, please take the effort to do it. Happy hacking and have a nice day.//See you in the afterlife//Subin Sebastian</p>
+
+	<div id="disqus_thread"></div>	
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES * * */
+// Required: on line below, replace text in quotes with your forum shortname
+var disqus_shortname = 'subinsebastien';
+    
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</article>
+
+</body>
+</html>

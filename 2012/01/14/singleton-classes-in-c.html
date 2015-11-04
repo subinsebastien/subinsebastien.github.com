@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Napster's Experiments with Freedom</title>
+  <meta name="viewport" content="width=device-width">
+
+  <!-- syntax highlighting CSS -->
+  <link rel="stylesheet" href="/css/syntax.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic|Open+Sans:400italic,600italic,400,600' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Singleton Classes in C++</title>
+  <meta name="description" content="Reading time : Less than 20 minutesYou might like this post post if you are a screwed developer just like me. I’ve heard that necessity is the mother of inve...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/2012/01/14/singleton-classes-in-c.html">
+  <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
+  
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.css">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.js"></script>
+  
+  <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  
+</head>
+
+<header style="background-image: url();">
+  <div class="container post-container">
+    <a href="/" class="home_button"></a>
+    <div class="inner-container">
+      <h1>Singleton Classes in C++</h1>
+      <ul class="meta">
+        <li>
+          <span>
+            Published
+          </span>
+          14 Jan 2012
+        </li>
+        <li>
+          <span>
+            Category
+          </span>
+          
+        </li>
+      </ul>      
+    </div>
+    <ul class="pagination">
+      
+        <li class="previous">
+          <a href="/2011/12/13/static-funtions-api-and-property-based-api.html">
+            Previous
+          </a>
+        </li>
+      
+      
+      <li class="next">
+        <a href="/2012/01/17/simple-qhttp-example.html">
+          Next
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+    <p>Reading time : Less than 20 minutes
+You might like this post post if you are a screwed developer just like me. I’ve heard that necessity is the mother of invention. I didn’t believe it till yesterday. The situation I’m going to tell you might probably familiar for many of us here. In some applications there are some places where you must restrict the number of instances of a class to just one. Yeah only one! For example the application class. You cannot make more than one instance of an application class in a single application. Another example will be logger classes. For one application, there should also be one and only one instance of this class also.
+In my case, I’ve wrote a database handler for my application which takes care of the low level db stuff with some abstraction. It just had few methods including putData() and getData(). The process of adding database to my application and database credential configuration were done inside the default constructor of this class. Which seemed absolutely useful in my application. I thought I can make an object of this handler class where ever I wanted and put and get data from the database.
+The problem occurred when I started creating objects of this handler class. When ever I create a new object, the constructor got called. Which added one database for each object, and which showed me an error that duplication database connections exists in my application. I was not able to go ahead with duplicate databases. So, I looked around, done a lot of Googling, asked a couple of developer friends across the world, and concluded that there are three solutions for this problem.
+Create a single global object of the handler class and access it from where ever I want
+Move the database adding process out of the constructor which avoids multiple calls
+Make the handler class Singleton, so that no more than one instance could exists at any time
+At first creating a global object looked easier for me. I thought I could just make a global instance in a globals header where I handle other global stuffs, and it just didn’t work. I tried accessing it in other files where it is required using the extern keyword, but it seemed like it was not my day. As I shared I couldn’t make it work, some friends suggested making it singleton. I couldn’t even think of moving the database adding process out of the constructor, which will break the soul purpose of that class. Also, I was not sure where to do it, if not inside the constructor. Also, if I do so, I might run into further bugs and it will be terrific for me track the outcomes later on. So, I decided to use singleton pattern which was widely recognized as complex but right among developers. And finally I made it work. So, apart from the story here is a simple example for singleton classes in C++. I used Qt for developing this application, but the concept is applicable to most of the object oriented languages.
+First open Qt-Creator and create a new Qt console project. You will get a skeleton application. Now add a new class to this project. For this, right click on the project folder and select Add New.</p>
+
+<p>Name the class Singleton. Now, lets make it a singleton class. Take a look at the new Singleton.h file.</p>
+
+<h1 id="ifndef-singletonhdefine-singletonhclass-singletonpublic-static-singleton-getinstance-singleton-int-getdata-void-setdataintprivate-int-data-singleton-singletonconst-singleton-singleton-operatorconst-singleton-static-bool-instanceexists-static-singleton-theonlyinstanceendif--singletonh">ifndef SINGLETON_H#define SINGLETON_Hclass Singleton{public:    static Singleton* getInstance();    ~Singleton();    int getData();    void setData(int);private:    int data;    Singleton();    Singleton(const Singleton&amp;);    Singleton&amp; operator=(const Singleton&amp;);    static bool instance_exists;    static Singleton* _theOnlyInstance;};#endif // SINGLETON_H</h1>
+
+<p>You might wonder why I moved all of the default constructors to private. This simply restrict others from making an instance of the class. So, how can I use the class without an object of it? See closely, there is another function named getInstance(). It can return an instance of the class. So the users of this class can only get an object of this class only through this method. So, subsequent calls to this method will return the same instance, no matter how many times it is called. Now, take a look at the definitions of the above class.</p>
+
+<h1 id="include-singletonhbool-singletoninstanceexistssingleton-singletontheonlyinstancesingletonsingleton-singletonsingleton--instanceexists--falsesingleton-singletongetinstance--ifinstanceexists--theonlyinstance--new-singleton-instanceexists--true-return-theonlyinstance--else--return-theonlyinstance-int-singletongetdata--return-datavoid-singletonsetdataint-data--data--data">include “singleton.h”bool Singleton::instance_exists;Singleton* Singleton::_theOnlyInstance;Singleton::Singleton()  {}Singleton::~Singleton() {    instance_exists = false;}Singleton* Singleton::getInstance()  {    if(!instance_exists)    {        _theOnlyInstance = new Singleton();        instance_exists = true;        return _theOnlyInstance;    }   else    {        return _theOnlyInstance;    }}int Singleton::getData()    {    return data;}void Singleton::setData(int _data)    {    data = _data;}</h1>
+
+<p>You might want to check the getInstance() method more closely. It just checks if there is an object exists in the scope. If yes, the instance_exists will be true. If one exists it will be stored in the _theOnlyInstance and is return on call. If one does not exists, create one and return it. Simple enough right? Lets take a look at the main function too.</p>
+
+<h1 id="include-qtcoreqcoreapplicationinclude-qdebuginclude-singletonhint-mainint-argc-char-argv-qcoreapplication-aargc-argv-singleton-one-two-one--singletongetinstance-two--singletongetinstance-one-setdata10-two-setdata20-qdebug--one-getdata-qdebug--two-getdata-return-aexec">include &lt;QtCore/QCoreApplication&gt;#include <qdebug>#include “singleton.h”int main(int argc, char *argv[]){    QCoreApplication a(argc, argv);    Singleton *one, *two;    one = Singleton::getInstance();    two = Singleton::getInstance();    one-&gt;setData(10);    two-&gt;setData(20);    qDebug() &lt;&lt; one-&gt;getData();    qDebug() &lt;&lt; two-&gt;getData();    return a.exec();}</qdebug></h1>
+
+<p>I create two pointers and get instanced using the Singleton::getInstance() method. As we expect both the insensate should be the same. To make sure, I set two different data with each of them. Take a look at the output.</p>
+
+<p>Now you should have a clean idea about the singleton design pattern in C++. And you would guess how this solved my database handler problem.
+//See you in the afterlife…//Subin Sebastian</p>
+
+	<div id="disqus_thread"></div>	
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES * * */
+// Required: on line below, replace text in quotes with your forum shortname
+var disqus_shortname = 'subinsebastien';
+    
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</article>
+
+</body>
+</html>

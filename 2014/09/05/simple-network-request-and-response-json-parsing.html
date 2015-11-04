@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Napster's Experiments with Freedom</title>
+  <meta name="viewport" content="width=device-width">
+
+  <!-- syntax highlighting CSS -->
+  <link rel="stylesheet" href="/css/syntax.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic|Open+Sans:400italic,600italic,400,600' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Simple Network Request and Response JSON Parsing Example in iOS</title>
+  <meta name="description" content="Reading time | Less than 10 MinutesThis is more or less a learning stage article. I’m learning iOS these days, and as usual I find it challenging. I’m not a ...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/2014/09/05/simple-network-request-and-response-json-parsing.html">
+  <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
+  
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.css">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.js"></script>
+  
+  <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  
+</head>
+
+<header style="background-image: url();">
+  <div class="container post-container">
+    <a href="/" class="home_button"></a>
+    <div class="inner-container">
+      <h1>Simple Network Request and Response JSON Parsing Example in iOS</h1>
+      <ul class="meta">
+        <li>
+          <span>
+            Published
+          </span>
+          05 Sep 2014
+        </li>
+        <li>
+          <span>
+            Category
+          </span>
+          
+        </li>
+      </ul>      
+    </div>
+    <ul class="pagination">
+      
+        <li class="previous">
+          <a href="/2014/03/18/were-the-aircraft-computers-hacked-by-the.html">
+            Previous
+          </a>
+        </li>
+      
+      
+      <li class="next">
+        <a href="/2014/12/17/filter-design-techniques-for-a-low-pass-fir-lti.html">
+          Next
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+    <p>Reading time | Less than 10 Minutes
+This is more or less a learning stage article. I’m learning iOS these days, and as usual I find it challenging. I’m not a very noteworthy developer anyway, but still the learning curve is not so steep. You need the right tools and right amount of passion for learning iOS development. Ofcourse you need a Mac, and XCode running to develop apps for the iOS or the OS-X platform. Check my other iOS article for environment setup.
+What we are building?
+We are building a very simple weather search application. You may search with a city name, and the app will show you the latest weather information provided by the awesome Open Weather Map API. Openweathermap is free to use for non-commercial purpose. Their API has JSON support, means we can retrieve data from their systems as JSON Object that typically looks something like the following. Please note that JSON is not particularly useful, unless we parse it to an NSDictionary or a NSArray.
+https://gist.github.com/subinsebastien/e663825d2624359b9aef
+Our app will let the user enter a city name and press a search button that triggers the network query. The GUI is simple, you will just need a Text Field, a Button and a Text View that fills the rest of the area on the screen. The text field will be used to display the result. Dealing with storyboard is easier in XCode’s Assistance View. Connect the Outlets and Action and you are done. Once correctly done, your XXViewController.h will look like the following.
+https://gist.github.com/subinsebastien/8802a3e0f42956ffd28b
+Now it is the time for implementation. What we basically do is, create a NSURLConnection and make an asynchronous request with it. Once the response is received, which is by the way a JSON object, parse it to an NSDictionary. NSDictionary is further useful if you want to get the value of a particular key in the JSON or for doing such things. The implementation is as follows.
+https://gist.github.com/subinsebastien/3b160b4192dd15179b29
+The result is just awesome! You enter a city name, and what you get is the complete response displayed in the textview. It is not the world’s most attractive UI, but it is simple and easy get started with. Take a look.</p>
+
+<p>Hope this is useful to somebody. Happy Hacking!</p>
+
+	<div id="disqus_thread"></div>	
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES * * */
+// Required: on line below, replace text in quotes with your forum shortname
+var disqus_shortname = 'subinsebastien';
+    
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</article>
+
+</body>
+</html>
