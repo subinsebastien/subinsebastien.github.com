@@ -1,36 +1,23 @@
-Strange Case
+Personal Website
 ============
 
-Strange Case is a simple, clean and responsive theme for Jekyll. 
+This is the source code of my personal website. It is open source distributed under WTF Public License. Read the complete license agreement below.
 
-
-### Demo 
-
-[Demo](http://thephuse.github.io/strange_case/)
-
-### Overview 
-
-* Fixed Sidebar with cover image
-* Minimal design 
-* Easy to configure
-* Browser support: Latest releases of Chrome, Safari, Firefox, Mobile Safari and IE 9+.
-
-### Screenshots
-
-![screenshot](/images/screenshot1.png)
-![screenshot](/images/screenshot2.png)
-
-### Setup
-
-1. Install [Jekyll](http://jekyllrb.com/)
-2. Fork or [download](https://github.com/thephuse/strange_case) this theme repo
-3. Edit the `_config.yml` file (if you make any additional changes to this file, you will need to stop and restart your command in the next step)
-4. From your command line, switch to your site directory and build using `jekyll serve`
-5. Site will be accessible by viewing http://localhost:4000/strange_case/
-
-### Download
-
-[Download](https://github.com/thephuse/strange_case)
 
 ### License
-* [MIT](http://opensource.org/licenses/MIT)
+![wtfpl]("http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png")
+
+
+ DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE 
+                    Version 2, December 2004 
+
+ Copyright (C) 2004 Sam Hocevar <sam@hocevar.net> 
+
+ Everyone is permitted to copy and distribute verbatim or modified 
+ copies of this license document, and changing it is allowed as long 
+ as the name is changed. 
+
+            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE 
+   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION 
+
+  0. You just DO WHAT THE FUCK YOU WANT TO.
