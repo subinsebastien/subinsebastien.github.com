@@ -9,7 +9,8 @@ This is the source code of my personal website. It is open source, completely di
 
 
 DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE 
-Version 2, December 2004 
+--
+Version 2, December 2004
 
 Copyright (C) 2004 Sam Hocevar <sam@hocevar.net> 
 
