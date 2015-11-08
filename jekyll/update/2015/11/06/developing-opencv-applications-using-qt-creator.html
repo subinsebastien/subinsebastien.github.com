@@ -27,6 +27,7 @@
   <meta name="description" content="I have used both OpenCV Library and Qt Creator IDE back in my academic days. I have developed or more precisely experimented with both a lot. In my blog, you...">
 
   <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/syntax.css">
   <link rel="canonical" href="/jekyll/update/2015/11/06/developing-opencv-applications-using-qt-creator.html">
   <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
   
@@ -89,7 +90,7 @@
 <figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>brew list opencv</code></pre></figure>
 
 <blockquote>
-  <p><strong>Tip:</strong> OpenCV 3.x is also has been released recently. If you want to leverage the coolest features, try installing opencv3</p>
+  <p><strong>Tip:</strong> OpenCV 3.x has been released recently. If you want to leverage the coolest features, try installing opencv3</p>
 </blockquote>
 
 <h2 id="installing-qt-creator">Installing Qt Creator</h2>
@@ -104,23 +105,22 @@
 <span class="n">using</span> <span class="n">namespace</span> <span class="n">cv</span><span class="p">;</span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span> <span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span> <span class="p">)</span> <span class="p">{</span>
-        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;usage: DisplayImage.out &lt;Image_Path&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span>
+	<span class="k">if</span> <span class="p">(</span> <span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span> <span class="p">)</span> <span class="p">{</span>
+		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;usage: DisplayImage.out &lt;Image_Path&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
 	
-    <span class="n">Mat</span> <span class="n">image</span><span class="p">;</span>
-    <span class="n">image</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span> <span class="p">);</span>
+	<span class="n">Mat</span> <span class="n">image</span><span class="p">;</span>
+	<span class="n">image</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span> <span class="p">);</span>
     
 	<span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">image</span><span class="p">.</span><span class="n">data</span> <span class="p">)</span> <span class="p">{</span>
-        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;No image data </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span>
-    
+		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;No image data </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
 	<span class="n">namedWindow</span><span class="p">(</span><span class="s">&quot;Display Image&quot;</span><span class="p">,</span> <span class="n">WINDOW_AUTOSIZE</span> <span class="p">);</span>
-    <span class="n">imshow</span><span class="p">(</span><span class="s">&quot;Display Image&quot;</span><span class="p">,</span> <span class="n">image</span><span class="p">);</span>
-    <span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="n">imshow</span><span class="p">(</span><span class="s">&quot;Display Image&quot;</span><span class="p">,</span> <span class="n">image</span><span class="p">);</span>
+	<span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
 
 <p>It does nothing but opens an image file and shows it in a named window. Now, to compile this, you can manually use <code>g++</code> or whatever C++ compiler you have on your machine. But, rather, we need to add support for <a href="https://cmake.org">CMake</a>, so that Qt Creator can pickup the project. My <strong>CMakeLists.txt</strong> file looks something like below. Note that, the file name should be exactly the same.</p>

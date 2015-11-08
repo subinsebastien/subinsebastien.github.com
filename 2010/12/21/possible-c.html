@@ -27,6 +27,7 @@
   <meta name="description" content="Reading time : Less than 8 minutesJust as I mentioned in the last post, gidentify project has given me another work around. My plan was to pipe the output of...">
 
   <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/syntax.css">
   <link rel="canonical" href="/2010/12/21/possible-c.html">
   <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
   
@@ -81,11 +82,48 @@
     <p>Reading time : Less than 8 minutes
 Just as I mentioned in the last post, gidentify project has given me another work around. My plan was to pipe the output of the command line tool identify to the graphical user interface. I was using GTK+ and the available option for this was to use GtkTextView widget which can be used to display mutiline text. Unlike GtkEntry, which could only display a single line text at a time, GtkTextView seemed to be flexible. GtkLabel was another possibility, but it lacked user functionality like Editing. By the way my plan was to display the output of the command on the GUI, and I thought the system function will be just enough. When I manned system(), it has given me a sad news that the system() function would just return the exit status of the command passed to system() as the argument. I searched for an API for this purpose but I was unable to find one. So I figured out a code like this,</p>
 
-<p>else    {        GtkTextBuffer <em>output_buff=gtk_text_view_get_buffer(output_view);        char</em> command = (char<em>)malloc(512);        char</em> output = (char<em>)malloc(4096);        char</em> temp = (char<em>)malloc(128);        strcpy(command,“identify -verbose ”);        strcpy(output,“”);        strcpy(temp,“”);        strcat(command,file);        strcat(command,“ &gt; temp.out”);        system(command);        FILE</em> fp=fopen(“temp.out”,“r”);        while (!feof(fp))   {            strcat(output,temp);            fgets(temp,512,fp);        }        gtk_text_buffer_set_text( output_buff, output, (gint)strlen(output));        fclose(fp);        remove(“./temp.out”);}</p>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">else</span> <span class="p">{</span>
+	<span class="n">GtkTextBuffer</span> <span class="o">*</span><span class="n">output_buff</span><span class="o">=</span><span class="n">gtk_text_view_get_buffer</span><span class="p">(</span><span class="n">output_view</span><span class="p">);</span>
+	<span class="kt">char</span><span class="o">*</span> <span class="n">command</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="mi">512</span><span class="p">);</span>
+	<span class="kt">char</span><span class="o">*</span> <span class="n">output</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="mi">4096</span><span class="p">);</span>
+	<span class="kt">char</span><span class="o">*</span> <span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="mi">128</span><span class="p">);</span>
+	<span class="n">strcpy</span><span class="p">(</span><span class="n">command</span><span class="p">,</span><span class="s">&quot;identify -verbose &quot;</span><span class="p">);</span>
+	<span class="n">strcpy</span><span class="p">(</span><span class="n">output</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">);</span>
+	<span class="n">strcpy</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">);</span>
+	<span class="n">strcat</span><span class="p">(</span><span class="n">command</span><span class="p">,</span><span class="n">file</span><span class="p">);</span>
+	<span class="n">strcat</span><span class="p">(</span><span class="n">command</span><span class="p">,</span><span class="s">&quot; &gt; temp.out&quot;</span><span class="p">);</span>
+	<span class="n">system</span><span class="p">(</span><span class="n">command</span><span class="p">);</span>
+	<span class="kt">FILE</span><span class="o">*</span> <span class="n">fp</span><span class="o">=</span><span class="n">fopen</span><span class="p">(</span><span class="s">&quot;temp.out&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+	<span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">feof</span><span class="p">(</span><span class="n">fp</span><span class="p">))</span> <span class="p">{</span>
+		<span class="n">strcat</span><span class="p">(</span><span class="n">output</span><span class="p">,</span><span class="n">temp</span><span class="p">);</span>
+		<span class="n">fgets</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="mi">512</span><span class="p">,</span><span class="n">fp</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="n">gtk_text_buffer_set_text</span><span class="p">(</span> <span class="n">output_buff</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="p">(</span><span class="n">gint</span><span class="p">)</span><span class="n">strlen</span><span class="p">(</span><span class="n">output</span><span class="p">));</span>
+	<span class="n">fclose</span><span class="p">(</span><span class="n">fp</span><span class="p">);</span>
+	<span class="n">remove</span><span class="p">(</span><span class="s">&quot;./temp.out&quot;</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
 
 <p>As you can see, it used a file, a temporary file named temp.out in the current directory. The identify command will write the output to this file. Later on the file is read and the output is displayed via GtkTextBuffer widget. This code was clunky. Because, it uses a file. A file is a costly resource in computer terminology. And the delay caused in between the file write and read was pretty good that the user could feel a slower GUI for a faster CLI. And also if there is a file named temp.out in the current directory (or what ever I could imagine genpasswd n could generate) it will get overwritten on execution of gidentify. So I figured out another possible C for this problem,</p>
 
-<p>else    {        GtkTextBuffer <em>output_buff = gtk_text_view_get_buffer( output_view );        char</em> command = (char<em>)malloc(512);        char</em> output = (char<em>)malloc(4096);        char</em> temp = (char<em>)malloc(128);        strcpy(command,“identify -verbose ”);        strcpy(output,“”);        strcpy(temp,“”);        strcat(command,file);        FILE</em> pipe_fp;        if (( pipe_fp = popen(command, “r”)) == NULL)   {            alert_function(“Pipe Error!”);        }        while (!feof(pipe_fp))   {            strcat(output,temp);            fgets(temp,512,pipe_fp);        }        gtk_text_buffer_set_text( output_buff, output, (gint)strlen(output));        fclose(pipe_fp);}</p>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">else</span> <span class="p">{</span>
+	<span class="n">GtkTextBuffer</span> <span class="o">*</span><span class="n">output_buff</span> <span class="o">=</span> <span class="n">gtk_text_view_get_buffer</span><span class="p">(</span> <span class="n">output_view</span> <span class="p">);</span>
+	<span class="kt">char</span><span class="o">*</span> <span class="n">command</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="mi">512</span><span class="p">);</span>
+	<span class="kt">char</span><span class="o">*</span> <span class="n">output</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="mi">4096</span><span class="p">);</span>
+	<span class="kt">char</span><span class="o">*</span> <span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="mi">128</span><span class="p">);</span>
+	<span class="n">strcpy</span><span class="p">(</span><span class="n">command</span><span class="p">,</span><span class="s">&quot;identify -verbose &quot;</span><span class="p">);</span>
+	<span class="n">strcpy</span><span class="p">(</span><span class="n">output</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">);</span>
+	<span class="n">strcpy</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">);</span>
+	<span class="n">strcat</span><span class="p">(</span><span class="n">command</span><span class="p">,</span><span class="n">file</span><span class="p">);</span>
+	<span class="kt">FILE</span><span class="o">*</span> <span class="n">pipe_fp</span><span class="p">;</span>
+	<span class="k">if</span> <span class="p">((</span> <span class="n">pipe_fp</span> <span class="o">=</span> <span class="n">popen</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">alert_function</span><span class="p">(</span><span class="s">&quot;Pipe Error!&quot;</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">feof</span><span class="p">(</span><span class="n">pipe_fp</span><span class="p">))</span> <span class="p">{</span>
+		<span class="n">strcat</span><span class="p">(</span><span class="n">output</span><span class="p">,</span><span class="n">temp</span><span class="p">);</span>
+		<span class="n">fgets</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="mi">512</span><span class="p">,</span><span class="n">pipe_fp</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="n">gtk_text_buffer_set_text</span><span class="p">(</span> <span class="n">output_buff</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="p">(</span><span class="n">gint</span><span class="p">)</span><span class="n">strlen</span><span class="p">(</span><span class="n">output</span><span class="p">));</span>
+	<span class="n">fclose</span><span class="p">(</span><span class="n">pipe_fp</span><span class="p">);}</span></code></pre></figure>
 
 <p>This code has some advantages over the last one. It doesn’t use a file at all but just a file pointer only. And I was able to run it from /usr/bin on my local machine. But it even possess a little delay on execution on popen. May be there is another possible C for this program that can pipe a line at a time and display via the GtkTextView widget. But factually the problem has got fixed for while, and the program worked fine…
 See you in the afterlife…Subin Sebastian</p>
