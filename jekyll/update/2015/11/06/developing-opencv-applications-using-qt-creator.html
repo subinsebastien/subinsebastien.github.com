@@ -132,7 +132,7 @@ include_directories<span class="o">(</span> <span class="k">${</span><span class
 add_executable<span class="o">(</span> DisplayImage DisplayImage.cpp <span class="o">)</span>
 target_link_libraries<span class="o">(</span> DisplayImage <span class="k">${</span><span class="nv">OpenCV_LIBS</span><span class="k">}</span> <span class="o">)</span></code></pre></figure>
 
-<p>The CMake file explains which library to link, and what kind out output to build and such things. Bascially it generates a <a href="https://en.wikipedia.org/wiki/Makefile">MakeFile</a>, which can be used in the subsequent <code>make</code> step of the building process. Before firing up the Qt Creator, lets see if this builds the project correctly. For this step, lets use in-source-building.</p>
+<p>The CMake file explains which library to link, and what kind out output to build and such things. Bascially it generates a <a href="https://en.wikipedia.org/wiki/Makefile">MakeFile</a>, which can be used in the subsequent <code>make</code> step of the building process. Before firing up the Qt Creator, lets see if this builds the project correctly. For this step, lets use in-source-building. A nice CMake tutorial can be found <a href="http://mirkokiefer.com/blog/2013/03/cmake-by-example/">here</a>.</p>
 
 <figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>cmake .
 <span class="nv">$ </span>make</code></pre></figure>
