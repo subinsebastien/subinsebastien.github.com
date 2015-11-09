@@ -109,10 +109,10 @@
 		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;usage: DisplayImage.out &lt;Image_Path&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
 	<span class="p">}</span>
-	
+
 	<span class="n">Mat</span> <span class="n">image</span><span class="p">;</span>
 	<span class="n">image</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span> <span class="p">);</span>
-    
+
 	<span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">image</span><span class="p">.</span><span class="n">data</span> <span class="p">)</span> <span class="p">{</span>
 		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;No image data </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>

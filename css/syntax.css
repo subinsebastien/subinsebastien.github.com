@@ -1,5 +1,13 @@
 .highlight  { background: #F9F9F9; padding: 20px; margin-bottom: 20px;}
-.highlight pre { font-family: Menlo, Monaco, "Courier New", monospace; font-size: .9em;}
+.highlight pre {
+	font-family: Menlo, Monaco, "Courier New", monospace;
+	font-size: .9em;
+	overflow: auto;
+	-ms-word-wrap: normal;
+	word-wrap: normal;
+	overflow-wrap: normal;
+	white-space: pre;
+}
 .highlight .c { color: #999988; font-style: italic } /* Comment */
 .highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
 .highlight .k { font-weight: bold } /* Keyword */
