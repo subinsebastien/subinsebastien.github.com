@@ -88,7 +88,7 @@
     <p>Reading time : Less than 5 minutes
 I came across developing a graphical user interface for a well known command line tool called identify. I figured out that, at a point in the code, using strcat is necessary. Gcc kept giving me executable code which makes Segmentation Fault and I was unable to find what was wrong. The code looked like,</p>
 
-<h1 id="include-stringhinclude-stdiohint-main--char-x--hello-char-y--guys-strcat-x--y--printf-s--x--return-0">include <string.h>#include <stdio.h>int main()  {    char* x = “Hello”;    char* y = “Guys”;    strcat( x , y );    printf( “%s” , x );    return 0;}</stdio.h></string.h></h1>
+<p>#include <string.h>#include <stdio.h>int main()  {    char* x = “Hello”;    char* y = “Guys”;    strcat( x , y );    printf( “%s” , x );    return 0;}</stdio.h></string.h></p>
 
 <p>At first site, there was no room for error in this code. But the point here is that, a statement like</p>
 
@@ -100,7 +100,7 @@ I came across developing a graphical user interface for a well known command lin
 
 <p>So, the destination string should be writeable. That means we have to create a non constant string and which should contain the value Hello. A probable solution I’ve found is using malloc function for allocating some writable memory. The new code which works perfectly for me looks like,</p>
 
-<h1 id="includestringhincludestdiohincludestdlibhint-main--char-x--charmalloc512-strcpy-x--hello--char-y--guys-strcat-x--y--printf-s--x--return-0">include<string.h>#include<stdio.h>#include<stdlib.h>int main()  {    char* x = (char*)malloc(512);    strcpy( x , ”Hello” );    char* y = ”Guys”;    strcat( x , y );    printf( “%s” , x );    return 0;}</stdlib.h></stdio.h></string.h></h1>
+<p>#include<string.h>#include<stdio.h>#include<stdlib.h>int main()  {    char* x = (char*)malloc(512);    strcpy( x , ”Hello” );    char* y = ”Guys”;    strcat( x , y );    printf( “%s” , x );    return 0;}</stdlib.h></stdio.h></string.h></p>
 
 <p>So, that was the end of the day for a lowlife programmer… :)
 See you in the afterlife…Subin Sebastian</p>
