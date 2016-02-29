@@ -117,8 +117,6 @@
 <figure class="highlight"><pre><code class="language-asm" data-lang="asm"><span class="nf">org</span> <span class="mi">0x7c00</span>
 
 <span class="nf">mov</span> <span class="no">si</span><span class="p">,</span> <span class="no">message</span>
-<span class="err">;</span><span class="nf">call</span> <span class="no">print_string</span>
-<span class="err">;</span><span class="nf">jmp</span> <span class="no">end</span>
 
 <span class="nl">print_string:</span>   <span class="nf">pusha</span>
                 <span class="nf">mov</span> <span class="no">al</span><span class="p">,</span> <span class="err">[</span><span class="no">si</span><span class="err">]</span>
