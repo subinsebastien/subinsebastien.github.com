@@ -95,13 +95,6 @@
 
 <p><img src="/images/disk-structure.png" alt="width=50%" /></p>
 
-<ul>
-  <li><strong>A:-</strong> Track</li>
-  <li><strong>B:-</strong> Geometrical sector</li>
-  <li><strong>C:-</strong> Track sector</li>
-  <li><strong>D:-</strong> Cluster</li>
-</ul>
-
 <p>Disks (floppy disks to be precise) are divided physically into small sections called <a href="https://en.wikipedia.org/wiki/Disk_sector">sectors</a>. The major reason why disks are divided into sectors is that, to quickly find the location of a specific file. Say for example, one could tell a file is at <strong>Disk-0, Track-3, Sector-19</strong>. And the reason for such a quick access mechanism was needed because, the read-write head on hard disks are moved by electric motors and always has some delays in moving from one place to the other across the disk area. These sector and are traditionally sized 512 bytes for hard disks are floppies. A boot sector is nothing but a sector, which contains a boot-loader program, followed by the boot signature. A boot signature is nothing but the last two bytes of the boot sector should be the magic number <strong>0xAA55</strong>. This boot-sector should always be the first sector of the disk as well. Such a disk with the first sector loaded with the boot-loader program is called a boot disk.</p>
 
 <p><img src="/images/boot-sector.png" alt="width=50%" /></p>
