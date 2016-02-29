@@ -31,7 +31,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Possible C</title>
-    <meta name="description" content="Reading time : Less than 8 minutesJust as I mentioned in the last post, gidentify project has given me another work around. My plan was to pipe the output of...">
+    <meta name="description" content="Just as I mentioned in the last post, gidentify project has given me another work around. My plan was to pipe the output of the command line tool identify to...">
 
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/syntax.css">
@@ -85,8 +85,7 @@
 
 <article>
   <div class="container">
-    <p>Reading time : Less than 8 minutes
-Just as I mentioned in the last post, gidentify project has given me another work around. My plan was to pipe the output of the command line tool identify to the graphical user interface. I was using GTK+ and the available option for this was to use GtkTextView widget which can be used to display mutiline text. Unlike GtkEntry, which could only display a single line text at a time, GtkTextView seemed to be flexible. GtkLabel was another possibility, but it lacked user functionality like Editing. By the way my plan was to display the output of the command on the GUI, and I thought the system function will be just enough. When I manned system(), it has given me a sad news that the system() function would just return the exit status of the command passed to system() as the argument. I searched for an API for this purpose but I was unable to find one. So I figured out a code like this,</p>
+    <p>Just as I mentioned in the last post, <strong>gidentify</strong> project has given me another work around. My plan was to pipe the output of the command line tool identify to the graphical user interface. I was using GTK+ and the available option for this was to use GtkTextView widget which can be used to display mutiline text. Unlike GtkEntry, which could only display a single line text at a time, GtkTextView seemed to be flexible. GtkLabel was another possibility, but it lacked user functionality like Editing. By the way my plan was to display the output of the command on the GUI, and I thought the system function will be just enough. When I manned system(), it has given me a sad news that the system() function would just return the exit status of the command passed to system() as the argument. I searched for an API for this purpose but I was unable to find one. So I figured out a code like this,</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">else</span> <span class="p">{</span>
 	<span class="n">GtkTextBuffer</span> <span class="o">*</span><span class="n">output_buff</span><span class="o">=</span><span class="n">gtk_text_view_get_buffer</span><span class="p">(</span><span class="n">output_view</span><span class="p">);</span>
@@ -131,8 +130,7 @@ Just as I mentioned in the last post, gidentify project has given me another wor
 	<span class="n">gtk_text_buffer_set_text</span><span class="p">(</span> <span class="n">output_buff</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="p">(</span><span class="n">gint</span><span class="p">)</span><span class="n">strlen</span><span class="p">(</span><span class="n">output</span><span class="p">));</span>
 	<span class="n">fclose</span><span class="p">(</span><span class="n">pipe_fp</span><span class="p">);}</span></code></pre></figure>
 
-<p>This code has some advantages over the last one. It doesn’t use a file at all but just a file pointer only. And I was able to run it from /usr/bin on my local machine. But it even possess a little delay on execution on popen. May be there is another possible C for this program that can pipe a line at a time and display via the GtkTextView widget. But factually the problem has got fixed for while, and the program worked fine…
-See you in the afterlife…Subin Sebastian</p>
+<p>This code has some advantages over the last one. It doesn’t use a file at all but just a file pointer only. And I was able to run it from <strong>/usr/bin</strong> on my local machine. But it even possess a little delay on execution on popen. May be there is another possible C for this program that can pipe a line at a time and display via the GtkTextView widget. But actually the problem has got fixed for now, and the program worked fine.</p>
 
 	<div id="disqus_thread"></div>	
 <script type="text/javascript">

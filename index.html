@@ -489,8 +489,7 @@ The first thing to do was to Google around a little on this. Just because I wa
           <span class="meta">
             21 Dec 2010
           </span>
-          <p>Reading time : Less than 8 minutes
-Just as I mentioned in the last post, gidentify project has given me another work around. My plan was to pipe the output of the command line tool identify to the graphical user interface. I was using GTK+ and the available option for this was to use GtkTextView widget which can be used to display mutiline text. Unlike GtkEntry, which could only display a single line text at a time, GtkTextView seemed to be flexible. GtkLabel was another possibility, but it lacked user functionality like Editing. By the way my plan was to display the output of the command on the GUI, and I thought the system function will be just enough. When I manned system(), it has given me a sad news that the system() function would just return the exit status of the command passed to system() as the argument. I searched for an API for this purpose but I was unable to find one. So I figured out a code like this,</p>
+          <p>Just as I mentioned in the last post, <strong>gidentify</strong> project has given me another work around. My plan was to pipe the output of the command line tool identify to the graphical user interface. I was using GTK+ and the available option for this was to use GtkTextView widget which can be used to display mutiline text. Unlike GtkEntry, which could only display a single line text at a time, GtkTextView seemed to be flexible. GtkLabel was another possibility, but it lacked user functionality like Editing. By the way my plan was to display the output of the command on the GUI, and I thought the system function will be just enough. When I manned system(), it has given me a sad news that the system() function would just return the exit status of the command passed to system() as the argument. I searched for an API for this purpose but I was unable to find one. So I figured out a code like this,</p>
 
 
         </li>
@@ -500,8 +499,7 @@ Just as I mentioned in the last post, gidentify project has given me another wor
           <span class="meta">
             21 Dec 2010
           </span>
-          <p>Reading time : Less than 5 minutes
-I came across developing a graphical user interface for a well known command line tool called identify. I figured out that, at a point in the code, using strcat is necessary. Gcc kept giving me executable code which makes Segmentation Fault and I was unable to find what was wrong. The code looked like,</p>
+          <p>I came across developing a graphical user interface for a well known command line tool called identify. I figured out that, at a point in the code, using strcat is necessary. Gcc kept giving me executable code which makes Segmentation Fault and I was unable to find what was wrong. The code looked like,</p>
 
 
         </li>

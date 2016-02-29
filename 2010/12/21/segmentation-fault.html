@@ -31,7 +31,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Segmentation Fault</title>
-    <meta name="description" content="Reading time : Less than 5 minutesI came across developing a graphical user interface for a well known command line tool called identify. I figured out that,...">
+    <meta name="description" content="I came across developing a graphical user interface for a well known command line tool called identify. I figured out that, at a point in the code, using str...">
 
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/syntax.css">
@@ -85,25 +85,42 @@
 
 <article>
   <div class="container">
-    <p>Reading time : Less than 5 minutes
-I came across developing a graphical user interface for a well known command line tool called identify. I figured out that, at a point in the code, using strcat is necessary. Gcc kept giving me executable code which makes Segmentation Fault and I was unable to find what was wrong. The code looked like,</p>
+    <p>I came across developing a graphical user interface for a well known command line tool called identify. I figured out that, at a point in the code, using strcat is necessary. Gcc kept giving me executable code which makes Segmentation Fault and I was unable to find what was wrong. The code looked like,</p>
 
-<p>#include <string.h>#include <stdio.h>int main()  {    char* x = “Hello”;    char* y = “Guys”;    strcat( x , y );    printf( “%s” , x );    return 0;}</stdio.h></string.h></p>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;string.h&gt;</span>
+<span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">char</span><span class="o">*</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;Hello&quot;</span><span class="p">;</span>
+    <span class="kt">char</span><span class="o">*</span> <span class="n">y</span> <span class="o">=</span> <span class="s">&quot;Guys&quot;</span><span class="p">;</span>
+    <span class="n">strcat</span><span class="p">(</span> <span class="n">x</span> <span class="p">,</span> <span class="n">y</span> <span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%s&quot;</span> <span class="p">,</span> <span class="n">x</span> <span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
 
 <p>At first site, there was no room for error in this code. But the point here is that, a statement like</p>
 
-<p>char* x= “Hello”;</p>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">char</span><span class="o">*</span> <span class="n">x</span><span class="o">=</span> <span class="s">&quot;Hello&quot;</span><span class="p">;</span></code></pre></figure>
 
 <p>will create a constant string which cannot be handled by strcat for concatenation. Because the signature for strcat is</p>
 
-<p>char *strcat( char *dest, const char *src )</p>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">char</span> <span class="o">*</span><span class="n">strcat</span><span class="p">(</span> <span class="kt">char</span> <span class="o">*</span><span class="n">dest</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">src</span> <span class="p">)</span></code></pre></figure>
 
-<p>So, the destination string should be writeable. That means we have to create a non constant string and which should contain the value Hello. A probable solution I’ve found is using malloc function for allocating some writable memory. The new code which works perfectly for me looks like,</p>
+<p>So, the destination string should be writeable. That means we have to create a non constant string and which should contain the value <em>Hello</em>. A possible solution I’ve found is using malloc function for allocating some writable memory. The new code which works perfectly for me looks like,</p>
 
-<p>#include<string.h>#include<stdio.h>#include<stdlib.h>int main()  {    char* x = (char*)malloc(512);    strcpy( x , ”Hello” );    char* y = ”Guys”;    strcat( x , y );    printf( “%s” , x );    return 0;}</stdlib.h></stdio.h></string.h></p>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include&lt;string.h&gt;</span>
+<span class="cp">#include&lt;stdio.h&gt;</span>
+<span class="cp">#include&lt;stdlib.h&gt;</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">char</span><span class="o">*</span> <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="mi">512</span><span class="p">);</span>
+    <span class="n">strcpy</span><span class="p">(</span> <span class="n">x</span> <span class="p">,</span> <span class="s">&quot;Hello&quot;</span> <span class="p">);</span>
+    <span class="kt">char</span><span class="o">*</span> <span class="n">y</span> <span class="o">=</span> <span class="s">&quot;Guys&quot;</span><span class="p">;</span>
+    <span class="n">strcat</span><span class="p">(</span> <span class="n">x</span> <span class="p">,</span> <span class="n">y</span> <span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%s&quot;</span> <span class="p">,</span> <span class="n">x</span> <span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
 
-<p>So, that was the end of the day for a lowlife programmer… :)
-See you in the afterlife…Subin Sebastian</p>
+<p>So, that was the end of the day for a lowlife programmer. :)
+See you in the afterlife</p>
 
 	<div id="disqus_thread"></div>	
 <script type="text/javascript">
