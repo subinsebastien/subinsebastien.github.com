@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Napster's Experiments with Freedom</title>
+    <meta name="viewport" content="width=device-width">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic|Open+Sans:400italic,600italic,400,600' rel='stylesheet' type='text/css'>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-20813670-8', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body>
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Google Cloud Vision API</title>
+    <meta name="description" content="Google Cloud Vision API provides a REST API for developers to understand the contents of images. In my personal experience, it is currently the best working ...">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+    <link rel="canonical" href="/jekyll/update/2016/02/26/google-cloud-vision-api-copy.html">
+    <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
+
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.js"></script>
+
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+</head>
+
+<header style="background-image: url();">
+  <div class="container post-container">
+    <a href="/" class="home_button"></a>
+    <div class="inner-container">
+      <h1>Google Cloud Vision API</h1>
+      <ul class="meta">
+        <li>
+          <span>
+            Published
+          </span>
+          26 Feb 2016
+        </li>
+        <li>
+          <span>
+            Category
+          </span>
+          jekyllupdate
+        </li>
+      </ul>      
+    </div>
+    <ul class="pagination">
+      
+        <li class="previous">
+          <a href="/jekyll/update/2015/11/06/developing-opencv-applications-using-qt-creator.html">
+            Previous
+          </a>
+        </li>
+      
+      
+      <li class="next">
+        <a href="/jekyll/update/2016/02/29/the-booting-process.html">
+          Next
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+    <p>Google Cloud Vision API provides a REST API for developers to understand the contents of images. In my personal experience, it is currently the best working solution for object detection from images, compared to custom trained HAAR/LBP classifiers or IBM’s Watson. Although it is still in beta, it provides very good results with object detection problems. Currently the API provides the following types of algorithms, each specific to a feature type.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>LABEL_DETECTION</strong></td>
+      <td>  Execute Image Content Analysis on the entire image and return</td>
+    </tr>
+    <tr>
+      <td><strong>TEXT_DETECTION</strong></td>
+      <td>  Perform Optical Character Recognition (OCR) on text within the image</td>
+    </tr>
+    <tr>
+      <td><strong>FACE_DETECTION</strong></td>
+      <td>  Detect faces within the image</td>
+    </tr>
+    <tr>
+      <td><strong>LANDMARK_DETECTION</strong></td>
+      <td>  Detect geographic landmarks within the image</td>
+    </tr>
+    <tr>
+      <td><strong>LOGO_DETECTION</strong></td>
+      <td>  Detect company logos within the image</td>
+    </tr>
+    <tr>
+      <td><strong>SAFE_SEARCH_DETECTION</strong></td>
+      <td>  Determine image safe search properties on the image</td>
+    </tr>
+    <tr>
+      <td><strong>IMAGE_PROPERTIES</strong></td>
+      <td>  Compute a set of properties about the image (such as the image’s dominant colors)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="request-example">Request Example</h2>
+<p>The following example uses curl</p>
+
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>curl -k -s -H <span class="s2">&quot;Content-Type: application/json&quot;</span> https://vision.googleapis.com/v1/images:annotate?key<span class="o">=[</span>YOUR_API_KEY<span class="o">]</span> -d <span class="s1">&#39;{ &quot;requests&quot;:[{ &quot;image&quot;:{ &quot;content&quot;:&quot;[IMAGE_AS_A_BASE_64_STRING]&quot;}, &quot;features&quot;:[{ &quot;type&quot;:&quot;LABEL_DETECTION&quot;, &quot;maxResults&quot;:10 }]}]}&#39;</span></code></pre></figure>
+
+<p>The <code>API_KEY</code> can be obtained from your <a href="https://console.cloud.google.com">Google Cloud Platform Console</a>. You may get a browser key, as it can also be used with Android. The image needs to be <a href="https://en.wikipedia.org/wiki/Base64">base64 encoded</a> before making the request. Base64 gives you a string, and you may use it directly in the request. Alternatively, you can use Google Cloud Storage URLs, if you have hosted your images on Cloud Storage buckets. Check my test image and the Cloud Vision API response below.</p>
+
+<p><strong>Test Image</strong></p>
+
+<p><img src="/images/gcv-test_image.jpg" alt="width=30%" /></p>
+
+<p><strong>Response</strong></p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&quot;responses&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;labelAnnotations&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;mid&quot;</span><span class="p">:</span> <span class="s2">&quot;/m/09j2d&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;clothing&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;score&quot;</span><span class="p">:</span> <span class="mf">0.99011743</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;mid&quot;</span><span class="p">:</span> <span class="s2">&quot;/m/083jv&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;score&quot;</span><span class="p">:</span> <span class="mf">0.92788029</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;mid&quot;</span><span class="p">:</span> <span class="s2">&quot;/m/06rrc&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;shoe&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;score&quot;</span><span class="p">:</span> <span class="mf">0.91207343</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;mid&quot;</span><span class="p">:</span> <span class="s2">&quot;/m/09j5n&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;footwear&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;score&quot;</span><span class="p">:</span> <span class="mf">0.89330035</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;mid&quot;</span><span class="p">:</span> <span class="s2">&quot;/m/0fly7&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;jeans&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;score&quot;</span><span class="p">:</span> <span class="mf">0.75597358</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;mid&quot;</span><span class="p">:</span> <span class="s2">&quot;/m/017ftj&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;sunglasses&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;score&quot;</span><span class="p">:</span> <span class="mf">0.71857065</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;mid&quot;</span><span class="p">:</span> <span class="s2">&quot;/m/07mhn&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;trousers&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;score&quot;</span><span class="p">:</span> <span class="mf">0.70007712</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span></code></pre></figure>
+
+<h2 id="putting-together-an-android-app-with-the-api">Putting together an Android app with the API</h2>
+<p>I’m using <a href="http://square.github.io/retrofit/">Retrofit</a> to work with the API. The following is my API interface.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
+<span class="cm"> * Created by napster on 25/02/16.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">GoogleCloudVisionApi</span> <span class="o">{</span>
+    <span class="nd">@POST</span><span class="o">(</span><span class="s">&quot;/images:annotate&quot;</span><span class="o">)</span>
+    <span class="n">LabelsResponse</span> <span class="nf">detectObjects</span><span class="o">(</span><span class="nd">@Query</span><span class="o">(</span><span class="s">&quot;key&quot;</span><span class="o">)</span> <span class="n">String</span> <span class="n">apikey</span><span class="o">,</span> <span class="nd">@Body</span> <span class="n">ReqWrapper</span> <span class="n">reqWrapper</span><span class="o">);</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>As you can see, I’m using a <code>@Body</code> type, as I’m wrapping the request object as a plain old java object.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
+<span class="cm"> * Created by napster on 25/02/16.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReqWrapper</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Request</span><span class="o">[]</span> <span class="n">requests</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">ReqWrapper</span><span class="o">(</span><span class="n">Request</span><span class="o">[]</span> <span class="n">requests</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">requests</span> <span class="o">=</span> <span class="n">requests</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Request</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="n">Image</span> <span class="n">image</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="n">Feature</span><span class="o">[]</span> <span class="n">features</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">Request</span><span class="o">(</span><span class="n">Image</span> <span class="n">image</span><span class="o">,</span> <span class="n">Feature</span><span class="o">[]</span> <span class="n">features</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">features</span> <span class="o">=</span> <span class="n">features</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Image</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="n">content</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">Image</span><span class="o">(</span><span class="n">String</span> <span class="n">content</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">content</span> <span class="o">=</span> <span class="n">content</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Feature</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="n">type</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="kt">int</span> <span class="n">maxResults</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">Feature</span><span class="o">(</span><span class="n">String</span> <span class="n">type</span><span class="o">,</span> <span class="kt">int</span> <span class="n">maxResults</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">type</span> <span class="o">=</span> <span class="n">type</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">maxResults</span> <span class="o">=</span> <span class="n">maxResults</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Now, create an API connecter, declare required permissions in the manifest, and add a camera intent to capture random test images from around you. This is a good test case since, it actually reveals the capabilities of the Google Cloud Vision system, since the images are mostly noisy, and completely unknown to Google’s ecosystem (such as Google Images). Here is what I’ve got.</p>
+
+<p><img src="/images/gcv-android-test.png" alt="width=50%" /></p>
+
+<p>You can read more about the Google Cloud Vision API <a href="https://cloud.google.com/vision/">here</a>.</p>
+
+
+	<div id="disqus_thread"></div>	
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES * * */
+// Required: on line below, replace text in quotes with your forum shortname
+var disqus_shortname = 'subinsebastien';
+    
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</article>
+
+</body>
+</html>

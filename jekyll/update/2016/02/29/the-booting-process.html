@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Napster's Experiments with Freedom</title>
+    <meta name="viewport" content="width=device-width">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic|Open+Sans:400italic,600italic,400,600' rel='stylesheet' type='text/css'>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-20813670-8', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body>
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>The Booting Process</title>
+    <meta name="description" content="Ever wondered how computers startup? Or where does the term booting come from in the first place? I was personally experimenting with boot-loaders (the progr...">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+    <link rel="canonical" href="/jekyll/update/2016/02/29/the-booting-process.html">
+    <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
+
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.js"></script>
+
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+</head>
+
+<header style="background-image: url(/images/booting-cover.jpg);">
+  <div class="container post-container">
+    <a href="/" class="home_button"></a>
+    <div class="inner-container">
+      <h1>The Booting Process</h1>
+      <ul class="meta">
+        <li>
+          <span>
+            Published
+          </span>
+          29 Feb 2016
+        </li>
+        <li>
+          <span>
+            Category
+          </span>
+          jekyllupdate
+        </li>
+      </ul>      
+    </div>
+    <ul class="pagination">
+      
+        <li class="previous">
+          <a href="/jekyll/update/2016/02/26/google-cloud-vision-api-copy.html">
+            Previous
+          </a>
+        </li>
+      
+      
+    </ul>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+    <p>Ever wondered how computers startup? Or where does the term <a href="https://en.wikipedia.org/wiki/Booting"><strong>booting</strong></a> come from in the first place? I was personally experimenting with boot-loaders (the program that loads an operating system from a disk to the memory in its simplest functionality), and came across several core concepts behind the booing-process of a computer.</p>
+
+<p><img src="/images/windows-xp-boot-screen.png" alt="width=50%" /></p>
+
+<h2 id="the-term">The Term</h2>
+<p>The word <strong>booting</strong> is generally used to represent a set of steps a computer performs after powering it up, to the point where it becomes fully functional for use. Modern computers does this in even a matter of seconds. Historically, the term <strong>booting</strong> originated from the paradox that, if one wants to load a computer memory with softwares, by another software inside the computer itself, some sort of a cyclic mechanism should be in place. The term <em>loading</em> means, moving the software to the primary memory from somewhere else. So, to do this, a method which is analogous to the phrase <a href="https://en.wikipedia.org/wiki/Bootstrapping"><em>pull oneself up by one’s bootstraps</em></a> is put in place. Basically what happens is that, when the computer is powered up, its primary memory will be empty (or can be filled with garbage, which can result in unexpected behaviour if executed). So, once ROMs have become popular in the industry, engineers put together an on-board ROM with some standard initialisation program, which loads a set of specific programs into the primary memory. Historically this program is called the <a href="https://en.wikipedia.org/wiki/BIOS">BIOS - Basic Input Output System</a>. Although with the advancements in computing, more advanced systems like UEFI were designed to replace BIOS, these programs are backward compatible with the BIOS. Since the BIOS/UEFI is written to an on-board ROM chip, they can be called a firmware rather than a software or a program. So, in simple words, job of such a program is to load some program generally called a <strong>boot-loader</strong> into the primary memory. Thus the boot-loader actually contributes to the term <strong>booting</strong>.</p>
+
+<h2 id="boot-loader-bootstrap-loader">Boot Loader (Bootstrap Loader)</h2>
+<p>A boot-loader is in simple words, a small program which is present in the boot-sector of any of the disk available on the system. We will find what is a boot sector in the next section. Boot loader should be sized exactly <strong>510 bytes</strong> or less. Nothing much can be done with that size limit, apart from printing some messages, may be, and transferring the rest of the job to a more capable program. This is the reason why, booting is done in multiple stages. We will see what are the stages in booting, but this 510 byte program is in general called the <strong>first stage boot loader</strong> or The Boot Loader itself.</p>
+
+<p><img src="/images/grub-bootloader.png" alt="width=50%" /></p>
+
+<h2 id="boot-sector">Boot Sector</h2>
+
+<p><img src="/images/disk-structure.png" alt="width=50%" /></p>
+
+<ul>
+  <li><strong>A:-</strong> Track</li>
+  <li><strong>B:-</strong> Geometrical sector</li>
+  <li><strong>C:-</strong> Track sector</li>
+  <li><strong>D:-</strong> Cluster</li>
+</ul>
+
+<p>Disks (floppy disks to be precise) are divided physically into small sections called <a href="https://en.wikipedia.org/wiki/Disk_sector">sectors</a>. The major reason why disks are divided into sectors is that, to quickly find the location of a specific file. Say for example, one could tell a file is at <strong>Disk-0, Track-3, Sector-19</strong>. And the reason for such a quick access mechanism was needed because, the read-write head on hard disks are moved by electric motors and always has some delays in moving from one place to the other across the disk area. These sector and are traditionally sized 512 bytes for hard disks are floppies. A boot sector is nothing but a sector, which contains a boot-loader program, followed by the boot signature. A boot signature is nothing but the last two bytes of the boot sector should be the magic number <strong>0xAA55</strong>. This boot-sector should always be the first sector of the disk as well. Such a disk with the first sector loaded with the boot-loader program is called a boot disk.</p>
+
+<p><img src="/images/boot-sector.png" alt="width=50%" /></p>
+
+<p>The image above shows the content of a boot sector. Notice that the last two bytes are equal to <a href="http://stackoverflow.com/questions/1125025/what-is-the-role-of-magic-number-in-boot-loading-in-linux"><strong>0xAA55</strong></a>. The rest of the 512 bytes should be the boot loader code. Also notice that it is actually <strong>0x55</strong> followed by <strong>0xAA</strong> because the lower byte is represented first.</p>
+
+<h2 id="boot-stages">Boot Stages</h2>
+<p>Since boot loaders are limited to 512 bytes in size, not much can be done using the boot-loader program itself. But it can load other programs in to the primary memory for execution. This gives us an opportunity. The boot loader can load a more capable program into the memory. This newly loaded program doesn’t have any size constraints. Most modern operating systems uses this approach. The boot-loader loads another more capable program, and then that program loads more files and programs and so on. Thus the booting process is represented as stages. The first 512-byte boot loader as first stage boot loader, and the next as second stage boot loader and so on.</p>
+
+<h2 id="a-simple-boot-loader-that-does-not-boot">A Simple Boot-Loader that does not boot</h2>
+<p>I have been experimenting with boot loaders and managed to write a simple boot loader that any x86 compatible computer will load automatically. For this experiment, I have created a virtual box VM with standard basic-x86 configurations. Then I have coded a simple boot loader and assembled it with <a href="http://nasm.us/">NASM</a>. Please find the following code.</p>
+
+<figure class="highlight"><pre><code class="language-asm" data-lang="asm"><span class="nf">org</span> <span class="mi">0x7c00</span>
+
+<span class="nf">mov</span> <span class="no">si</span><span class="p">,</span> <span class="no">message</span>
+<span class="err">;</span><span class="nf">call</span> <span class="no">print_string</span>
+<span class="err">;</span><span class="nf">jmp</span> <span class="no">end</span>
+
+<span class="nl">print_string:</span>   <span class="nf">pusha</span>
+                <span class="nf">mov</span> <span class="no">al</span><span class="p">,</span> <span class="err">[</span><span class="no">si</span><span class="err">]</span>
+                <span class="nf">cmp</span> <span class="no">al</span><span class="p">,</span> <span class="mi">0</span>
+                <span class="nf">je</span> <span class="no">end</span>
+                <span class="nf">call</span> <span class="no">print_char</span>
+                <span class="nf">add</span> <span class="no">si</span><span class="p">,</span> <span class="mi">1</span>
+                <span class="nf">jmp</span> <span class="no">print_string</span>
+                <span class="nf">popa</span>
+                <span class="nf">ret</span>
+
+<span class="nl">print_char:</span>     <span class="nf">pusha</span>
+                <span class="nf">mov</span> <span class="no">ah</span><span class="p">,</span> <span class="mi">0x0e</span>
+                <span class="nf">int</span> <span class="mi">0x10</span>
+                <span class="nf">popa</span>
+                <span class="nf">ret</span>
+
+<span class="nl">end:</span>            <span class="nf">jmp</span> <span class="no">$</span>
+
+<span class="nl">message:</span>        <span class="nf">db</span> <span class="err">&#39;</span><span class="no">Booting</span> <span class="no">OS...</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">0</span>
+
+<span class="nf">times</span> <span class="mi">510</span><span class="p">-(</span><span class="no">$-$$</span><span class="p">)</span> <span class="no">db</span> <span class="mi">0</span>
+<span class="nf">dw</span> <span class="mi">0xaa55</span></code></pre></figure>
+
+<p>The first line of the program is nothing but an assembler directive. The assembler will assemble that code and relative addresses such that the program is loaded to the address <strong>0x7c00</strong> always. The address labeled <strong>message</strong> is loaded with a string <em>Booting OS…</em> and the rest of the program does nothing but print the message into the computer’s console in text-mode. Notice that no OS provided <a href="https://en.wikipedia.org/wiki/Interrupt_handler">interrupt routines</a> are available in this stage, because there is not fucking OS at this level ofcourse. Interrupt routine <strong>0x10</strong> is provided by the BIOS for printing characters into a text-mode console. Here is the result of this experiment.</p>
+
+<p><img src="/images/stage-one-bootloader-running.png" alt="width=50%" /></p>
+
+<h2 id="the-rest-of-the-process">The rest of the process</h2>
+<p>This example boot loader does nothing but printing a message to the console. As you can see, a trivial task like this takes a lot of effort and understanding of the underlaying system. Some calls this <a href="https://en.wikipedia.org/wiki/Bare_machine">bare-metal</a> programming, as there is not much of an abstraction available like in other programming environments. The next task would obviously to create a second stage boot loader and load and execute it from this level. We might also want to switch to <a href="https://en.wikipedia.org/wiki/Protected_mode">32-bit protected mode</a> since the 16-bit real mode in which all first stage boot-loaders run is not memory-secure. Will keep posting updates on this blog.</p>
+
+<p>Thanks for reading.</p>
+
+
+	<div id="disqus_thread"></div>	
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES * * */
+// Required: on line below, replace text in quotes with your forum shortname
+var disqus_shortname = 'subinsebastien';
+    
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</article>
+
+</body>
+</html>
