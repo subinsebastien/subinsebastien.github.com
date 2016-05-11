@@ -31,7 +31,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Deploying Parse.com Server on AWS</title>
-    <meta name="description" content="IntroductionParse.com has announced shut down a few months ago, and they are planning complete the process by the end of the year 2016. They have done a pret...">
+    <meta name="description" content="Parse.com has announced shut down a few months ago, and they are planning complete the process by the end of the year 2016. They have done a pretty good job ...">
 
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/syntax.css">
@@ -44,7 +44,7 @@
     <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 </head>
 
-<header style="background-image: url(/images/aws-cover.jpg);">
+<header style="background-image: url(/images/aws-cover.png);">
   <div class="container post-container">
     <a href="/" class="home_button"></a>
     <div class="inner-container">
@@ -79,8 +79,7 @@
 
 <article>
   <div class="container">
-    <h2 id="introduction">Introduction</h2>
-<p>Parse.com has announced shut down a few months ago, and they are planning complete the process by the end of the year 2016. They have done a pretty good job in helping developers migrating to other platforms, including Amazon Web Services. I have experimented with their automated tools, and One-Click deployment solution, and this article discusses about what I think the best way to setup a web-app from a Parse.com background.</p>
+    <p>Parse.com has announced shut down a few months ago, and they are planning complete the process by the end of the year 2016. They have done a pretty good job in helping developers migrating to other platforms, including Amazon Web Services. I have experimented with their automated tools, and One-Click deployment solution, and this article discusses about what I think the best way to setup a web-app from a Parse.com background.</p>
 
 <h2 id="baby-steps">Baby Steps</h2>
 <p>At the minimum, here is what we are going to do. These steps assumes that, you already have an AWS account setup.</p>
@@ -97,22 +96,27 @@
 
 <p><strong>1. Creating an IAM Role</strong></p>
 
-<p>To get started, you need to create a use and IAM role assigned to that user, so that you can create EB instances. Go to https://console.aws.amazon.com/ and select <strong>Identity and Access Management</strong>. Select <strong>Users</strong> from the left pane and create a new user. Once created you will see the access-key-id and access-secret. Note these two strings down. Now, click on the username, and navigate to <strong>Permissions</strong>. Click on <strong>Attach Policy</strong> and select <em>AWSElasticBeanstalkFullAccess</em> and click save. Now, this user has full access to EB service.</p>
+<p>To get started, you need to create a use and IAM role assigned to that user, so that you can create EB instances. Go to <a href="https://console.aws.amazon.com/">https://console.aws.amazon.com/</a> and select <strong>Identity and Access Management</strong>. Select <strong>Users</strong> from the left pane and create a new user. Once created you will see the access-key-id and access-secret. Note these two strings down. Now, click on the username, and navigate to <strong>Permissions</strong>. Click on <strong>Attach Policy</strong> and select <em>AWSElasticBeanstalkFullAccess</em> and click save. Now, this user has full access to EB service.</p>
 
 <p><strong>2. Installing EB CLI</strong></p>
 
 <p>Depending on your operating system, choose one of the following commands to install the elastic beanstalk CLI.</p>
 
-<pre><code># Linux
-$ pip install awsebcli
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># Linux</span>
+<span class="nv">$ </span>pip install awsebcli
 
-# Mac OSX
-$ brew install awsebcli
-</code></pre>
+<span class="c"># Mac OSX</span>
+<span class="nv">$ </span>brew install awsebcli</code></pre></figure>
 
 <p><strong>3. Creating an Elastic Beanstalk Environment</strong></p>
 
-<p>Create a folder and name it appropriately. Clone the Parse-Server-Example repository into this folder. <code>git clone https://github.com/ParsePlatform/parse-server-example.git &lt;your app name&gt;</code>. Run <code>eb init</code> to initialize the directory and login using the access-key-id and access-secret created from the earlier step. Run <code>eb create</code> to create an EB app and run <code>eb deploy</code> to upload the code and run your app on AWS.</p>
+<p>Create a folder and name it appropriately. Clone the Parse-Server-Example repository into this folder.</p>
+
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>git clone https://github.com/ParsePlatform/parse-server-example.git &lt;your app name&gt;</code></pre></figure>
+
+<p>Run <code>eb init</code> to initialize the directory and login using the access-key-id and access-secret created from the earlier step. Run <code>eb create</code> to create an EB app and run <code>eb deploy</code> to upload the code and run your app on AWS.</p>
+
+<p><img src="/images/aws-app-running.png" alt="" /></p>
 
 <blockquote>
   <p>Note : You may choose the appropriate availability region on AWS to have the lowest latency</p>
@@ -121,8 +125,7 @@ $ brew install awsebcli
 <h2 id="mongolab-setup">Mongolab setup</h2>
 <p>Go to http://mongolab.com and sign-up for a free account. Click <strong>Create new</strong> database, select AWS, and choose a single-node sandbox for now. You may migrate to a better deployment for a production app. Give a name to your database and click <strong>Create</strong>. This will leave you with a new MongoDB deployment. Now, create a new DB user, and make sure <strong><em>NOT</em></strong> to select <strong>read-only</strong>. Everything is good from the Mongo standpoint. Your mongoDB URI will be something approximately like the following.</p>
 
-<pre><code>mongodb://&lt;db_user&gt;:&lt;db_password&gt;@ds011472.mlab.com:11472/&lt;db_name&gt;
-</code></pre>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">mongodb://&lt;db_user&gt;:&lt;db_password&gt;@ds011472.mlab.com:11472/&lt;db_name&gt;</code></pre></figure>
 
 <h2 id="setting-up-environment-variables">Setting up Environment Variables</h2>
 <p>Now, that we have all the basic components, you may go ahead and configure the EB environment variables. Parse server uses environment variables to configure and run the web server. Go to Elastic Beanstalk on AWS console, select the newly created app (the app you created through the CLI should appear here). Click on <strong>Configuration</strong> on the left pane, and click on the small  <i class="icon-cog"></i> gear icon on <strong>Software Configuration</strong> and scroll down to the bottom of the screen, you may see <strong>Environment Properties</strong>. Add the following three properties and values for each of them.</p>
@@ -135,19 +138,27 @@ $ brew install awsebcli
 
 <p>Press <strong>Save</strong>, and we are ready to run our app on the parse instance now.</p>
 
-<p><img src="/images/aws-env-variables-parse.png" alt="" /></p>
+<p><img src="/images/aws-env-variables-parse.png" alt="width=50%" /></p>
 
 <h2 id="saving-the-first-object-and-retrieving">Saving the first object and retrieving</h2>
+<p>To create and save an object to the Parse server, use the same approach we used on Parse.com.</p>
 
-<pre><code>$ curl -X POST -H "X-Parse-Application-Id: &lt;APP_ID&gt;" -H "Content-Type: application/json" -d '{"score":1337,"playerName":"John Doe","cheatMode":false}' http://&lt;BEANSTALK_URL&gt;/parse/classes/GameScore
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>curl -X POST -H <span class="se">\</span>
+    <span class="s2">&quot;X-Parse-Application-Id: &lt;APP_ID&gt;&quot;</span> <span class="se">\</span>
+    -H <span class="s2">&quot;Content-Type: application/json&quot;</span> <span class="se">\</span>
+    -d <span class="s1">&#39;{&quot;score&quot;:1337,&quot;playerName&quot;:&quot;John Doe&quot;,&quot;cheatMode&quot;:false}&#39;</span> <span class="se">\</span>
+    http://&lt;BEANSTALK_URL&gt;/parse/classes/GameScore
 
-{"objectId":"cuD8K9vbVm","createdAt":"2016-05-11T12:29:36.176Z"}
+<span class="o">{</span><span class="s2">&quot;objectId&quot;</span>:<span class="s2">&quot;cuD8K9vbVm&quot;</span>,<span class="s2">&quot;createdAt&quot;</span>:<span class="s2">&quot;2016-05-11T12:29:36.176Z&quot;</span><span class="o">}</span></code></pre></figure>
 
-$ curl -X GET -H "X-Parse-Application-Id: &lt;APP_ID&gt;" -H "X-Parse-Master-Key: &lt;MASTER_KEY&gt;" http://&lt;BEANSTALK_URL&gt;/parse/classes/GameScore
+<p>To retrieve also, the same method. Note that for creating an object just the APP_ID is enough.</p>
 
-{"results":[{"objectId":"cuD8K9vbVm","score":1337,"playerName":"John Doe","cheatMode":false,"updatedAt":"2016-05-11T12:29:36.176Z","createdAt":"2016-05-11T12:29:36.176Z"}]}
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>curl -X GET <span class="se">\</span>
+    -H <span class="s2">&quot;X-Parse-Application-Id: &lt;APP_ID&gt;&quot;</span> <span class="se">\</span>
+    -H <span class="s2">&quot;X-Parse-Master-Key: &lt;MASTER_KEY&gt;&quot;</span> <span class="se">\</span>
+    http://&lt;BEANSTALK_URL&gt;/parse/classes/GameScore
 
-</code></pre>
+<span class="o">{</span><span class="s2">&quot;results&quot;</span>:<span class="o">[{</span><span class="s2">&quot;objectId&quot;</span>:<span class="s2">&quot;cuD8K9vbVm&quot;</span>,<span class="s2">&quot;score&quot;</span>:1337,<span class="s2">&quot;playerName&quot;</span>:<span class="s2">&quot;John Doe&quot;</span>,<span class="s2">&quot;cheatMode&quot;</span>:false,<span class="s2">&quot;updatedAt&quot;</span>:<span class="s2">&quot;2016-05-11T12:29:36.176Z&quot;</span>,<span class="s2">&quot;createdAt&quot;</span>:<span class="s2">&quot;2016-05-11T12:29:36.176Z&quot;</span><span class="o">}]}</span></code></pre></figure>
 
 <p>You may get the beanstalk instance’s publick url from the beanstalk app page on the aws console. App key and master key should be the one used in the environment properties.</p>
 
