@@ -114,7 +114,7 @@
 
 <figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>git clone https://github.com/ParsePlatform/parse-server-example.git &lt;your app name&gt;</code></pre></figure>
 
-<p>Run <code>eb init</code> to initialize the directory and login using the access-key-id and access-secret created from the earlier step. Run <code>eb create</code> to create an EB app and run <code>eb deploy</code> to upload the code and run your app on AWS.</p>
+<p>Run <strong>$ eb init</strong> to initialize the directory and login using the access-key-id and access-secret created from the earlier step. Run <strong>$ eb create</strong> to create an EB app and run <strong>$ eb deploy</strong> to upload the code and run your app on AWS.</p>
 
 <p><img src="/images/aws-app-running.png" alt="" /></p>
 
@@ -143,8 +143,8 @@
 <h2 id="saving-the-first-object-and-retrieving">Saving the first object and retrieving</h2>
 <p>To create and save an object to the Parse server, use the same approach we used on Parse.com.</p>
 
-<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>curl -X POST -H <span class="se">\</span>
-    <span class="s2">&quot;X-Parse-Application-Id: &lt;APP_ID&gt;&quot;</span> <span class="se">\</span>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>curl -X POST <span class="se">\</span>
+    -H <span class="s2">&quot;X-Parse-Application-Id: &lt;APP_ID&gt;&quot;</span> <span class="se">\</span>
     -H <span class="s2">&quot;Content-Type: application/json&quot;</span> <span class="se">\</span>
     -d <span class="s1">&#39;{&quot;score&quot;:1337,&quot;playerName&quot;:&quot;John Doe&quot;,&quot;cheatMode&quot;:false}&#39;</span> <span class="se">\</span>
     http://&lt;BEANSTALK_URL&gt;/parse/classes/GameScore
