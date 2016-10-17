@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Napster's Experiments with Freedom</title>
+    <meta name="viewport" content="width=device-width">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic|Open+Sans:400italic,600italic,400,600' rel='stylesheet' type='text/css'>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-20813670-8', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body>
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Getting Started with Image Processing</title>
+    <meta name="description" content="I have been working on digital image processing for sometime now, and I was learning a lot of stuff recently. I thought I should put together a very basic ge...">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+    <link rel="canonical" href="/jekyll/update/2016/11/17/getting-started-with-image-processing.md.html">
+    <link rel="alternate" type="application/rss+xml" title="Napster's Experiments with Freedom" href="/feed.xml" />
+
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.2.0/katex.min.js"></script>
+
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+</head>
+
+<header style="background-image: url(/images/aws-cover.png);">
+  <div class="container post-container">
+    <a href="/" class="home_button"></a>
+    <div class="inner-container">
+      <h1>Getting Started with Image Processing</h1>
+      <ul class="meta">
+        <li>
+          <span>
+            Published
+          </span>
+          17 Nov 2016
+        </li>
+        <li>
+          <span>
+            Category
+          </span>
+          jekyllupdate
+        </li>
+      </ul>      
+    </div>
+    <ul class="pagination">
+      
+        <li class="previous">
+          <a href="/jekyll/update/2016/05/11/deploying-parse-on-aws.html">
+            Previous
+          </a>
+        </li>
+      
+      
+    </ul>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+    <p>I have been working on digital image processing for sometime now, and I was learning a lot of stuff recently. I thought I should put together a very basic getting started guide on image processing, which could help a lot of enthusiasts. This aritcle is greatly borrowed from the <a href="https://codewords.recurse.com/issues/six/image-processing-101">Image Processing - 101 Sher Minn Chong</a>. This article, as I have planned, will be multi-part, and will be as detail as possible from my own understanding of the concepts.</p>
+
+<h3 id="digital-image">Digital Image</h3>
+
+<p>Digital images are fundamentally a finite number of pixels distributed in X and Y axis, and are stored on the disk as a two (or more) dimentional array of numbers (or more complex datastructers) in rows and columns. Any 2D digital image can be viewed as a matrix of size NxM. Each element in the matrix represents a pixel. A <a href="https://en.wikipedia.org/wiki/Pixel">pixel</a>, its definition, and how a pixel is displayed on a screen or how it is printed out on a paper, is out of the context of this article. Following a hypothetical representation of a flower as a digital image.</p>
+
+<p><img src="/images/digital-image-rep.png" alt="" /></p>
+
+<p>As you can see, each pixels intensity (the blackness) is represented on a scale of 1-9. Basically, this means, in this representation, each pixel in your image can have one of the 10 shades of gray. What is the lowest needed number of shades to represent an image? Well, the answer is 2. Absolute black, and absolute white. The image below is an example.</p>
+
+<p><img src="/images/bit_depth_1bit.jpg" alt="" /></p>
+
+	<div id="disqus_thread"></div>	
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES * * */
+// Required: on line below, replace text in quotes with your forum shortname
+var disqus_shortname = 'subinsebastien';
+    
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</article>
+
+</body>
+</html>
