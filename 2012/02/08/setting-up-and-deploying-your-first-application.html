@@ -96,11 +96,11 @@ This is article is for newbies who want to create and deploy their first OpenShi
 
 <p>This command will install all client tools required to create and manage your OpenShift applications. Now, lets sign-up with OpenShift. You need a login id and password for creating and managing applications on OpenShift. Once you have created an account, you can move back and get a terminal. The URL for any application hosted on OpenShift will be looking like,</p>
 
-<p>http://<your_app_name>-<your_domain_name>.rhcloud.com/</your_domain_name></your_app_name></p>
+<p>http://<your_app_name>-<your_domain_name>.rhcloud.com/</p>
 
 <p>First of all, create a domain for hosting your applications. Once, a domain is ready, you can create an application also. Remember, you can have one domain and any number of applications with RedHat cloud.</p>
 
-<p>rhc-create-domain -n <your_domain_name> -l <your_openshift_login_id>rhc-create-app -a <your_app_name> -t php-5.3 -l <your_openshift_login_id></your_openshift_login_id></your_app_name></your_openshift_login_id></your_domain_name></p>
+<p>rhc-create-domain -n <your_domain_name> -l <your_openshift_login_id>rhc-create-app -a <your_app_name> -t php-5.3 -l <your_openshift_login_id></p>
 
 <p>I have created a PHP application with the above command. You can run other types of applications as well. The second command will generate a simple code base and a git repository in the current directory. Move to the directory and browse through the code base. The exposed PHP files are located in php/ and you can change or add files in it. Open index.php and make it look exactly like the code below.
 https://gist.github.com/5076132
@@ -109,7 +109,7 @@ The code simple, it just makes a call to the phpinfo() method to make sure PHP w
 <p>git commit -am “My first change in the application”git push</p>
 
 <p>The application is ready to run now. You can access your application URL now using any browser. Remember, it will be looking like <your_app>-<your_domain>.rhcloud.com. Take a look at my application here : http://redshift-subinsebastien.rhcloud.com/
-//See you in the afterlife//Subin Sebastian</your_domain></your_app></p>
+//See you in the afterlife//Subin Sebastian</p>
 
 	<div id="disqus_thread"></div>	
 <script type="text/javascript">

@@ -85,42 +85,18 @@
 
 <article>
   <div class="container">
-    <p>Google Cloud Vision API provides a REST API for developers to understand the contents of images. In my personal experience, it is currently the best working solution for object detection from images, compared to custom trained HAAR/LBP classifiers or IBM’s Watson. Although it is still in beta, it provides very good results with object detection problems. Currently the API provides the following types of algorithms, each specific to a feature type.</p>
+    <p>Google Cloud Vision API provides a REST API for developers to understand the contents of images. In my personal experience, it is currently the best working solution for object detection from images, compared to custom trained HAAR/LBP classifiers or IBM&#39;s Watson. Although it is still in beta, it provides very good results with object detection problems. Currently the API provides the following types of algorithms, each specific to a feature type.</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><strong>LABEL_DETECTION</strong></td>
-      <td>  Execute Image Content Analysis on the entire image and return</td>
-    </tr>
-    <tr>
-      <td><strong>TEXT_DETECTION</strong></td>
-      <td>  Perform Optical Character Recognition (OCR) on text within the image</td>
-    </tr>
-    <tr>
-      <td><strong>FACE_DETECTION</strong></td>
-      <td>  Detect faces within the image</td>
-    </tr>
-    <tr>
-      <td><strong>LANDMARK_DETECTION</strong></td>
-      <td>  Detect geographic landmarks within the image</td>
-    </tr>
-    <tr>
-      <td><strong>LOGO_DETECTION</strong></td>
-      <td>  Detect company logos within the image</td>
-    </tr>
-    <tr>
-      <td><strong>SAFE_SEARCH_DETECTION</strong></td>
-      <td>  Determine image safe search properties on the image</td>
-    </tr>
-    <tr>
-      <td><strong>IMAGE_PROPERTIES</strong></td>
-      <td>  Compute a set of properties about the image (such as the image’s dominant colors)</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>LABEL_DETECTION</strong>        | &nbsp; Execute Image Content Analysis on the entire image and return
+<strong>TEXT_DETECTION</strong>         | &nbsp; Perform Optical Character Recognition (OCR) on text within the image
+<strong>FACE_DETECTION</strong>         | &nbsp; Detect faces within the image
+<strong>LANDMARK_DETECTION</strong>     | &nbsp; Detect geographic landmarks within the image
+<strong>LOGO_DETECTION</strong>         | &nbsp; Detect company logos within the image
+<strong>SAFE<em>SEARCH</em>DETECTION</strong>  | &nbsp; Determine image safe search properties on the image
+<strong>IMAGE_PROPERTIES</strong>       | &nbsp; Compute a set of properties about the image (such as the image&#39;s dominant colors)</p>
 
-<h2 id="request-example">Request Example</h2>
+<h2>Request Example</h2>
+
 <p>The following example uses curl</p>
 
 <figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>curl -k -s -H <span class="s2">&quot;Content-Type: application/json&quot;</span> https://vision.googleapis.com/v1/images:annotate?key<span class="o">=[</span>YOUR_API_KEY<span class="o">]</span> -d <span class="s1">&#39;{ &quot;requests&quot;:[{ &quot;image&quot;:{ &quot;content&quot;:&quot;[IMAGE_AS_A_BASE_64_STRING]&quot;}, &quot;features&quot;:[{ &quot;type&quot;:&quot;LABEL_DETECTION&quot;, &quot;maxResults&quot;:10 }]}]}&#39;</span></code></pre></figure>
@@ -129,7 +105,7 @@
 
 <p><strong>Test Image</strong></p>
 
-<p><img src="/images/gcv-test_image.jpg" alt="width=30%" /></p>
+<p><img src="/images/gcv-test_image.jpg" alt="width=30%"></p>
 
 <p><strong>Response</strong></p>
 
@@ -177,8 +153,9 @@
   <span class="p">]</span>
 <span class="p">}</span></code></pre></figure>
 
-<h2 id="putting-together-an-android-app-with-the-api">Putting together an Android app with the API</h2>
-<p>I’m using <a href="http://square.github.io/retrofit/">Retrofit</a> to work with the API. The following is my API interface.</p>
+<h2>Putting together an Android app with the API</h2>
+
+<p>I&#39;m using <a href="http://square.github.io/retrofit/">Retrofit</a> to work with the API. The following is my API interface.</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
 <span class="cm"> * Created by napster on 25/02/16.</span>
@@ -188,7 +165,7 @@
     <span class="n">LabelsResponse</span> <span class="nf">detectObjects</span><span class="o">(</span><span class="nd">@Query</span><span class="o">(</span><span class="s">&quot;key&quot;</span><span class="o">)</span> <span class="n">String</span> <span class="n">apikey</span><span class="o">,</span> <span class="nd">@Body</span> <span class="n">ReqWrapper</span> <span class="n">reqWrapper</span><span class="o">);</span>
 <span class="o">}</span></code></pre></figure>
 
-<p>As you can see, I’m using a <code>@Body</code> type, as I’m wrapping the request object as a plain old java object.</p>
+<p>As you can see, I&#39;m using a <code>@Body</code> type, as I&#39;m wrapping the request object as a plain old java object.</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
 <span class="cm"> * Created by napster on 25/02/16.</span>
@@ -229,12 +206,11 @@
     <span class="o">}</span>
 <span class="o">}</span></code></pre></figure>
 
-<p>Now, create an API connecter, declare required permissions in the manifest, and add a camera intent to capture random test images from around you. This is a good test case since, it actually reveals the capabilities of the Google Cloud Vision system, since the images are mostly noisy, and completely unknown to Google’s ecosystem (such as Google Images). Here is what I’ve got.</p>
+<p>Now, create an API connecter, declare required permissions in the manifest, and add a camera intent to capture random test images from around you. This is a good test case since, it actually reveals the capabilities of the Google Cloud Vision system, since the images are mostly noisy, and completely unknown to Google&#39;s ecosystem (such as Google Images). Here is what I&#39;ve got.</p>
 
-<p><img src="/images/gcv-android-test.png" alt="width=50%" /></p>
+<p><img src="/images/gcv-android-test.png" alt="width=50%"></p>
 
 <p>You can read more about the Google Cloud Vision API <a href="https://cloud.google.com/vision/">here</a>.</p>
-
 
 	<div id="disqus_thread"></div>	
 <script type="text/javascript">

@@ -85,10 +85,11 @@
 
 <article>
   <div class="container">
-    <p>I have used both <strong>OpenCV</strong> Library and Qt Creator IDE back in my academic days. I have developed or more precisely experimented with both a lot. In my blog, you may find a couple of articles about both as well. A couple of years ago, I switched to OSX and my general interests were in Android mobile apps development using Java. Recently, I have got a chance to work with OpenCV again. I’m one of the guy who prefers an IDE over command line tools and text editors to work on projects. So, this article is about setting up and using the best C++ IDE ever, the <strong>Qt Creator</strong> for developing OpenCV projects.</p>
+    <p>I have used both <strong>OpenCV</strong> Library and Qt Creator IDE back in my academic days. I have developed or more precisely experimented with both a lot. In my blog, you may find a couple of articles about both as well. A couple of years ago, I switched to OSX and my general interests were in Android mobile apps development using Java. Recently, I have got a chance to work with OpenCV again. I&#39;m one of the guy who prefers an IDE over command line tools and text editors to work on projects. So, this article is about setting up and using the best C++ IDE ever, the <strong>Qt Creator</strong> for developing OpenCV projects.</p>
 
-<h2 id="installing-opencv-on-mac-osx">Installing OpenCV on Mac OSX</h2>
-<p>There exist an open source package manager called <a href="http://brew.sh" title="Home Brew">brew</a> for mac. If you don’t have brew installed on your machine, install brew first.</p>
+<h2>Installing OpenCV on Mac OSX</h2>
+
+<p>There exist an open source package manager called <a href="http://brew.sh" title="Home Brew">brew</a> for mac. If you don&#39;t have brew installed on your machine, install brew first.</p>
 
 <figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>ruby -e <span class="s2">&quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span></code></pre></figure>
 
@@ -102,13 +103,15 @@
 <figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>brew list opencv</code></pre></figure>
 
 <blockquote>
-  <p>OpenCV 3.x has been released recently. If you want to leverage the coolest features, try installing opencv3</p>
+<p>OpenCV 3.x has been released recently. If you want to leverage the coolest features, try installing opencv3</p>
 </blockquote>
 
-<h2 id="installing-qt-creator">Installing Qt Creator</h2>
+<h2>Installing Qt Creator</h2>
+
 <p>This is also quite straight forward. Go to Qt website and download Qt and buy the appropriate license. If you want to run Qt for free, you should develop and release all of your Qt Create projects as FOSS project compliant with GPLv2/3. For individual non-commercial GPL use, you may head to the <a href="https://download.qt.io/official_releases/qtcreator/">Download site here</a>. Download the <em>.dmg</em> file and drag the Qt Creator App into the global <strong>/Applications</strong> folder. You have now both OpenCV and Qt Creator installed and ready.</p>
 
-<h2 id="creating-an-opencv-project-and-adding-cmake-support">Creating an OpenCV Project and adding CMake Support</h2>
+<h2>Creating an OpenCV Project and adding CMake Support</h2>
+
 <p>An OpenCV project can be nothing but a single C/C++ file. Here is an example below.</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;stdio.h&gt;</span>
@@ -117,22 +120,22 @@
 <span class="n">using</span> <span class="n">namespace</span> <span class="n">cv</span><span class="p">;</span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span> <span class="p">)</span> <span class="p">{</span>
-	<span class="k">if</span> <span class="p">(</span> <span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span> <span class="p">)</span> <span class="p">{</span>
-		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;usage: DisplayImage.out &lt;Image_Path&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-	<span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;usage: DisplayImage.out &lt;Image_Path&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
 
-	<span class="n">Mat</span> <span class="n">image</span><span class="p">;</span>
-	<span class="n">image</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span> <span class="p">);</span>
+    <span class="n">Mat</span> <span class="n">image</span><span class="p">;</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span> <span class="p">);</span>
 
-	<span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">image</span><span class="p">.</span><span class="n">data</span> <span class="p">)</span> <span class="p">{</span>
-		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;No image data </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-	<span class="p">}</span>
-	<span class="n">namedWindow</span><span class="p">(</span><span class="s">&quot;Display Image&quot;</span><span class="p">,</span> <span class="n">WINDOW_AUTOSIZE</span> <span class="p">);</span>
-	<span class="n">imshow</span><span class="p">(</span><span class="s">&quot;Display Image&quot;</span><span class="p">,</span> <span class="n">image</span><span class="p">);</span>
-	<span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">image</span><span class="p">.</span><span class="n">data</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;No image data </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">namedWindow</span><span class="p">(</span><span class="s">&quot;Display Image&quot;</span><span class="p">,</span> <span class="n">WINDOW_AUTOSIZE</span> <span class="p">);</span>
+    <span class="n">imshow</span><span class="p">(</span><span class="s">&quot;Display Image&quot;</span><span class="p">,</span> <span class="n">image</span><span class="p">);</span>
+    <span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
 
 <p>It does nothing but opens an image file and shows it in a named window. Now, to compile this, you can manually use <code>g++</code> or whatever C++ compiler you have on your machine. But, rather, we need to add support for <a href="https://cmake.org">CMake</a>, so that Qt Creator can pickup the project. My <strong>CMakeLists.txt</strong> file looks something like below. Note that, the file name should be exactly the same.</p>
@@ -155,16 +158,16 @@ target_link_libraries<span class="o">(</span> DisplayImage <span class="k">${</s
 
 <p>If this opens the image file in a named window, we are good so far. If it does not, we have messed up at some stages before. Check your OpenCV installation is good, and if required, reinstall it.</p>
 
-<h2 id="open-project-using-qt-creator">Open Project Using Qt Creator</h2>
+<h2>Open Project Using Qt Creator</h2>
+
 <p>This is now quite easy. Fire up Qt Creator, and look for out <strong>CMakeLists.txt</strong> file. Select it and it will open up a <strong>CMake Wizard</strong> dialog. Choose an out-of-source build folder this time, since we can keep the source tree clean with that configuration. This means, all your build related files will be inside this build folder, and the source folder will not be cluttered with any other files, other than your source code. Click Continue, and click <strong>Run CMake</strong> and it will generate a MakeFile for the project and we are done! Ta Da! Now, we have our first OpenCV project in Qt Creator ready to work with. Look how beautiful it is.
-<img src="/images/qt-creator-opencv.png" alt="Qt Creator Showing OpenCV Project" /></p>
+<img src="/images/qt-creator-opencv.png" alt="Qt Creator Showing OpenCV Project"></p>
 
 <p>In case, if Qt Creator fails find the <code>cmake</code> binary, you can manually point the cmake location. To find the location of cmake on a Linux/OSX machine, run.</p>
 
 <figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>which cmake</code></pre></figure>
 
 <p>You can also configure this at a later point from <strong>Preferences &gt; Build &amp; Run &gt; CMake &gt; Add</strong>.</p>
-
 
 	<div id="disqus_thread"></div>	
 <script type="text/javascript">

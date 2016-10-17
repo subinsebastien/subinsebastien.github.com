@@ -87,17 +87,19 @@
   <div class="container">
     <p>Parse.com has announced shut down a few months ago, and they are planning complete the process by the end of the year 2016. They have done a pretty good job in helping developers migrating to other platforms, including Amazon Web Services. I have experimented with their automated tools, and One-Click deployment solution, and this article discusses about what I think the best way to setup a web-app from a Parse.com background.</p>
 
-<h2 id="baby-steps">Baby Steps</h2>
+<h2>Baby Steps</h2>
+
 <p>At the minimum, here is what we are going to do. These steps assumes that, you already have an AWS account setup.</p>
 
 <ul>
-  <li>Create an Elastic Beanstalk Environment</li>
-  <li>Clone the Parse Server Example</li>
-  <li>Setup a MongoLab deployment</li>
-  <li>Connect and run</li>
+<li>Create an Elastic Beanstalk Environment</li>
+<li>Clone the Parse Server Example</li>
+<li>Setup a MongoLab deployment</li>
+<li>Connect and run</li>
 </ul>
 
-<h2 id="elastic-beanstalk">Elastic Beanstalk</h2>
+<h2>Elastic Beanstalk</h2>
+
 <p>Elastic beanstalk is a wrapper offering from AWS. It basically includes a compute instance (t2.small is recommended by Parse.com), an S3 bucket and which runs in a load balancing, autoscaling group. EB is apparently one of the best way to deploy and manage web apps on AWS. To get started, you may need to install the Elastic Beanstalk Command Line Interface, which lets you create environments and deploy code.</p>
 
 <p><strong>1. Creating an IAM Role</strong></p>
@@ -122,31 +124,34 @@
 
 <p>Run <strong>$ eb init</strong> to initialize the directory and login using the access-key-id and access-secret created from the earlier step. Run <strong>$ eb create</strong> to create an EB app and run <strong>$ eb deploy</strong> to upload the code and run your app on AWS.</p>
 
-<p><img src="/images/aws-app-running.png" alt="" /></p>
+<p><img src="/images/aws-app-running.png" alt=""></p>
 
 <blockquote>
-  <p>Note : You may choose the appropriate availability region on AWS to have the lowest latency</p>
+<p>Note : You may choose the appropriate availability region on AWS to have the lowest latency</p>
 </blockquote>
 
-<h2 id="mongolab-setup">Mongolab setup</h2>
+<h2>Mongolab setup</h2>
+
 <p>Go to http://mongolab.com and sign-up for a free account. Click <strong>Create new</strong> database, select AWS, and choose a single-node sandbox for now. You may migrate to a better deployment for a production app. Give a name to your database and click <strong>Create</strong>. This will leave you with a new MongoDB deployment. Now, create a new DB user, and make sure <strong><em>NOT</em></strong> to select <strong>read-only</strong>. Everything is good from the Mongo standpoint. Your mongoDB URI will be something approximately like the following.</p>
 
 <figure class="highlight"><pre><code class="language-sh" data-lang="sh">mongodb://&lt;db_user&gt;:&lt;db_password&gt;@ds011472.mlab.com:11472/&lt;db_name&gt;</code></pre></figure>
 
-<h2 id="setting-up-environment-variables">Setting up Environment Variables</h2>
+<h2>Setting up Environment Variables</h2>
+
 <p>Now, that we have all the basic components, you may go ahead and configure the EB environment variables. Parse server uses environment variables to configure and run the web server. Go to Elastic Beanstalk on AWS console, select the newly created app (the app you created through the CLI should appear here). Click on <strong>Configuration</strong> on the left pane, and click on the small  <i class="icon-cog"></i> gear icon on <strong>Software Configuration</strong> and scroll down to the bottom of the screen, you may see <strong>Environment Properties</strong>. Add the following three properties and values for each of them.</p>
 
 <ol>
-  <li><strong>APP_ID</strong> : An alpha-num string that is sufficiently long</li>
-  <li><strong>MASTER_KEY</strong> : Another alpha-num string that is sufficiently long</li>
-  <li><strong>DATABASE_URI</strong> : The MongoLab URI you have just generated</li>
+<li><strong>APP_ID</strong> : An alpha-num string that is sufficiently long</li>
+<li><strong>MASTER_KEY</strong> : Another alpha-num string that is sufficiently long</li>
+<li><strong>DATABASE_URI</strong> : The MongoLab URI you have just generated</li>
 </ol>
 
 <p>Press <strong>Save</strong>, and we are ready to run our app on the parse instance now.</p>
 
-<p><img src="/images/aws-env-variables-parse.png" alt="width=50%" /></p>
+<p><img src="/images/aws-env-variables-parse.png" alt="width=50%"></p>
 
-<h2 id="saving-the-first-object-and-retrieving">Saving the first object and retrieving</h2>
+<h2>Saving the first object and retrieving</h2>
+
 <p>To create and save an object to the Parse server, use the same approach we used on Parse.com.</p>
 
 <figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>curl -X POST <span class="se">\</span>
@@ -166,9 +171,10 @@
 
 <span class="o">{</span><span class="s2">&quot;results&quot;</span>:<span class="o">[{</span><span class="s2">&quot;objectId&quot;</span>:<span class="s2">&quot;cuD8K9vbVm&quot;</span>,<span class="s2">&quot;score&quot;</span>:1337,<span class="s2">&quot;playerName&quot;</span>:<span class="s2">&quot;John Doe&quot;</span>,<span class="s2">&quot;cheatMode&quot;</span>:false,<span class="s2">&quot;updatedAt&quot;</span>:<span class="s2">&quot;2016-05-11T12:29:36.176Z&quot;</span>,<span class="s2">&quot;createdAt&quot;</span>:<span class="s2">&quot;2016-05-11T12:29:36.176Z&quot;</span><span class="o">}]}</span></code></pre></figure>
 
-<p>You may get the beanstalk instance’s publick url from the beanstalk app page on the aws console. App key and master key should be the one used in the environment properties.</p>
+<p>You may get the beanstalk instance&#39;s publick url from the beanstalk app page on the aws console. App key and master key should be the one used in the environment properties.</p>
 
-<h2 id="further-improvements">Further Improvements</h2>
+<h2>Further Improvements</h2>
+
 <p><strong>1. Adding Cloud Code Endpoints</strong></p>
 
 <p>Your sample app already contains <code>index.js</code> which is nothing but the good old <code>app.js</code> from Parse.com terminology. You may add new endpoints and write cloud functions there, or split into multiple modules if required.</p>

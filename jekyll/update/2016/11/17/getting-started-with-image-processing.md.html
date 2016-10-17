@@ -81,16 +81,19 @@
   <div class="container">
     <p>I have been working on digital image processing for sometime now, and I was learning a lot of stuff recently. I thought I should put together a very basic getting started guide on image processing, which could help a lot of enthusiasts. This aritcle is greatly borrowed from the <a href="https://codewords.recurse.com/issues/six/image-processing-101">Image Processing - 101 Sher Minn Chong</a>. This article, as I have planned, will be multi-part, and will be as detail as possible from my own understanding of the concepts.</p>
 
-<h3 id="digital-image">Digital Image</h3>
+<h3>Digital Image</h3>
 
 <p>Digital images are fundamentally a finite number of pixels distributed in X and Y axis, and are stored on the disk as a two (or more) dimentional array of numbers (or more complex datastructers) in rows and columns. Any 2D digital image can be viewed as a matrix of size NxM. Each element in the matrix represents a pixel. A <a href="https://en.wikipedia.org/wiki/Pixel">pixel</a>, its definition, and how a pixel is displayed on a screen or how it is printed out on a paper, is out of the context of this article. Following a hypothetical representation of a flower as a digital image.</p>
 
-<p><img src="/images/digital-image-rep.png" alt="" /></p>
+<p><img src="/images/digital-image-rep.png" alt=""></p>
 
-<p>As you can see, each pixels intensity (the blackness) is represented on a scale of 1-9. Basically, this means, in this representation, each pixel in your image can have one of the 10 shades of gray. What is the lowest needed number of shades to represent an image? Well, the answer is 2. Absolute black, and absolute white. The image below is an example.</p>
+<p>As you can see, each pixels intensity (the blackness) is represented on a scale of 1-9. Basically, this means, in this representation, each pixel in your image can have one of the 10 shades of gray. What is the lowest needed number of shades to represent an image? Well, the answer is 2. Absolute black, and absolute white are the only colors we need at a minimum. The image below is an example.</p>
 
-<p><img src="/images/bit_depth_1bit.jpg" alt="" /></p>
+<p><img src="/images/bit_depth_1bit.jpg" alt=""></p>
 
+<p>Suppose, I represent black with zero and white with 1, then each pixel in the above image can be represented using one bit. Every pixel is either 1 or 0. But what if I need more shades of gray to represent an image? I need more bits to represent each pixel. Suppose instead of 1 bit, I use 2 bits to represent each pixel. I can now show 4 different shades of gray.</p>
+<div class="highlight"><pre><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</code></pre></div>
 	<div id="disqus_thread"></div>	
 <script type="text/javascript">
 /* * * CONFIGURATION VARIABLES * * */

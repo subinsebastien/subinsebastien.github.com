@@ -91,35 +91,49 @@ Calculate the filter coefficients for a low-pass FIR filter with cut-off frequen
 
 <p>Pass band gain is given to be unity. \(ie,\)</p>
 
-<script type="math/tex; mode=display">H_d(e^{j\omega}) = 1 \tag1</script>
+<p>$$
+H_d(e^{j\omega}) = 1 \tag1
+$$</p>
 
 <p>Cut-off value of \(\omega\) is expressed as</p>
 
-<script type="math/tex; mode=display">{\omega}c_1 = \frac{2\pi f_{c_1}}{F} \tag2</script>
+<p>$$
+{\omega}c<em>1 = \frac{2\pi f</em>{c_1}}{F} \tag2
+$$</p>
 
-<p>Where \(f_{c_1}\) is the cut-off frequency and \(F\) is the sampling frequency. In the problem statement the following data is given.</p>
+<p>Where \(f<em>{c</em>1}\) is the cut-off frequency and \(F\) is the sampling frequency. In the problem statement the following data is given.</p>
 
-<script type="math/tex; mode=display">f_{c_1} = 1000Hz</script>
+<p>$$
+f<em>{c</em>1} = 1000Hz
+$$</p>
 
-<script type="math/tex; mode=display">F = 5000Hz</script>
+<p>$$
+F = 5000Hz
+$$</p>
 
 <p>Now, \({\omega}c_1\) can be calculated as follows.</p>
 
-<script type="math/tex; mode=display">{\omega}c_1 = \frac{2\pi.1000}{5000} = \frac{2\pi}{5} \tag3</script>
+<p>$$
+{\omega}c_1 = \frac{2\pi.1000}{5000} = \frac{2\pi}{5} \tag3
+$$</p>
 
 <p>From the above calculation,</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-H_d(e^{j\omega}) = \left\{ \begin{array}{ll} 1 & \mbox{for } \frac{-2\pi}{5} \leq n \leq \frac{2\pi}{5} \\ 0 & \mbox otherwise \end{array} \right. %]]></script>
+<p>$$
+H_d(e^{j\omega}) = \left{ \begin{array}{ll} 1 &amp; \mbox{for } \frac{-2\pi}{5} \leq n \leq \frac{2\pi}{5} \ 0 &amp; \mbox otherwise \end{array} \right.
+$$</p>
 
 <p>The inverse DTFT (Discrete time Fourier transform)</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{align} \mathcal h_d(n) &= \frac1{2\pi}\int_{-\pi}^{\pi}H(e^{j\omega}).e^{j{\omega}n}d\omega \\ & = \frac1{2\pi}\int_{-\frac{2\pi}5}^{\frac{2\pi}5}1* e^{j{\omega}n}d\omega \tag4 \\ & = \frac1{2\pi}\left[\frac{e^{j\omega{n}}}{jn}\right]_{\frac{-2\pi}5}^{\frac{2\pi}5} \\ & = \frac1{2\pi{jn}}\left[e^{jn\frac{2\pi}5}-e^{-jn\frac{2\pi}5}\right] \\ & = \frac1{\pi n}sin\left(\frac{2\pi n}5\right) \end{align} %]]></script>
+<p>$$
+\begin{align} \mathcal h<em>d(n) &amp;= \frac1{2\pi}\int</em>{-\pi}^{\pi}H(e^{j\omega}).e^{j{\omega}n}d\omega \ &amp; = \frac1{2\pi}\int<em>{-\frac{2\pi}5}^{\frac{2\pi}5}1* e^{j{\omega}n}d\omega \tag4 \ &amp; = \frac1{2\pi}\left[\frac{e^{j\omega{n}}}{jn}\right]</em>{\frac{-2\pi}5}^{\frac{2\pi}5} \ &amp; = \frac1{2\pi{jn}}\left[e^{jn\frac{2\pi}5}-e^{-jn\frac{2\pi}5}\right] \ &amp; = \frac1{\pi n}sin\left(\frac{2\pi n}5\right) \end{align}
+$$</p>
 
 <p>Now substitute values for \(n\) such that the length of the resulting sequence is 7,</p>
 
-<script type="math/tex; mode=display">-3 \leq n \leq 3</script>
+<p>$$
+-3 \leq n \leq 3
+$$</p>
 
 <p>\(h_d(-3) = -0.062\)</p>
 
@@ -137,13 +151,15 @@ H_d(e^{j\omega}) = \left\{ \begin{array}{ll} 1 & \mbox{for } \frac{-2\pi}{5} \le
 
 <p>To calculate a finite value of \(h_d(0)\), substitute the value \(n = 0\) in equation \((4)\)</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-\begin{align} \mathcal h_d(0) &= \frac1{2\pi}\int_{-\frac{2\pi}5}^{\frac{2\pi}5}1* e^0d\omega \\ &= \frac1{2\pi}\int_{-\frac{2\pi}5}^{\frac{2\pi}5}d\omega \\ &= \frac1{2\pi}\left[\omega\right]_{\frac{-2\pi}5}^{\frac{2\pi}5} \\ &= \frac1{2\pi}\left[\frac{2\pi}5 - \frac{-2\pi}5\right] \\ &= \frac1{2\pi}\left[\frac{2\pi}5 + \frac{2\pi}5\right] \\ &= \frac1{2\pi}\left[\frac{4\pi}5\right] \\ & = \frac25 \\ &= 0.4 \end{align} %]]></script>
+<p>$$
+\begin{align} \mathcal h<em>d(0) &amp;= \frac1{2\pi}\int</em>{-\frac{2\pi}5}^{\frac{2\pi}5}1* e^0d\omega \ &amp;= \frac1{2\pi}\int<em>{-\frac{2\pi}5}^{\frac{2\pi}5}d\omega \ &amp;= \frac1{2\pi}\left[\omega\right]</em>{\frac{-2\pi}5}^{\frac{2\pi}5} \ &amp;= \frac1{2\pi}\left[\frac{2\pi}5 - \frac{-2\pi}5\right] \ &amp;= \frac1{2\pi}\left[\frac{2\pi}5 + \frac{2\pi}5\right] \ &amp;= \frac1{2\pi}\left[\frac{4\pi}5\right] \ &amp; = \frac25 \ &amp;= 0.4 \end{align}
+$$</p>
 
 <p>The window to be used is a Hamming window, \((\alpha = 0.5)\)</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
-W_{Hm}(n) = \left\{ \begin{array}{ll} 0.5 + 0.5cos\left(\frac{2\pi n}{N-1}\right) & \mbox{for } -\frac{N-1}{2} \leq n \leq \frac{N-1}{2} \\ 0 & \mbox otherwise \end{array} \right. %]]></script>
+<p>$$
+W_{Hm}(n) = \left{ \begin{array}{ll} 0.5 + 0.5cos\left(\frac{2\pi n}{N-1}\right) &amp; \mbox{for } -\frac{N-1}{2} \leq n \leq \frac{N-1}{2} \ 0 &amp; \mbox otherwise \end{array} \right.
+$$</p>
 
 <p>The length of the sequence, \(N = 7\). The Hamming window sequence is calculated as follows,</p>
 
@@ -163,7 +179,9 @@ W_{Hm}(n) = \left\{ \begin{array}{ll} 0.5 + 0.5cos\left(\frac{2\pi n}{N-1}\right
 
 <p>Apply the window over the sequence \(h_d(n)\) such that,</p>
 
-<script type="math/tex; mode=display">h(n) = h_d(n) * W_{Hm}(n)</script>
+<p>$$
+h(n) = h<em>d(n) * W</em>{Hm}(n)
+$$</p>
 
 <p>\(h(-3) = 0\)</p>
 

@@ -95,13 +95,13 @@ To enable a broadcast receiver, you need to register it per se. As explained abo
 https://gist.github.com/subinsebastien/7462040
 Ok, there is a hell lot of variants for the broadcast sending function. For now, lets check out the simplest one, that is sendBroadcast(Intent intent). This method takes an intent as the parameter. Lets see how this can used in a typical condition.
 https://gist.github.com/subinsebastien/7462190
-This is simple huh? It sends a simple broadcast with an action string ACTION_HELLO as the so called address. This simply means that, any broadcast receiver with intent filter set to ACTION_HELLO can receive this broadcast. Lets create such a broadcast receiver.
+This is simple huh? It sends a simple broadcast with an action string ACTION<em>HELLO as the so called address. This simply means that, any broadcast receiver with intent filter set to ACTION</em>HELLO can receive this broadcast. Lets create such a broadcast receiver.
 https://gist.github.com/subinsebastien/7462046
 Ok, it still doesn’t says what intent filter this receive is planning to use. So we have to enable or register this broadcast receiver to do that. As we have seen earlier, we can register it for the entire application or we can register it for just one activity. For registering it for the entire application, you need to add the corresponding entry into the manifest, inside the <application> tag.
 https://gist.github.com/subinsebastien/7462053
 And for doing the same inside an activity, you can do it simply as follows. Remember, this particular receiver will work only if the activity is visible and it cannot receive any broadcasts if the activity is not in the foreground.
 https://gist.github.com/subinsebastien/7462068
-Ok, this part needs a little bit of explanation. We may simply register this receiver in the onCreate() itself. But in that case, there is a risk of leaking memory if the activity is killed or has moved to the background. To avoid this, I register the receiver inside the onResume() and safely unregister the same from inside the onPause(). As you might know, onPause() will be triggered when the activity is about to go to the background. A complete sample project is available here for downloading and testing out broadcast receivers.</application></intent-filter></p>
+Ok, this part needs a little bit of explanation. We may simply register this receiver in the onCreate() itself. But in that case, there is a risk of leaking memory if the activity is killed or has moved to the background. To avoid this, I register the receiver inside the onResume() and safely unregister the same from inside the onPause(). As you might know, onPause() will be triggered when the activity is about to go to the background. A complete sample project is available here for downloading and testing out broadcast receivers.</p>
 
 	<div id="disqus_thread"></div>	
 <script type="text/javascript">

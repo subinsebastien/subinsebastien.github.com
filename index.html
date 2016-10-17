@@ -48,7 +48,6 @@
           </span>
           <p>I have been working on digital image processing for sometime now, and I was learning a lot of stuff recently. I thought I should put together a very basic getting started guide on image processing, which could help a lot of enthusiasts. This aritcle is greatly borrowed from the <a href="https://codewords.recurse.com/issues/six/image-processing-101">Image Processing - 101 Sher Minn Chong</a>. This article, as I have planned, will be multi-part, and will be as detail as possible from my own understanding of the concepts.</p>
 
-
         </li>
       
         <li>
@@ -57,7 +56,6 @@
             11 May 2016
           </span>
           <p>Parse.com has announced shut down a few months ago, and they are planning complete the process by the end of the year 2016. They have done a pretty good job in helping developers migrating to other platforms, including Amazon Web Services. I have experimented with their automated tools, and One-Click deployment solution, and this article discusses about what I think the best way to setup a web-app from a Parse.com background.</p>
-
 
         </li>
       
@@ -68,7 +66,6 @@
           </span>
           <p>Ever wondered how computers startup? Or where does the term <a href="https://en.wikipedia.org/wiki/Booting"><strong>booting</strong></a> come from in the first place? I was personally experimenting with boot-loaders (the program that loads an operating system from a disk to the memory in its simplest functionality), and came across several core concepts behind the booing-process of a computer.</p>
 
-
         </li>
       
         <li>
@@ -76,8 +73,7 @@
           <span class="meta">
             26 Feb 2016
           </span>
-          <p>Google Cloud Vision API provides a REST API for developers to understand the contents of images. In my personal experience, it is currently the best working solution for object detection from images, compared to custom trained HAAR/LBP classifiers or IBM’s Watson. Although it is still in beta, it provides very good results with object detection problems. Currently the API provides the following types of algorithms, each specific to a feature type.</p>
-
+          <p>Google Cloud Vision API provides a REST API for developers to understand the contents of images. In my personal experience, it is currently the best working solution for object detection from images, compared to custom trained HAAR/LBP classifiers or IBM&#39;s Watson. Although it is still in beta, it provides very good results with object detection problems. Currently the API provides the following types of algorithms, each specific to a feature type.</p>
 
         </li>
       
@@ -86,8 +82,7 @@
           <span class="meta">
             06 Nov 2015
           </span>
-          <p>I have used both <strong>OpenCV</strong> Library and Qt Creator IDE back in my academic days. I have developed or more precisely experimented with both a lot. In my blog, you may find a couple of articles about both as well. A couple of years ago, I switched to OSX and my general interests were in Android mobile apps development using Java. Recently, I have got a chance to work with OpenCV again. I’m one of the guy who prefers an IDE over command line tools and text editors to work on projects. So, this article is about setting up and using the best C++ IDE ever, the <strong>Qt Creator</strong> for developing OpenCV projects.</p>
-
+          <p>I have used both <strong>OpenCV</strong> Library and Qt Creator IDE back in my academic days. I have developed or more precisely experimented with both a lot. In my blog, you may find a couple of articles about both as well. A couple of years ago, I switched to OSX and my general interests were in Android mobile apps development using Java. Recently, I have got a chance to work with OpenCV again. I&#39;m one of the guy who prefers an IDE over command line tools and text editors to work on projects. So, this article is about setting up and using the best C++ IDE ever, the <strong>Qt Creator</strong> for developing OpenCV projects.</p>
 
         </li>
       
@@ -98,7 +93,6 @@
           </span>
           <p>Everybody kind of forgot about the best Android phone ever to be produced, the <a href="http://www.gsmarena.com/samsung_galaxy_nexus_i9250-4219.php">Galaxy Nexus</a>, after Google abandoned it with Android 4.4 OTA update. There will not be another update from Google for Galaxy Nexus in the future due to some driver portability issues for its TI OMAP core. But recently someone from the community managed to build AOSP Android 5.0 for Galaxy Nexus bringing it back from the grave. I was kind of happy to see this as I’m still a proud owner of one of them, and didn’t have a budget to spend on new gadgets every other week. So, I decided to flash my Nexus with Lollipop and this is just a brief post about it. The following steps just worked for me pretty well.</p>
 
-
         </li>
       
         <li>
@@ -107,7 +101,6 @@
             25 Mar 2015
           </span>
           <p>Recently I came across a math problem on a Facebook group I silently follow. There were a couple of solutions posted by different people. So I thought, may be I should try solving it my way. So this post. The problem statment was as follows.</p>
-
 
         </li>
       
@@ -119,12 +112,11 @@
           <p>Reading time : Less than 20 minutesSuppose you own a web domain, the first thing you ought to do is that to setup a website for it. The second thing is highly probably, setting up an e-mail system. By an e-mail system, what I mean is a complete system that typically has the following capabilities.Send &amp; Receive emailsRead and create emailsDelete emails
 Filter unwanted emails
 Create/Delete email accounts
-When you want to do all these, your first choice is to look for providers such as Google Apps, Outlook.com, Freemail, Zoho etc. Some of them provide free pricing plans and upto 10 email addresses in their free tier. All of them include webmail capability, so you do not need an email client on your local machine. Mails can be managed from a web application provided by them. Without a doubt, Google is the best among these providers and they have an awesome webmail interface similar to Gmail. An year ago, they have removed the free plan, and my next option was Outlook.com since their service appeared to be almost in par with Google’s and slightly better than Zoho’s. And, now that they have removed their free service as well, I need to switch to another. Now, most of the times, you might not be able to retain your old e-mails unless you back up everything regularly. Often this is not the case, and I cannot afford another move. So, I decided to setup an email server on my own as I write this article down. My plan is to document each step as I do it, so you can follow this to setup yours as well.Step Zero - Prepare a Server (Optional if you have one already)If you have a static public IP and a decent server machine, you are good to skip this step. In my case I didn’t have one, and I built one on Amazon EC2. Basically it is a virtual server, having all the capabilities of a normal server. I can access the machine using SSH from my local machine. Setting up an EC2 instance is very easy, and I chose to run Ubuntu 14.04-amd64 server edition on my server instance. Its basically a t2-micro type instance and it is free of cost for upto 750 hours of usage per month. I’m not quite sure about its running expense for a long term use, since I’m using one for the firs time. Down the line I will try to update this article when I start getting my invoices from Amazon.You must also have an MX record in your domain’s DNS zone file pointing to your designated mail server. Open your domain setting and find the DNS zone settings. Then remove all the MX records there and fill the following data.Host : Leave it blank or input @ Mail Server Name : your_mail_server.yourdomain.comPriority : 10TTL : Lowest valueThis will take s a few minutes to propagate. So you can proceed to the next step and you can check if the servers has picked up your new MX by the following command from your local machine.dig mx yourdomain.comStep One - Install Postfix SMTP ServerA mail systems is indeed a composition of a couple of tools. The following list includes the most basic componentsAn SMTP server
+When you want to do all these, your first choice is to look for providers such as Google Apps, Outlook.com, Freemail, Zoho etc. Some of them provide free pricing plans and upto 10 email addresses in their free tier. All of them include webmail capability, so you do not need an email client on your local machine. Mails can be managed from a web application provided by them. Without a doubt, Google is the best among these providers and they have an awesome webmail interface similar to Gmail. An year ago, they have removed the free plan, and my next option was Outlook.com since their service appeared to be almost in par with Google’s and slightly better than Zoho’s. And, now that they have removed their free service as well, I need to switch to another. Now, most of the times, you might not be able to retain your old e-mails unless you back up everything regularly. Often this is not the case, and I cannot afford another move. So, I decided to setup an email server on my own as I write this article down. My plan is to document each step as I do it, so you can follow this to setup yours as well.Step Zero - Prepare a Server (Optional if you have one already)If you have a static public IP and a decent server machine, you are good to skip this step. In my case I didn’t have one, and I built one on Amazon EC2. Basically it is a virtual server, having all the capabilities of a normal server. I can access the machine using SSH from my local machine. Setting up an EC2 instance is very easy, and I chose to run Ubuntu 14.04-amd64 server edition on my server instance. Its basically a t2-micro type instance and it is free of cost for upto 750 hours of usage per month. I’m not quite sure about its running expense for a long term use, since I’m using one for the firs time. Down the line I will try to update this article when I start getting my invoices from Amazon.You must also have an MX record in your domain’s DNS zone file pointing to your designated mail server. Open your domain setting and find the DNS zone settings. Then remove all the MX records there and fill the following data.Host : Leave it blank or input @ Mail Server Name : your<em>mail</em>server.yourdomain.comPriority : 10TTL : Lowest valueThis will take s a few minutes to propagate. So you can proceed to the next step and you can check if the servers has picked up your new MX by the following command from your local machine.dig mx yourdomain.comStep One - Install Postfix SMTP ServerA mail systems is indeed a composition of a couple of tools. The following list includes the most basic componentsAn SMTP server
 IMAP / POP3 server
 Authentication System such as SASL (Optional)
 Webmail (Optional)
-The SMTP server is the core of an e-mail system. It provides the basic capabilities of sending and receiving mails based on a protocol called Simple Mail Transfer Protocol (SMTP). There are many SMTP server solutions ranging from the simplistic OpenSMTPD to Haraka a super fast node.js SMTP server. We are going to use the Postfix SMTP server for this article. Postfix is free and open source. To install postfix, execute the following command on your Ubuntu server.sudo apt-get install postfixYou will be presented with two questions typically. For the first question General type of mail Configuration select Internet Site. The second question will be to set a System mail name. Input your domain name there, say for example mydomain.com, and you are good to go. If any other questions are asked, leave them out with default configurations.Step Two - Create a User AccountThis unix user will be the owner of the virtual mailbox. The reason why we have virtual mailboxes is that, we cannot create new unix accounts our server every time a new email address is required. So all mail addresses will be having their inboxes in this one single virtual mailbox.sudo groupadd -g 5000 vmailsudo useradd -m -u 5000 -g 5000 -s /bin/bash vmailStep Three - Configure Mail DomainsWe have to define for which domains this email server is going to be setup. So that it can receive mails designated for those domains. In my case it is just for one domain. sudo touch /etc/postfix/vhostssudo echo yourdomain.com &gt; /etc/postfix/vhostsStep Four - Assign mail foldersNow create file that describes which folders we are going to use for storing emails for each mail addresses. Each mail address should have one specific directory and you can point multiple addresses to a single inbox if required. Execute the following commandsudo vim /etc/postfix/vmapsand input your mail addresses and corresponding mail directories. My vmaps file looks like the following.subin@mydomain.com     mydomain.com/subinnapster@mydomain.com  mydomain.com/subinsales@mydomain.com      mydomain.com/salesWe need to hash this file to be used by the postfix system. If in the future, this file is edited for including more email maps, be sure to run the following command then as well.sudo postmap /etc/postfix/vmapsStep Five - Configure PostfixNow from the useradd command, default home folders will be created by the system as /home/vmail. This folder is going to be our virtual mailbox base directory. Now open /etc/postfix/main.cf and add the following lines to it.home_mailbox = Maildir/virtual_mailbox_domains = /etc/postfix/vhostsvirtual_mailbox_base = /home/vmailvirtual_mailbox_maps = hash:/etc/postfix/vmapsvirtual_minimum_uid = 1000virtual_uid_maps = static:5000virtual_gid_maps = static:5000More that the uid and gid should match what we used in step two.Step Six - Test your Mail serverRestart the postfix service and try out a test mail inwards and outwards. Make sure the MX record is now up and pointing to this server. use the following command to send a test mail from this machine.sendmail somemail@gmail.comfrom: sales@yourdomain.comHello, this is a test mail.The dot[.] at the end tells the sendmail command that you are done with the email body. Now somemail@gmail.com will have one mail in its inbox. Now try sending a mail back to sales@yourdomain.com and which will be present in the following directory after a few minutes. /home/vmail/yourcomain.com/sales/new If any of these two does not work properly, you missed some steps in between, or the configuration is incorrect. Now you have a fully functional email server ready to send and receive mails from and to any networks. But this setup is a very minal one if you are planning to use it for your professional requirements. In that case you also need another layer called Mail Access Layer. So that you can read/write and send/receive mails in a lot more efficient way. I will covering up this in the next article.</p>
-
+The SMTP server is the core of an e-mail system. It provides the basic capabilities of sending and receiving mails based on a protocol called Simple Mail Transfer Protocol (SMTP). There are many SMTP server solutions ranging from the simplistic OpenSMTPD to Haraka a super fast node.js SMTP server. We are going to use the Postfix SMTP server for this article. Postfix is free and open source. To install postfix, execute the following command on your Ubuntu server.sudo apt-get install postfixYou will be presented with two questions typically. For the first question General type of mail Configuration select Internet Site. The second question will be to set a System mail name. Input your domain name there, say for example mydomain.com, and you are good to go. If any other questions are asked, leave them out with default configurations.Step Two - Create a User AccountThis unix user will be the owner of the virtual mailbox. The reason why we have virtual mailboxes is that, we cannot create new unix accounts our server every time a new email address is required. So all mail addresses will be having their inboxes in this one single virtual mailbox.sudo groupadd -g 5000 vmailsudo useradd -m -u 5000 -g 5000 -s /bin/bash vmailStep Three - Configure Mail DomainsWe have to define for which domains this email server is going to be setup. So that it can receive mails designated for those domains. In my case it is just for one domain. sudo touch /etc/postfix/vhostssudo echo yourdomain.com &gt; /etc/postfix/vhostsStep Four - Assign mail foldersNow create file that describes which folders we are going to use for storing emails for each mail addresses. Each mail address should have one specific directory and you can point multiple addresses to a single inbox if required. Execute the following commandsudo vim /etc/postfix/vmapsand input your mail addresses and corresponding mail directories. My vmaps file looks like the following.subin@mydomain.com     mydomain.com/subinnapster@mydomain.com  mydomain.com/subinsales@mydomain.com      mydomain.com/salesWe need to hash this file to be used by the postfix system. If in the future, this file is edited for including more email maps, be sure to run the following command then as well.sudo postmap /etc/postfix/vmapsStep Five - Configure PostfixNow from the useradd command, default home folders will be created by the system as /home/vmail. This folder is going to be our virtual mailbox base directory. Now open /etc/postfix/main.cf and add the following lines to it.home<em>mailbox = Maildir/virtual</em>mailbox<em>domains = /etc/postfix/vhostsvirtual</em>mailbox<em>base = /home/vmailvirtual</em>mailbox<em>maps = hash:/etc/postfix/vmapsvirtual</em>minimum<em>uid = 1000virtual</em>uid<em>maps = static:5000virtual</em>gid_maps = static:5000More that the uid and gid should match what we used in step two.Step Six - Test your Mail serverRestart the postfix service and try out a test mail inwards and outwards. Make sure the MX record is now up and pointing to this server. use the following command to send a test mail from this machine.sendmail somemail@gmail.comfrom: sales@yourdomain.comHello, this is a test mail.The dot[.] at the end tells the sendmail command that you are done with the email body. Now somemail@gmail.com will have one mail in its inbox. Now try sending a mail back to sales@yourdomain.com and which will be present in the following directory after a few minutes. /home/vmail/yourcomain.com/sales/new If any of these two does not work properly, you missed some steps in between, or the configuration is incorrect. Now you have a fully functional email server ready to send and receive mails from and to any networks. But this setup is a very minal one if you are planning to use it for your professional requirements. In that case you also need another layer called Mail Access Layer. So that you can read/write and send/receive mails in a lot more efficient way. I will covering up this in the next article.</p>
 
         </li>
       
@@ -136,7 +128,6 @@ The SMTP server is the core of an e-mail system. It provides the basic capabilit
           <p>I came across certain interesting Digital Signal Processing techniques past week. One of them been a problem statement and its solution for a finite impulse response filter design. I thought it would be great to put up the same as an article on the blog.
 Problem Statement
 Calculate the filter coefficients for a low-pass FIR filter with cut-off frequency 1000Hz where the sampling frequency is 5Khz. Consider the filter passband gain as unity, and the impulse response sequence length is 7. Use a Hamming window to remove spectral leakage.</p>
-
 
         </li>
       
@@ -151,7 +142,6 @@ What we are building?
 We are building a very simple weather search application. You may search with a city name, and the app will show you the latest weather information provided by the awesome Open Weather Map API. Openweathermap is free to use for non-commercial purpose. Their API has JSON support, means we can retrieve data from their systems as JSON Object that typically looks something like the following. Please note that JSON is not particularly useful, unless we parse it to an NSDictionary or a NSArray.
 https://gist.github.com/subinsebastien/e663825d2624359b9aef</p>
 
-
         </li>
       
         <li>
@@ -161,7 +151,6 @@ https://gist.github.com/subinsebastien/e663825d2624359b9aef</p>
           </span>
           <p>Reading time : Less than an hour
 It has been more than a week since the Malaysian Airline Flight-370 has been missing after its successful take off from a Malaysian airport. I have been closely researching on the topic since it came as a shocking news to me as well as I was amazed how modern technology is limited when it comes to situations like these. The aircraft was a passenger jet boarded with 239 people including crew and pilots, and it was an ER series (stands for Extended Range) Boeing 777 which is usually used in 9/11 kind of attacks. I live in India and one US diplomat speculated that the same flight could have been hijacked to execute an attack similar to 9/11 in an Indian city. I’m trying to analyse as much information as available to see what could have happened to the air plane and a set of events happened in the past 10 days.</p>
-
 
         </li>
       
@@ -180,13 +169,13 @@ To enable a broadcast receiver, you need to register it per se. As explained abo
 https://gist.github.com/subinsebastien/7462040
 Ok, there is a hell lot of variants for the broadcast sending function. For now, lets check out the simplest one, that is sendBroadcast(Intent intent). This method takes an intent as the parameter. Lets see how this can used in a typical condition.
 https://gist.github.com/subinsebastien/7462190
-This is simple huh? It sends a simple broadcast with an action string ACTION_HELLO as the so called address. This simply means that, any broadcast receiver with intent filter set to ACTION_HELLO can receive this broadcast. Lets create such a broadcast receiver.
+This is simple huh? It sends a simple broadcast with an action string ACTION<em>HELLO as the so called address. This simply means that, any broadcast receiver with intent filter set to ACTION</em>HELLO can receive this broadcast. Lets create such a broadcast receiver.
 https://gist.github.com/subinsebastien/7462046
 Ok, it still doesn’t says what intent filter this receive is planning to use. So we have to enable or register this broadcast receiver to do that. As we have seen earlier, we can register it for the entire application or we can register it for just one activity. For registering it for the entire application, you need to add the corresponding entry into the manifest, inside the <application> tag.
 https://gist.github.com/subinsebastien/7462053
 And for doing the same inside an activity, you can do it simply as follows. Remember, this particular receiver will work only if the activity is visible and it cannot receive any broadcasts if the activity is not in the foreground.
 https://gist.github.com/subinsebastien/7462068
-Ok, this part needs a little bit of explanation. We may simply register this receiver in the onCreate() itself. But in that case, there is a risk of leaking memory if the activity is killed or has moved to the background. To avoid this, I register the receiver inside the onResume() and safely unregister the same from inside the onPause(). As you might know, onPause() will be triggered when the activity is about to go to the background. A complete sample project is available here for downloading and testing out broadcast receivers.</application></intent-filter></p>
+Ok, this part needs a little bit of explanation. We may simply register this receiver in the onCreate() itself. But in that case, there is a risk of leaking memory if the activity is killed or has moved to the background. To avoid this, I register the receiver inside the onResume() and safely unregister the same from inside the onPause(). As you might know, onPause() will be triggered when the activity is about to go to the background. A complete sample project is available here for downloading and testing out broadcast receivers.</p>
 
         </li>
       
@@ -198,7 +187,6 @@ Ok, this part needs a little bit of explanation. We may simply register this rec
           <p>Reading Time : Less than 10 minutes
 Lately I was onto more experiments with the 433Mhz serial communication modules. I have purchased two different pairs of 433 modules which is shown in the image below.</p>
 
-
         </li>
       
         <li>
@@ -208,7 +196,6 @@ Lately I was onto more experiments with the 433Mhz serial communication modules.
           </span>
           <p>Reading time : Less than 5 Mniutes
 Holtek produces a number of encoders and decoders to be used in minimal remote control applications. I’m about to work on a project that involves some basic RF remote control circuit. As the preliminary research starts, I came across an RF transmitter module which does not support direct serial data transmission. We have to use encoders like the HT12E for giving proper input to the module. The RF transmitter I have just uses 433Mhz ASK. For it, to be used as a remote control, we need to encode our parallel data into serial burst data. HT12E just got my attention because it was known to me long before. With an oscilloscope here, I wired up and tested the following circuit.</p>
-
 
         </li>
       
@@ -221,7 +208,6 @@ Holtek produces a number of encoders and decoders to be used in minimal remote c
 More and more modern day consumer electronic devices are becoming wireless. Say for example, keyboards, mouses, printers, car-locks, point of sale equipment or almost anything that you can think of. I came across working on a POS application for Android which requires a mobile phone to talk to a ESC/POS  printer over Bluetooth. The Android Bluetooth stack requires both the parties in the communication, to be bonded (paired up) before starting to send data over the Bluetooth. Also, the new version of Android (4.1x) includes significant changes in the Bluetooth stack which makes the communication even restricted/secure.
 Communicating with an embedded device is somewhat different from communicating with a regular Bluetooth enabled telephony device. First of all, an embedded device might not have a keypad or a screen to indicate what is going on. We are either on a pure-guess-side or we should be correctly following the manufacturer datasheets. In my case I was dealing with AB-330M Mobile POS printer which follows the Epson ESC protocol. It just had two button on the front panel and not any other feature except an LED to blink in case of occurrence of an error.</p>
 
-
         </li>
       
         <li>
@@ -233,7 +219,6 @@ Communicating with an embedded device is somewhat different from communicating w
 Most of us develop PCBs for our hobby projects at home. Although, without following a proper process, chances are that you end up with a totally unusable result, or something that requires further hacks to make it working. This article contains some information I have acquired from my experiments in the PCB making process. Since making PCBs at home does not involve professional capabilities like proper chemical processing or machinery, it is quite difficult to obtain a proper output, compared to a commercial PCB manufacturer’s board.
 Always start with the Simulation</p>
 
-
         </li>
       
         <li>
@@ -243,7 +228,6 @@ Always start with the Simulation</p>
           </span>
           <p>Reading Time : Less than 15 minutes
 The function generator IC XR2206 from EXAR corporation is pretty popular among hobbyists. Although, it is popular, the company stopped the production of this IC earlier in 2011. Yet, it is available in some local shops and of course on ebay. I have a few here in my home workshop, and I worked with one of them today to develop a small function generator for my personal use. The application circuit from the datasheet worked just fine. </p>
-
 
         </li>
       
@@ -255,7 +239,6 @@ The function generator IC XR2206 from EXAR corporation is pretty popular among h
           <p>Reading Time : Less than 10 minutes
 I was trying to remotely maneuver a prototype robot I have made last week. If you happen to read it, you might know about it. I had an infrared receiver named TSOP1738 and a few different remote controls left useless from a car audio system and a TV here. I had IR LEDs as well, but to avoid unnecessary complexity I chose to use one of the remote controls over building one on my own with the LEDs. Here is a study I have made to make this thing work as I expected.</p>
 
-
         </li>
       
         <li>
@@ -266,7 +249,6 @@ I was trying to remotely maneuver a prototype robot I have made last week. If yo
           <p>Reading TIme : Less than 10 Minutes
 Well, it could be fairly easy for geeks, but not for kids who starts to learn electronics. I have been looking around for a solution for driving DC motors with Arduino, eventhough I’m not a kid. I’m 24 by the way, and I’m not married! Ok, anyway I found out a number of motor driving setups either using dual H-Bridge ICs like L298 or L293D. They are still ofcourse elegant solutions if you want to drive just 1 or 2 motors using your Arduino. It gives you full control, so that you can drive the motor in either CW or CCW direction. The problem with this solution is that, you have to sacrifice a number of digital lines to work with these ICs. As you all know, most Arduinos have few number of pins to work with. Mine is Duemilanove, which has just 14 I/O pins. So this should be considered when you need to do something else with your remaining pins while the others driving motors.
 In the Arduino book, there was another solution using a MOSFET or something which I don’t clearly remember. So I can’t comment about that right now. On the other hand, here I have another solution which I found on a website. They showed, how to drive a power LED with PWM using an IC named ULN2003A. ULN200X are generally darlington pair arrays. So what is a darlington pair?</p>
-
 
         </li>
       
@@ -282,7 +264,6 @@ For the sake of safety, I have gathered a 500GB external HDD. I thought I could 
 Boot the machine from a Live CD. I used Linux Mint 15 RC CD-ROM itself, since it was already available, as you would guess. Please note that the entire system is in the RAM when booting live, so the recovery process depends on the available RAM you do have. If possible, extend the RAM before initiating the recovery, or move the HDD to another PC with faster/larger RAM, although I’m not sure the later one is a good idea.
 Install the testdisk application. Please note that the installation goes to the RAM as well. So its better not to run any other apps from this Live CD for the sake of speed. Now, run the tool</p>
 
-
         </li>
       
         <li>
@@ -291,8 +272,7 @@ Install the testdisk application. Please note that the installation goes to the 
             06 Mar 2013
           </span>
           <p>Reading Time : Less than 5 Minutes
-A popular video floating around on the internet back in 2011 was a talk show between David Silverman (the president of the American Atheists) and Bill O’Reilly. The video, in fact made a number of O’‘Reilly posters and a very popular Internet meme. I’m not really able to figure out what the talk was all about, but it is pretty interesting. You can checkout the video below.</p>
-
+A popular video floating around on the internet back in 2011 was a talk show between David Silverman (the president of the American Atheists) and Bill O’Reilly. The video, in fact made a number of O&#39;&#39;Reilly posters and a very popular Internet meme. I’m not really able to figure out what the talk was all about, but it is pretty interesting. You can checkout the video below.</p>
 
         </li>
       
@@ -314,7 +294,6 @@ NB : The description about the function is followed by code snippets for each.
 ConnectivityLets begin with the connectivity check function. The function uses the Connectivity Manager class to check whether the phone is connected or not. Please do keep in mind that it does not really checks out about Internet connectivity, but it just checks if the phone connected to a WiFi or your mobile data network. For finding if the Internet connection is working or not, you really have to make a network request from the phone.
 https://gist.github.com/5079918</p>
 
-
         </li>
       
         <li>
@@ -328,7 +307,6 @@ A button named Random
 On clicking Random it should load a random comic from xkcd.
 The features are simple enough for a hello world app. So first thing to consider is the API xkcd provides. Thankfully the xkcd API is also very simple to be used in our app. The xkcd API returns JSON document from which we get comic metadata such as image URL and comic search keyword strings. So that part is more or less fine. You can see the API details here.As with any projects, the next step is to create a mockup for the application. I use pencil here to create a mockup as shown in the image below.</p>
 
-
         </li>
       
         <li>
@@ -339,7 +317,6 @@ The features are simple enough for a hello world app. So first thing to consider
           <p>Reading time : Less than 10 minutes
 This is article is for newbies who want to create and deploy their first OpenShift application with RedHat cloud service. OpenShift is the code name of the Red Hat’s platform as a service PaaS for PHP, python (and more) applications to run on RedHat infrastructure. OpenShift client tools are ruby modules so the one who start working with OpenShift need to have Ruby support on their machines. I used Ubuntu 11.10 for setting the development system up. Lets start by installing the per-requisites.</p>
 
-
         </li>
       
         <li>
@@ -349,7 +326,6 @@ This is article is for newbies who want to create and deploy their first OpenShi
           </span>
           <p>Reading time : Less than 10 minutes
 Qt provides a very good class named Qhttp for doing http requests and to get response from the web. This class is thread safe and you can use it maximum ease. To begin with, create a Qt console application and name it DoHttp, and add a reference about network usage in your project file.</p>
-
 
         </li>
       
@@ -367,7 +343,6 @@ Move the database adding process out of the constructor which avoids multiple ca
 Make the handler class Singleton, so that no more than one instance could exists at any time
 At first creating a global object looked easier for me. I thought I could just make a global instance in a globals header where I handle other global stuffs, and it just didn’t work. I tried accessing it in other files where it is required using the extern keyword, but it seemed like it was not my day. As I shared I couldn’t make it work, some friends suggested making it singleton. I couldn’t even think of moving the database adding process out of the constructor, which will break the soul purpose of that class. Also, I was not sure where to do it, if not inside the constructor. Also, if I do so, I might run into further bugs and it will be terrific for me track the outcomes later on. So, I decided to use singleton pattern which was widely recognized as complex but right among developers. And finally I made it work. So, apart from the story here is a simple example for singleton classes in C++. I used Qt for developing this application, but the concept is applicable to most of the object oriented languages.
 First open Qt-Creator and create a new Qt console project. You will get a skeleton application. Now add a new class to this project. For this, right click on the project folder and select Add New.</p>
-
 
         </li>
       
@@ -398,7 +373,6 @@ One of the easy way to manage this is, to create a simple function which can tak
           </span>
           <p>Most of the real world applications use databases to store data in a structured manner. Databases provide a very programmatic way to store and retrieve organised data. Qt, just like any other professional toolkit, provides rich set of database drivers and libraries to handle database functionality in a very managed way. It this, post, I would like to show you a simple example of how to use database with Qt. To begin with, create a console qt application and name it, say DBApp. Then add a reference to the project(.pro) file that we are going to use database in this project.</p>
 
-
         </li>
       
         <li>
@@ -408,7 +382,6 @@ One of the easy way to manage this is, to create a simple function which can tak
           </span>
           <p>Reading Time : Less than 10 minutes
 In this article I’m trying to introduce you a simple microcontroller board. There is nothing surprising for those people who are using Arduino already, since I just use an example program which is bundled with the Arduino software. So, only those noobs can come along, and others, please google some other interesting articles. By the way, you can go and get started with Arduino stuff from here. There are a number of Arduino boards are available in the market and there are a couple of clones are also available. I’m using the one called Duemilanove which is a property of Emdesic. The board’s name is pretty easy to pronounce, huh? Take a look at it.</p>
-
 
         </li>
       
@@ -420,7 +393,6 @@ In this article I’m trying to introduce you a simple microcontroller board. Th
           <p>Reading time : Less than 20 minutes
 I would like to introduce you guys into another fruitful environment in application development. Apart from the mobile applications, we should think seriously about desktop application development also. So far, I have been using GTK+ and glade for creating simple applications. But it is for the first time I’m using Qt for doing the same. I feel farthermost advanced in creating useful applications. So, this time I’ll be posting something much more mature than a Hello World application. It would be a converter application, which will be capable of converting currencies and length among different units. So, lets begin with Qt Creator. Qt is a carefully designed application development framework. We will be get into an environment where we will get everything we would be expecting. Anyway, for a simple converter application, we don’t have to learn Qt very deeply. Lets begin with creating an empty project in Qt Creator.
 Open Qt Creator -&gt; File -&gt; New File or Project -&gt; Other Project -&gt; Empty Qt Project and click Choose</p>
-
 
         </li>
       
@@ -437,7 +409,6 @@ After 20HRS, everyone can start using the tool, no issue :)
 But make sure it wont continue after 6HRS next day!
 So, here is a simple script that can do the same. I used pkill for killing processes, so that I can avoid having the logic of finding instances and killing them. To reduce resource utilisation I used a sleep command in between(?). Take a look at the script.</p>
 
-
         </li>
       
         <li>
@@ -447,7 +418,6 @@ So, here is a simple script that can do the same. I used pkill for killing proce
           </span>
           <p>Reading time : Less than 8 minutes
 In many applications I had run into situations where I can’t predetermine the number of arguments while defining a function. Or even, some of you might be wondering how the printf() function works  fine any number of arguments if proper format string is provided. Suppose If I have to get the maximum value out of a number of variables, see If don’t know the number of variables to be handled, it will be a mess. We would rather use an array, but that is not a good idea when you really want to reflect the idea of handling multiple values in a function signature. It would be better if we can call the same function as either,</p>
-
 
         </li>
       
@@ -463,7 +433,6 @@ The letters will be scrambled across the string
 Intersection of both character set will be equal to the set itself
 Err… for better English you can read something like this. Anyway, I think you got the overall idea, that is the strings  William Shakespeare and I am a weakish speller are anagrams. Now, lets figure out how can we hack the problem. Lets start writing a Phrase class.</p>
 
-
         </li>
       
         <li>
@@ -473,7 +442,6 @@ Err… for better English you can read something like this. Anyway, I think you 
           </span>
           <p>Reading time : Less than 10 minutes
 As a part of an interview, the interviewer asked me to implement a circular linked list. The basic concept is nothing but all the nodes in the list should be connected to the one before it and to the one next to it. Also, it should be circular, the tail should refer the head and the head should refer the tail. Ah, well since it is circular, we can say, just a referring pointer rather than head or tail, which looks more apt.</p>
-
 
         </li>
       
@@ -488,7 +456,6 @@ So, lets find a mail server somewhere on the Internet. Before going into details
 SMTP is a simple protocol or standard which can handle electronic mail over the Internet. You can find more details about SMTP here. SMTP runs on port number 25. So, our target is some machine which has port 25 open. There is a very useful tool named nmap. Nmap is nothing but a stealth  capable scanner which can fingerprint machines and services running on  them. You can a copy of nmap from here. I suggest you to use the command line version, since it is more flexible in my experience. And also it is good practice to use command line tools. This is because, when you break into others machines, they are never gonna provide you a very good user friendly GUI to mess their system up. Its worth noting that, running nmap on other’s machines without permission is illegal.
 Finding other machines over the Internet is not a big deal. When you get an IP you can use nmap for checking if SMTP port is open or not. Use the following command for doing this. Since some hosts/firewalls blocks ping probs, we can use SYN scan.</p>
 
-
         </li>
       
         <li>
@@ -501,7 +468,6 @@ This post is all about another experiment of mine. As usual, the language was C 
 How to display an openCv image in GTK+ user interface?
 The first thing to do was to Google around a little on this. Just because I was using Internet from my campus, the messy proxy server refused to go to many links returned be Google. Pretty bad, no? Anyway, the basic idea to solve this is to convert an IplImage (Typical opencv image data structure) to some data that is compatible with GTK+. GtkImage data type has an associated function with signature,</p>
 
-
         </li>
       
         <li>
@@ -511,7 +477,6 @@ The first thing to do was to Google around a little on this. Just because I wa
           </span>
           <p>Just as I mentioned in the last post, <strong>gidentify</strong> project has given me another work around. My plan was to pipe the output of the command line tool identify to the graphical user interface. I was using GTK+ and the available option for this was to use GtkTextView widget which can be used to display mutiline text. Unlike GtkEntry, which could only display a single line text at a time, GtkTextView seemed to be flexible. GtkLabel was another possibility, but it lacked user functionality like Editing. By the way my plan was to display the output of the command on the GUI, and I thought the system function will be just enough. When I manned system(), it has given me a sad news that the system() function would just return the exit status of the command passed to system() as the argument. I searched for an API for this purpose but I was unable to find one. So I figured out a code like this,</p>
 
-
         </li>
       
         <li>
@@ -520,7 +485,6 @@ The first thing to do was to Google around a little on this. Just because I wa
             21 Dec 2010
           </span>
           <p>I came across developing a graphical user interface for a well known command line tool called identify. I figured out that, at a point in the code, using strcat is necessary. Gcc kept giving me executable code which makes Segmentation Fault and I was unable to find what was wrong. The code looked like,</p>
-
 
         </li>
       
@@ -560,7 +524,7 @@ See you in the afterlife…Subin Sebastian</p>
             16 Dec 2010
           </span>
           <p>Reading time : Less than 9 minutes
-When I was in high school or something, I had an inclination to small and new breed devices of that time. I was so amazed by the computer technologies that I had day dreamed about some miniature computing devices which I can afford and put in my pocket safely. I was unaware of the device that I seen on some note book cover or so was not a computer but a PDA (Personal Digital Assistant). I was using Microsoft Windows ‘98 at that time in my school. So I wondered when I see the Start button on the screen of that device. I thought that it was a mini-computer that is capable of performing all the necessary computing that I need. It was just Paint or Notepad what I refer to ‘‘computing’ at that time. One of them was later on identified as iPAQ from Compaq computers.
+When I was in high school or something, I had an inclination to small and new breed devices of that time. I was so amazed by the computer technologies that I had day dreamed about some miniature computing devices which I can afford and put in my pocket safely. I was unaware of the device that I seen on some note book cover or so was not a computer but a PDA (Personal Digital Assistant). I was using Microsoft Windows ‘98 at that time in my school. So I wondered when I see the Start button on the screen of that device. I thought that it was a mini-computer that is capable of performing all the necessary computing that I need. It was just Paint or Notepad what I refer to &#39;&#39;computing’ at that time. One of them was later on identified as iPAQ from Compaq computers.
 Compaq iPAQ
 When I was able to do a search (it was yahoo if I remember correctly) I had figured out that there are more devices out in the market that I can dream about. At that point HP hired Compaq or what ever, iPAQ was owned by HP and I continued to love the device.
 HP iPAQ

@@ -93,7 +93,7 @@ After 20HRS, everyone can start using the tool, no issue :)
 But make sure it wont continue after 6HRS next day!
 So, here is a simple script that can do the same. I used pkill for killing processes, so that I can avoid having the logic of finding instances and killing them. To reduce resource utilisation I used a sleep command in between(?). Take a look at the script.</p>
 
-<p>#!/bin/bashwhile :do    h=$(date +“%H”)    if [ $h -gt 5 ]; then        if [ $h -lt 20 ]; then            pkill nmap        fi    fi    sleep 1done</p>
+<h1>!/bin/bashwhile :do    h=$(date +“%H”)    if [ $h -gt 5 ]; then        if [ $h -lt 20 ]; then            pkill nmap        fi    fi    sleep 1done</h1>
 
 <p>I have a copy in my current directory and I run it on my machine using ’./my_script.sh &amp;’ - so that I can use the prompt for my other works. Hope this post was useful.
 //See you in the afterlife…//Subin Sebastian</p>

@@ -87,30 +87,34 @@
   <div class="container">
     <p>Ever wondered how computers startup? Or where does the term <a href="https://en.wikipedia.org/wiki/Booting"><strong>booting</strong></a> come from in the first place? I was personally experimenting with boot-loaders (the program that loads an operating system from a disk to the memory in its simplest functionality), and came across several core concepts behind the booing-process of a computer.</p>
 
-<p><img src="/images/windows-xp-boot-screen.png" alt="width=50%" /></p>
+<p><img src="/images/windows-xp-boot-screen.png" alt="width=50%"></p>
 
-<h2 id="the-term">The Term</h2>
-<p>The word <strong>booting</strong> is generally used to represent a set of steps a computer performs after powering it up, to the point where it becomes fully functional for use. Modern computers does this in even a matter of seconds. Historically, the term <strong>booting</strong> originated from the paradox that, if one wants to load a computer memory with softwares, by another software inside the computer itself, some sort of a cyclic mechanism should be in place. The term <em>loading</em> means, moving the software to the primary memory from somewhere else. So, to do this, a method which is analogous to the phrase <a href="https://en.wikipedia.org/wiki/Bootstrapping"><em>pull oneself up by one’s bootstraps</em></a> is put in place. Basically what happens is that, when the computer is powered up, its primary memory will be empty (or can be filled with garbage, which can result in unexpected behaviour if executed). So, once ROMs have become popular in the industry, engineers put together an on-board ROM with some standard initialisation program, which loads a set of specific programs into the primary memory. Historically this program is called the <a href="https://en.wikipedia.org/wiki/BIOS">BIOS - Basic Input Output System</a>. Although with the advancements in computing, more advanced systems like UEFI were designed to replace BIOS, these programs are backward compatible with the BIOS. Since the BIOS/UEFI is written to an on-board ROM chip, they can be called a firmware rather than a software or a program. So, in simple words, job of such a program is to load some program generally called a <strong>boot-loader</strong> into the primary memory. Thus the boot-loader actually contributes to the term <strong>booting</strong>.</p>
+<h2>The Term</h2>
 
-<h2 id="boot-loader-bootstrap-loader">Boot Loader (Bootstrap Loader)</h2>
+<p>The word <strong>booting</strong> is generally used to represent a set of steps a computer performs after powering it up, to the point where it becomes fully functional for use. Modern computers does this in even a matter of seconds. Historically, the term <strong>booting</strong> originated from the paradox that, if one wants to load a computer memory with softwares, by another software inside the computer itself, some sort of a cyclic mechanism should be in place. The term <em>loading</em> means, moving the software to the primary memory from somewhere else. So, to do this, a method which is analogous to the phrase <a href="https://en.wikipedia.org/wiki/Bootstrapping"><em>pull oneself up by one&#39;s bootstraps</em></a> is put in place. Basically what happens is that, when the computer is powered up, its primary memory will be empty (or can be filled with garbage, which can result in unexpected behaviour if executed). So, once ROMs have become popular in the industry, engineers put together an on-board ROM with some standard initialisation program, which loads a set of specific programs into the primary memory. Historically this program is called the <a href="https://en.wikipedia.org/wiki/BIOS">BIOS - Basic Input Output System</a>. Although with the advancements in computing, more advanced systems like UEFI were designed to replace BIOS, these programs are backward compatible with the BIOS. Since the BIOS/UEFI is written to an on-board ROM chip, they can be called a firmware rather than a software or a program. So, in simple words, job of such a program is to load some program generally called a <strong>boot-loader</strong> into the primary memory. Thus the boot-loader actually contributes to the term <strong>booting</strong>.</p>
+
+<h2>Boot Loader (Bootstrap Loader)</h2>
+
 <p>A boot-loader is in simple words, a small program which is present in the boot-sector of any of the disk available on the system. We will find what is a boot sector in the next section. Boot loader should be sized exactly <strong>510 bytes</strong> or less. Nothing much can be done with that size limit, apart from printing some messages, may be, and transferring the rest of the job to a more capable program. This is the reason why, booting is done in multiple stages. We will see what are the stages in booting, but this 510 byte program is in general called the <strong>first stage boot loader</strong> or The Boot Loader itself.</p>
 
-<p><img src="/images/grub-bootloader.png" alt="width=50%" /></p>
+<p><img src="/images/grub-bootloader.png" alt="width=50%"></p>
 
-<h2 id="boot-sector">Boot Sector</h2>
+<h2>Boot Sector</h2>
 
-<p><img src="/images/disk-structure.png" alt="width=50%" /></p>
+<p><img src="/images/disk-structure.png" alt="width=50%"></p>
 
 <p>Disks (floppy disks to be precise) are divided physically into small sections called <a href="https://en.wikipedia.org/wiki/Disk_sector">sectors</a>. The major reason why disks are divided into sectors is that, to quickly find the location of a specific file. Say for example, one could tell a file is at <strong>Disk-0, Track-3, Sector-19</strong>. And the reason for such a quick access mechanism was needed because, the read-write head on hard disks are moved by electric motors and always has some delays in moving from one place to the other across the disk area. These sector and are traditionally sized 512 bytes for hard disks are floppies. A boot sector is nothing but a sector, which contains a boot-loader program, followed by the boot signature. A boot signature is nothing but the last two bytes of the boot sector should be the magic number <strong>0xAA55</strong>. This boot-sector should always be the first sector of the disk as well. Such a disk with the first sector loaded with the boot-loader program is called a boot disk.</p>
 
-<p><img src="/images/boot-sector.png" alt="width=50%" /></p>
+<p><img src="/images/boot-sector.png" alt="width=50%"></p>
 
 <p>The image above shows the content of a boot sector. Notice that the last two bytes are equal to <a href="http://stackoverflow.com/questions/1125025/what-is-the-role-of-magic-number-in-boot-loading-in-linux"><strong>0xAA55</strong></a>. The rest of the 512 bytes should be the boot loader code. Also notice that it is actually <strong>0x55</strong> followed by <strong>0xAA</strong> because the lower byte is represented first.</p>
 
-<h2 id="boot-stages">Boot Stages</h2>
-<p>Since boot loaders are limited to 512 bytes in size, not much can be done using the boot-loader program itself. But it can load other programs in to the primary memory for execution. This gives us an opportunity. The boot loader can load a more capable program into the memory. This newly loaded program doesn’t have any size constraints. Most modern operating systems uses this approach. The boot-loader loads another more capable program, and then that program loads more files and programs and so on. Thus the booting process is represented as stages. The first 512-byte boot loader as first stage boot loader, and the next as second stage boot loader and so on.</p>
+<h2>Boot Stages</h2>
 
-<h2 id="a-simple-boot-loader-that-does-not-boot">A Simple Boot-Loader that does not boot</h2>
+<p>Since boot loaders are limited to 512 bytes in size, not much can be done using the boot-loader program itself. But it can load other programs in to the primary memory for execution. This gives us an opportunity. The boot loader can load a more capable program into the memory. This newly loaded program doesn&#39;t have any size constraints. Most modern operating systems uses this approach. The boot-loader loads another more capable program, and then that program loads more files and programs and so on. Thus the booting process is represented as stages. The first 512-byte boot loader as first stage boot loader, and the next as second stage boot loader and so on.</p>
+
+<h2>A Simple Boot-Loader that does not boot</h2>
+
 <p>I have been experimenting with boot loaders and managed to write a simple boot loader that any x86 compatible computer will load automatically. For this experiment, I have created a virtual box VM with standard basic-x86 configurations. Then I have coded a simple boot loader and assembled it with <a href="http://nasm.us/">NASM</a>. Please find the following code.</p>
 
 <figure class="highlight"><pre><code class="language-asm" data-lang="asm"><span class="nf">org</span> <span class="mi">0x7c00</span>
@@ -140,15 +144,15 @@
 <span class="nf">times</span> <span class="mi">510</span><span class="p">-(</span><span class="no">$-$$</span><span class="p">)</span> <span class="no">db</span> <span class="mi">0</span>
 <span class="nf">dw</span> <span class="mi">0xaa55</span></code></pre></figure>
 
-<p>The first line of the program is nothing but an assembler directive. The assembler will assemble that code and relative addresses such that the program is loaded to the address <strong>0x7c00</strong> always. The address labeled <strong>message</strong> is loaded with a string <em>Booting OS…</em> and the rest of the program does nothing but print the message into the computer’s console in text-mode. Notice that no OS provided <a href="https://en.wikipedia.org/wiki/Interrupt_handler">interrupt routines</a> are available in this stage, because there is not fucking OS at this level ofcourse. Interrupt routine <strong>0x10</strong> is provided by the BIOS for printing characters into a text-mode console. Here is the result of this experiment.</p>
+<p>The first line of the program is nothing but an assembler directive. The assembler will assemble that code and relative addresses such that the program is loaded to the address <strong>0x7c00</strong> always. The address labeled <strong>message</strong> is loaded with a string <em>Booting OS...</em> and the rest of the program does nothing but print the message into the computer&#39;s console in text-mode. Notice that no OS provided <a href="https://en.wikipedia.org/wiki/Interrupt_handler">interrupt routines</a> are available in this stage, because there is not fucking OS at this level ofcourse. Interrupt routine <strong>0x10</strong> is provided by the BIOS for printing characters into a text-mode console. Here is the result of this experiment.</p>
 
-<p><img src="/images/stage-one-bootloader-running.png" alt="width=50%" /></p>
+<p><img src="/images/stage-one-bootloader-running.png" alt="width=50%"></p>
 
-<h2 id="the-rest-of-the-process">The rest of the process</h2>
+<h2>The rest of the process</h2>
+
 <p>This example boot loader does nothing but printing a message to the console. As you can see, a trivial task like this takes a lot of effort and understanding of the underlaying system. Some calls this <a href="https://en.wikipedia.org/wiki/Bare_machine">bare-metal</a> programming, as there is not much of an abstraction available like in other programming environments. The next task would obviously to create a second stage boot loader and load and execute it from this level. We might also want to switch to <a href="https://en.wikipedia.org/wiki/Protected_mode">32-bit protected mode</a> since the 16-bit real mode in which all first stage boot-loaders run is not memory-secure. Will keep posting updates on this blog.</p>
 
 <p>Thanks for reading.</p>
-
 
 	<div id="disqus_thread"></div>	
 <script type="text/javascript">
