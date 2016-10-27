@@ -1,0 +1,86 @@
+<html>
+    <head>
+         <link rel="stylesheet" type="text/css" href="css/post.css">
+         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+         <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+         <script>hljs.initHighlightingOnLoad();</script>
+         <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body><p>Parse.com has announced shut down a few months ago, and they are planning complete the process by the end of the year 2016. They have done a pretty good job in helping developers migrating to other platforms, including Amazon Web Services. I have experimented with their automated tools, and One-Click deployment solution, and this article discusses about what I think the best way to setup a web-app from a Parse.com background.</p>
+<h2 id="baby-steps">Baby Steps</h2>
+<p>At the minimum, here is what we are going to do. These steps assumes that, you already have an AWS account setup.</p>
+<ul>
+<li>Create an Elastic Beanstalk Environment</li>
+<li>Clone the Parse Server Example</li>
+<li>Setup a MongoLab deployment</li>
+<li>Connect and run</li>
+</ul>
+<h2 id="elastic-beanstalk">Elastic Beanstalk</h2>
+<p>Elastic beanstalk is a wrapper offering from AWS. It basically includes a compute instance (t2.small is recommended by Parse.com), an S3 bucket and which runs in a load balancing, autoscaling group. EB is apparently one of the best way to deploy and manage web apps on AWS. To get started, you may need to install the Elastic Beanstalk Command Line Interface, which lets you create environments and deploy code.</p>
+<p><strong>1. Creating an IAM Role</strong></p>
+<p>To get started, you need to create a use and IAM role assigned to that user, so that you can create EB instances. Go to <a href="https://console.aws.amazon.com/" class="uri">https://console.aws.amazon.com/</a> and select <strong>Identity and Access Management</strong>. Select <strong>Users</strong> from the left pane and create a new user. Once created you will see the access-key-id and access-secret. Note these two strings down. Now, click on the username, and navigate to <strong>Permissions</strong>. Click on <strong>Attach Policy</strong> and select <em>AWSElasticBeanstalkFullAccess</em> and click save. Now, this user has full access to EB service.</p>
+<p><strong>2. Installing EB CLI</strong></p>
+<p>Depending on your operating system, choose one of the following commands to install the elastic beanstalk CLI.</p>
+<p>{% highlight sh %} # Linux $ pip install awsebcli</p>
+<h1 id="mac-osx">Mac OSX</h1>
+<p>$ brew install awsebcli {% endhighlight %}</p>
+<p><strong>3. Creating an Elastic Beanstalk Environment</strong></p>
+<p>Create a folder and name it appropriately. Clone the Parse-Server-Example repository into this folder. {% highlight sh %} $ git clone https://github.com/ParsePlatform/parse-server-example.git <your app="" name=""> {% endhighlight %} Run <strong>$ eb init</strong> to initialize the directory and login using the access-key-id and access-secret created from the earlier step. Run <strong>$ eb create</strong> to create an EB app and run <strong>$ eb deploy</strong> to upload the code and run your app on AWS.</your></p>
+<div class="figure">
+<img src="%7B%7B%20site.url%20%7D%7D/images/aws-app-running.png">
+
+</div>
+<blockquote>
+<p>Note : You may choose the appropriate availability region on AWS to have the lowest latency</p>
+</blockquote>
+<h2 id="mongolab-setup">Mongolab setup</h2>
+<p>Go to http://mongolab.com and sign-up for a free account. Click <strong>Create new</strong> database, select AWS, and choose a single-node sandbox for now. You may migrate to a better deployment for a production app. Give a name to your database and click <strong>Create</strong>. This will leave you with a new MongoDB deployment. Now, create a new DB user, and make sure <strong><em>NOT</em></strong> to select <strong>read-only</strong>. Everything is good from the Mongo standpoint. Your mongoDB URI will be something approximately like the following.</p>
+<p>{% highlight sh %} mongodb://<db_user>:<db_password><span class="citation">@ds011472.mlab.com:11472</span>/<db_name> {% endhighlight %}</db_name></db_password></db_user></p>
+<h2 id="setting-up-environment-variables">Setting up Environment Variables</h2>
+<p>Now, that we have all the basic components, you may go ahead and configure the EB environment variables. Parse server uses environment variables to configure and run the web server. Go to Elastic Beanstalk on AWS console, select the newly created app (the app you created through the CLI should appear here). Click on <strong>Configuration</strong> on the left pane, and click on the small <i class="icon-cog"></i> gear icon on <strong>Software Configuration</strong> and scroll down to the bottom of the screen, you may see <strong>Environment Properties</strong>. Add the following three properties and values for each of them.</p>
+<ol style="list-style-type: decimal">
+<li><strong>APP_ID</strong> : An alpha-num string that is sufficiently long</li>
+<li><strong>MASTER_KEY</strong> : Another alpha-num string that is sufficiently long</li>
+<li><strong>DATABASE_URI</strong> : The MongoLab URI you have just generated</li>
+</ol>
+<p>Press <strong>Save</strong>, and we are ready to run our app on the parse instance now.</p>
+<div class="figure">
+<img src="%7B%7B%20site.url%20%7D%7D/images/aws-env-variables-parse.png" alt="width=50%">
+<p class="caption">width=50%</p>
+</div>
+<h2 id="saving-the-first-object-and-retrieving">Saving the first object and retrieving</h2>
+<p>To create and save an object to the Parse server, use the same approach we used on Parse.com.</p>
+<p>{% highlight sh %} $ curl -X POST<br>
+-H &quot;X-Parse-Application-Id: <app_id>&quot;<br>
+-H &quot;Content-Type: application/json&quot;<br>
+-d &apos;{&quot;score&quot;:1337,&quot;playerName&quot;:&quot;John Doe&quot;,&quot;cheatMode&quot;:false}&apos;<br>
+http://<beanstalk_url>/parse/classes/GameScore</beanstalk_url></app_id></p>
+<p>{&quot;objectId&quot;:&quot;cuD8K9vbVm&quot;,&quot;createdAt&quot;:&quot;2016-05-11T12:29:36.176Z&quot;} {% endhighlight %}</p>
+<p>To retrieve also, the same method. Note that for creating an object just the APP_ID is enough. {% highlight sh %} $ curl -X GET<br>
+-H &quot;X-Parse-Application-Id: <app_id>&quot;<br>
+-H &quot;X-Parse-Master-Key: <master_key>&quot;<br>
+http://<beanstalk_url>/parse/classes/GameScore</beanstalk_url></master_key></app_id></p>
+<p>{&quot;results&quot;:[{&quot;objectId&quot;:&quot;cuD8K9vbVm&quot;,&quot;score&quot;:1337,&quot;playerName&quot;:&quot;John Doe&quot;,&quot;cheatMode&quot;:false,&quot;updatedAt&quot;:&quot;2016-05-11T12:29:36.176Z&quot;,&quot;createdAt&quot;:&quot;2016-05-11T12:29:36.176Z&quot;}]} {% endhighlight %}</p>
+<p>You may get the beanstalk instance&apos;s publick url from the beanstalk app page on the aws console. App key and master key should be the one used in the environment properties.</p>
+<h2 id="further-improvements">Further Improvements</h2>
+<p><strong>1. Adding Cloud Code Endpoints</strong></p>
+<p>Your sample app already contains <code>index.js</code> which is nothing but the good old <code>app.js</code> from Parse.com terminology. You may add new endpoints and write cloud functions there, or split into multiple modules if required.</p>
+<p><strong>2. Using S3 buckets for file upload</strong></p>
+<p>By default, files goes to the mongoDB. You may change this functionality, and direct file upload into S3 buckets. This is particularly useful, because S3 is comparatively cheaper and you may use convenient Lambda functions with them, say for example for scaling images. Parse server comes with built in support for S3. <a href="https://github.com/ParsePlatform/parse-server/wiki/Configuring-File-Adapters#configuring-s3adapter">Read More</a>.</p>
+<p><strong>3. Parse Dashboard</strong></p>
+<p>One of the best thing Parse.com had is their nice looking app dashboard, where you can inspect database tables and review other things related to your app. You may install it as a component on your local machine and run it using the beanstalk server URL. <a href="https://github.com/ParsePlatform/parse-dashboard">Read More</a>.</p>
+<p><strong>4. Using API Gateway Service</strong></p>
+<p>AWS also provides an API Gateway service. If you are planning to expose a REST api from your web app, this would be an ideal choice. API Gateway comes with caching and several other features to improve the performance of your API. <a href="https://aws.amazon.com/api-gateway/">Read More</a>.</p>
+<p>Thanks for Reading.</p>
+
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    </body>
+</html>
