@@ -1,0 +1,57 @@
+<html>
+    <head>
+         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+         <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+         <script>hljs.initHighlightingOnLoad();</script>
+         <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+         <link rel="stylesheet" type="text/css" href="css/post.css">
+    </head>
+    <body><p>Everybody kind of forgot about the best Android phone ever to be produced, the <a href="http://www.gsmarena.com/samsung_galaxy_nexus_i9250-4219.php">Galaxy Nexus</a>, after Google abandoned it with Android 4.4 OTA update. There will not be another update from Google for Galaxy Nexus in the future due to some driver portability issues for its TI OMAP core. But recently someone from the community managed to build AOSP Android 5.0 for Galaxy Nexus bringing it back from the grave. I was kind of happy to see this as I&#x2019;m still a proud owner of one of them, and didn&#x2019;t have a budget to spend on new gadgets every other week. So, I decided to flash my Nexus with Lollipop and this is just a brief post about it. The following steps just worked for me pretty well.</p>
+<p>Please note that the entire process was not 100% successful. So, if you are planning to do this on your primary phone, rather look out for something else like <em><a href="https://www.google.co.in/search?safe=off&amp;biw=1258&amp;bih=850&amp;q=Cyanogenmod&amp;spell=1&amp;sa=X&amp;ei=nV1NVbjQBcOiugTG-IGoBw&amp;ved=0CBkQvwUoAA">Cyanogenmod 11</a></em>. And please note that, this ROM works only for Galaxy Nexus GSM International with baseband version I9250XXLJ1.</p>
+<h2 id="step-1-installing-android-debug-bridge-adb-and-fastboot">Step 1 : Installing Android Debug Bridge (ADB) and Fastboot</h2>
+<p>Both adb and fastboot are small and quite useful tools which comes bundled with the Android SDK. If you are an Android developer or something you will already have this on your machine. If not, goto <a href="https://developer.android.com/sdk/index.html#Other">SDK Download Website</a> and download the appropriate version for your PC. On some operating systems, you will also need a USB driver to enable debugging on your device to be able to use with ADB. Once adb is setup correctly, enable USB debugging on your device. You can find more details about adb and enabled debugging on your device <a href="http://developer.android.com/tools/help/adb.html">here</a>. Both adb and fastboot comes in the same package. You can verify adb and fastboot are correctly setup by trying out the following commands.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ot">$adb</span> <span class="kw">version</span>
+<span class="ot">$fastboot</span></code></pre></div>
+<h2 id="step-2-flashing-a-custom-recovery-software">Step 2 : Flashing a custom recovery software</h2>
+<p>You cannot flash anything other than the stock android ROMs on your phones with the stock recovery software. You need to first flash a custom recovery software on your phone to do this. There are two major recovery tools available publicly. One is <a href="https://www.clockworkmod.com/">ClockWorkMod</a> and the other is <a href="https://twrp.me/">TWRP</a>. Even though ClockWorkMod is quite popular, I would suggest you to use TWRP. It has a better interface and it is less buggy as I learned from XDA. Download the recovery software image from the TWRP website for Galaxy Nexus i9250. Now reboot into bootloader mode and execute the following commands to flash the TWRP recovery image.</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ot">$adb</span> <span class="kw">reboot</span> bootloader <span class="co"># This will reboot your device into bootloader</span>
+<span class="ot">$fastboot</span> <span class="kw">flash</span> recovery <span class="kw">&lt;</span>path_to_recovery.img<span class="kw">&gt;</span></code></pre></div>
+<p>Now press the volume up &amp; down keys to navigate to Recovery and then press the power button to enter the recovery mode, which is now the TWRP. If TWRP is not correctly installed, you will enter into the stock recovery or may be have soft bricked the device. Soft bricking unlike hardware bricking, is not something to be panicked about. Try flashing the TWRP recovery again.</p>
+<div class="figure">
+<img src="https://github.com/subinsebastien/rowfiles/raw/master/8.5.15/bootloader.png">
+
+</div>
+<h2 id="step-3-wiping-the-device-clean-using-twrp">Step 3 : Wiping the device clean using TWRP</h2>
+<p>You can navigate using the touch screen with TWRP. Thats a nice touch anyway. Navigate to Wipe &gt; Advance Wipe and then select every folder except <strong>System</strong> and <strong>Data</strong>. I have tried to wipe these two, and eventually run into problems soft bricking the device again. You might not be able to flash this particular ROM if you wipe these two folders. Once you have wiped the device properly proceed to the next step.</p>
+<h2 id="step-4-download-and-flash-the-fml-aosp-5.0-rom-for-nexus">Step 4 : Download and flash the FML AOSP 5.0 ROM for Nexus</h2>
+<p>You can download the ROM image from <a href="http://get.xda-developers.com/GATymndDiXaqPwdu0lNFLQ/1431141162/4/3/5/2/FML-AOSP-5.0-20141109-maguro.zip">here</a>. Its about 162MBs. Now move the ROM image to the device&#x2019;s SD card root folder. Use the following command. {% highlight sh %} $adb push &lt;path_to_rom_file.zip&gt; /sdcard/ {% endhighlight %} It takes a moment or so. After successfully moving the image file, press the home button on the device running TWRP. Click <strong>Install</strong> and then select the zip file from the sdcard folder. Confirm flash, and wait for about 5 minutes while the flash is in progress. If you are planning to install Google apps, proceed to step 5 or otherwise just reboot your device into Android 5.0.</p>
+<div class="figure">
+<img src="https://github.com/subinsebastien/rowfiles/raw/master/8.5.15/flash_failure.png">
+
+</div>
+<h2 id="step-5-optional-installing-google-apps">Step 5 : (Optional) Installing Google Apps</h2>
+<p>Download the Google Apps bundle from&#xA0;<a href="http://get.xda-developers.com/l1PfxxIAP3_gilN4kw2aHA/1431143828/1/0/9/8/FML-GApps-5.0-20141109.zip">here</a>. Push the zip file using add into <code>/sdcard/</code> just like we did in Step 4. Again, click <strong>Install</strong> and select the Google apps zip file from the <code>/sdcard</code> folder. Once completed, simply reboot the device from TWRP.</p>
+<div class="figure">
+<img src="https://github.com/subinsebastien/rowfiles/raw/master/8.5.15/sccess.png">
+
+</div>
+<h2 id="results-notes">Results &amp; Notes</h2>
+<ul>
+<li>I was able to run Andorid 5.0 on my Galaxy Nexus. But the <em>phone</em> part of the device is not working yet. I tried flashing the radio image (the software part that manages the RF module) from the stock Android image for my device. It didn&#x2019;t work either. So basically, this process rendered my device unusable for telephonic needs.</li>
+<li>The camera is not working at all. So you cannot take new photographs with your device anymore. Yep, yet another important feature not working.</li>
+<li>Thirdly, the camera flash light is not working either. This is directly linked with the camera issue I have mentioned above. Since the flash light control is a part of the camera API, I guess these two issues will be fixed together in the future, if they are getting fixed at all.</li>
+<li>I was not able to setup my device with Google at first. I had to factory reset again to enter into the setup mode. After the factory reset, the device tried to activate the cellular for quite some time with no luck at all.</li>
+</ul>
+<p>Thanks for reading the post. Hope you would find it useful if you own a Nexus too. Good luck in not bricking your phone. Happy hacking.</p>
+
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    </body>
+</html>

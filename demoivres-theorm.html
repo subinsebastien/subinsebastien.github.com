@@ -1,0 +1,69 @@
+<html>
+    <head>
+         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+         <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+         <script>hljs.initHighlightingOnLoad();</script>
+         <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+         <link rel="stylesheet" type="text/css" href="css/post.css">
+    </head>
+    <body><p>Recently I came across a math problem on a Facebook group I silently follow. There were a couple of solutions posted by different people. So I thought, may be I should try solving it my way. So this post. The problem statment was as follows.</p>
+<p>Prove that</p>
+<p><br><span class="math display">$$
+\left[\frac{1 + \sin\theta + i \cos\theta}{1 + \sin\theta - i \cos\theta}\right]^n = \cos\left[\frac{n\pi}{2} - n\theta\right] + i\sin\left[\frac{n\pi}{2} - n\theta\right]\tag1
+$$</span><br></p>
+<p>Demoivre&apos;s law says that <br><span class="math display">$$
+\left(\cos\theta + i\sin\theta\right)^n = \cos{n\theta} + i\sin{n\theta} \tag2
+$$</span><br></p>
+<p>Therefor, the RHS of equation (1) becomes,</p>
+<p><br><span class="math display">$$
+\begin{align} \mathcal RHS &amp; = \cos{n\left[\frac\pi2-\theta\right]} + i\sin{n\left[\frac\pi2 -\theta\right]}\tag3 \\ &amp; = \cos{n\left[P\right]} + i\sin{n\left[P\right]} \\ &amp; = \left(\cos{P} + i\sin{P}\right)^n \tag4 \end{align}
+$$</span><br> Now, lets simplify the LHS,</p>
+<p><br><span class="math display">$$
+\begin{align} LHS &amp; = \left[\frac{1 + \sin\theta + i \cos\theta}{1 + \sin\theta - i \cos\theta}\right]^n \\ &amp; = \left[\frac{1 + i\left(-i\sin\theta + \cos\theta\right)}{1 - i\left(i\sin\theta+\cos\theta\right)}\right]^n \\ &amp; = \left[\frac{1 + i\left(\cos\theta -i\sin\theta \right)}{1 - i\left(\cos\theta+i\sin\theta\right)}\right]^n \\ &amp; = \left[\frac{1+ie^{-i\theta}}{1-ie^{i\theta}}\right]^n \tag5 \end{align}
+$$</span><br></p>
+<p>Now, compare LHS and RHS and take \(n^{th}\) root on both sides</p>
+<p><br><span class="math display">$$
+\left[\frac{1+ie^{-i\theta}}{1-ie^{i\theta}}\right] = \left(\cos{P} + i\sin{P}\right) \\
+\left[\frac{1+ie^{-i\theta}}{1-ie^{i\theta}}\right] = \left[\cos{\left(\frac{\pi}{2}-\theta\right)} + i\sin{\left(\frac{\pi}{2}-\theta\right)}\right]
+$$</span><br></p>
+<p>Therefore, <br><span class="math display">$$
+\left[\frac{1+ie^{-i\theta}}{1-ie^{i\theta}}\right] = e^{i{\left(\frac{\pi}{2}-\theta\right)}} \tag6
+$$</span><br></p>
+<p>Now lets assume, \(K = ie^{i}\) and take natural log on both sides.</p>
+<p><br><span class="math display">$$
+\begin{align} ln(K) &amp; = ln\left(ie^{i\theta}\right) \\ &amp; = ln(i) + ln(e^{i\theta}) \\ &amp; = ln(i) + i\theta.ln(e) \\ &amp; = i\frac{\pi}{2} + i\theta \tag7 \\ &amp; = i\left(\frac{\pi}{2}+\theta\right)\\  e^{ln(K)} &amp; =  e^{i\left(\frac{\pi}{2}+\theta\right)} \\ K &amp; =  e^{i\left(\frac{\pi}{2}+\theta\right)} \tag8 \end{align}
+$$</span><br></p>
+<p>Similarly,</p>
+<p><br><span class="math display">$$
+\begin{align} ln(M) &amp; = ln\left(ie^{-i\theta}\right) \\ M &amp; = e^{i\left(\frac{\pi}{2}-\theta\right)}\tag9\end{align}
+$$</span><br></p>
+<p>Substitute these values back to equation (6)</p>
+<p><br><span class="math display">$$
+\frac{1+ e^{i\left(\frac{\pi}{2}-\theta\right)}}{1- e^{i\left(\frac{\pi}{2}+\theta\right)}} = e^{i{\left(\frac{\pi}{2}-\theta\right)}}
+$$</span><br></p>
+<p>Multiply both sides by the denominator of the LHS</p>
+<p><br><span class="math display">$$
+\begin{align} 1+e^{i\left(\frac{\pi}{2}-\theta\right)} &amp; = e^{i{\left(\frac{\pi}{2}-\theta\right)}} * \left(1- e^{i\left(\frac{\pi}{2}+\theta\right)}\right) \\ &amp; = e^{i{\left(\frac{\pi}{2}-\theta\right)}} - e^{i{\left(\frac{\pi}{2}-\theta\right)}} *  e^{i\left(\frac{\pi}{2}+\theta\right)} \\ &amp; = e^{i{\left(\frac{\pi}{2}-\theta\right)}} - e^{i\left(\frac{\pi}{2} - \theta + \frac{\pi}{2} +\theta\right)} \\ &amp; = e^{i{\left(\frac{\pi}{2}-\theta\right)}} - e^{i\pi} \\ &amp; = e^{i{\left(\frac{\pi}{2}-\theta\right)}} + 1 \\ &amp; = LHS \end{align}
+$$</span><br></p>
+<p>Thus proved. On equation (7), we used the equality, \(ln(i) = i\) Following is the reason.</p>
+<p><br><span class="math display">$$
+e^{i\theta} = \cos\theta + i\sin\theta \\
+e^{i\frac{\pi}{2}} = \cos{\frac{\pi}{2}} + i\sin{\frac{\pi}{2}} \\
+e^{i\frac{\pi}{2}} = 0 + i \\
+ln(e^{i\frac{\pi}{2}}) = ln(i) \\
+{i\frac{\pi}{2}} ln(e) = ln(i) \\
+{i\frac{\pi}{2}} = ln(i)
+$$</span><br></p>
+<p>This was used in equation (7)</p>
+
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,171 @@
+<html>
+    <head>
+         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+         <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+         <script>hljs.initHighlightingOnLoad();</script>
+         <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+         <link rel="stylesheet" type="text/css" href="css/post.css">
+    </head>
+    <body><h1 id="google-cloud-vision-api">Google Cloud Vision API</h1>
+<p>Google Cloud Vision API provides a REST API for developers to understand the contents of images. In my personal experience, it is currently the best working solution for object detection from images, compared to custom trained HAAR/LBP classifiers or IBM&apos;s Watson. Although it is still in beta, it provides very good results with object detection problems. Currently the API provides the following types of algorithms, each specific to a feature type.</p>
+<table style="width:88%;">
+<colgroup>
+<col width="30%">
+<col width="56%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Functionality</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>LABEL_DETECTION</td>
+<td>Execute Image Content Analysis on the entire image and return</td>
+</tr>
+<tr class="even">
+<td>TEXT_DETECTION</td>
+<td>Perform Optical Character Recognition (OCR) on text within the image</td>
+</tr>
+<tr class="odd">
+<td>FACE_DETECTION</td>
+<td>Detect faces within the image</td>
+</tr>
+<tr class="even">
+<td>LANDMARK_DETECTION</td>
+<td>Detect geographic landmarks within the image</td>
+</tr>
+<tr class="odd">
+<td>LOGO_DETECTION</td>
+<td>Detect company logos within the image</td>
+</tr>
+<tr class="even">
+<td>SAFE_SEARCH_DETECTION</td>
+<td>Determine image safe search properties on the image</td>
+</tr>
+<tr class="odd">
+<td>IMAGE_PROPERTIES</td>
+<td>Compute a set of properties about the image (such as the image&apos;s dominant colors)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="request-example">Request Example</h2>
+<p>The following example uses curl</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash">$ <span class="kw">curl</span> -k -s -H <span class="st">&quot;Content-Type: application/json&quot;</span> https://vision.googleapis.com/v1/images:annotate?key=[YOUR_API_KEY] -d <span class="st">&apos;{ &quot;requests&quot;:[{ &quot;image&quot;:{ &quot;content&quot;:&quot;[IMAGE_AS_A_BASE_64_STRING]&quot;}, &quot;features&quot;:[{ &quot;type&quot;:&quot;LABEL_DETECTION&quot;, &quot;maxResults&quot;:10 }]}]}&apos;</span></code></pre></div>
+<p>The <code>API_KEY</code> can be obtained from your <a href="https://console.cloud.google.com">Google Cloud Platform Console</a>. You may get a browser key, as it can also be used with Android. The image needs to be <a href="https://en.wikipedia.org/wiki/Base64">base64 encoded</a> before making the request. Base64 gives you a string, and you may use it directly in the request. Alternatively, you can use Google Cloud Storage URLs, if you have hosted your images on Cloud Storage buckets. Check my test image and the Cloud Vision API response below.</p>
+<p><strong>Test Image</strong></p>
+<div class="figure">
+<img src="images/gcv-test_image.jpg">
+
+</div>
+<p><strong>Response</strong></p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+  <span class="dt">&quot;responses&quot;</span><span class="fu">:</span> <span class="ot">[</span>
+    <span class="fu">{</span>
+      <span class="dt">&quot;labelAnnotations&quot;</span><span class="fu">:</span> <span class="ot">[</span>
+        <span class="fu">{</span>
+          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/09j2d&quot;</span><span class="fu">,</span>
+          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;clothing&quot;</span><span class="fu">,</span>
+          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.99011743</span>
+        <span class="fu">}</span><span class="ot">,</span>
+        <span class="fu">{</span>
+          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/083jv&quot;</span><span class="fu">,</span>
+          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;white&quot;</span><span class="fu">,</span>
+          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.92788029</span>
+        <span class="fu">}</span><span class="ot">,</span>
+        <span class="fu">{</span>
+          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/06rrc&quot;</span><span class="fu">,</span>
+          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;shoe&quot;</span><span class="fu">,</span>
+          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.91207343</span>
+        <span class="fu">}</span><span class="ot">,</span>
+        <span class="fu">{</span>
+          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/09j5n&quot;</span><span class="fu">,</span>
+          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;footwear&quot;</span><span class="fu">,</span>
+          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.89330035</span>
+        <span class="fu">}</span><span class="ot">,</span>
+        <span class="fu">{</span>
+          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/0fly7&quot;</span><span class="fu">,</span>
+          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;jeans&quot;</span><span class="fu">,</span>
+          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.75597358</span>
+        <span class="fu">}</span><span class="ot">,</span>
+        <span class="fu">{</span>
+          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/017ftj&quot;</span><span class="fu">,</span>
+          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;sunglasses&quot;</span><span class="fu">,</span>
+          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.71857065</span>
+        <span class="fu">}</span><span class="ot">,</span>
+        <span class="fu">{</span>
+          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/07mhn&quot;</span><span class="fu">,</span>
+          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;trousers&quot;</span><span class="fu">,</span>
+          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.70007712</span>
+        <span class="fu">}</span>
+      <span class="ot">]</span>
+    <span class="fu">}</span>
+  <span class="ot">]</span>
+<span class="fu">}</span></code></pre></div>
+<h2 id="putting-together-an-android-app-with-the-api">Putting together an Android app with the API</h2>
+<p>I&apos;m using <a href="http://square.github.io/retrofit/">Retrofit</a> to work with the API. The following is my API interface.</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
+<span class="co">* Created by napster on 25/02/16.</span>
+<span class="co">    */</span>
+   <span class="kw">public</span> <span class="kw">interface</span> GoogleCloudVisionApi {
+    <span class="fu">@POST</span>(<span class="st">&quot;/images:annotate&quot;</span>)
+    LabelsResponse <span class="fu">detectObjects</span>(<span class="fu">@Query</span>(<span class="st">&quot;key&quot;</span>) String apikey, <span class="fu">@Body</span> ReqWrapper reqWrapper);
+   }</code></pre></div>
+<p>As you can see, I&apos;m using a <code>@Body</code> type, as I&apos;m wrapping the request object as a plain old java object.</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
+<span class="co">*  Created by napster on 25/02/16.</span>
+<span class="co">    */</span>
+   <span class="kw">public</span> <span class="kw">class</span> ReqWrapper {
+    <span class="kw">public</span> Request[] requests;
+
+    <span class="kw">public</span> <span class="fu">ReqWrapper</span>(Request[] requests) {
+        <span class="kw">this</span>.<span class="fu">requests</span> = requests;
+    }
+
+    <span class="kw">public</span> <span class="dt">static</span> <span class="kw">class</span> Request {
+        <span class="kw">public</span> Image image;
+        <span class="kw">public</span> Feature[] features;
+       
+        <span class="kw">public</span> Request(Image image, Feature[] features) {
+            <span class="kw">this</span>.<span class="fu">image</span> = image;
+            <span class="kw">this</span>.<span class="fu">features</span> = features;
+        }
+    }
+
+    <span class="kw">public</span> <span class="dt">static</span> <span class="kw">class</span> Image {
+        <span class="kw">public</span> String content;
+
+        <span class="kw">public</span> Image(String content) {
+            <span class="kw">this</span>.<span class="fu">content</span> = content;
+        }
+    }
+
+    <span class="kw">public</span> <span class="dt">static</span> <span class="kw">class</span> Feature {
+        <span class="kw">public</span> String type;
+        <span class="kw">public</span> <span class="dt">int</span> maxResults;
+       
+        <span class="kw">public</span> <span class="fu">Feature</span>(String type, <span class="dt">int</span> maxResults) {
+            <span class="kw">this</span>.<span class="fu">type</span> = type;
+            <span class="kw">this</span>.<span class="fu">maxResults</span> = maxResults;
+        }
+    }
+   }</code></pre></div>
+<p>Now, create an API connecter, declare required permissions in the manifest, and add a camera intent to capture random test images from around you. This is a good test case since, it actually reveals the capabilities of the Google Cloud Vision system, since the images are mostly noisy, and completely unknown to Google&apos;s ecosystem (such as Google Images). Here is what I&apos;ve got.</p>
+<div class="figure">
+<img src="images/gcv-android-test.png">
+
+</div>
+<p>You can read more about the Google Cloud Vision API <a href="https://cloud.google.com/vision/">here</a>.</p>
+
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    </body>
+</html>

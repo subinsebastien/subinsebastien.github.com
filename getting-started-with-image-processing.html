@@ -1,16 +1,17 @@
 <html>
     <head>
-         <link rel="stylesheet" type="text/css" href="css/post.css">
          <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
          <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
          <script>hljs.initHighlightingOnLoad();</script>
          <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+         <link rel="stylesheet" type="text/css" href="css/post.css">
     </head>
-    <body><p>I have been working on digital image processing for sometime now, and I was learning a lot of stuff recently. I thought I should put together a very basic getting started guide on image processing, which could help a lot of enthusiasts. This aritcle is greatly borrowed from the <a href="https://codewords.recurse.com/issues/six/image-processing-101">Image Processing - 101 Sher Minn Chong</a>. This article, as I have planned, will be multi-part, and will be as detail as possible from my own understanding of the concepts.</p>
+    <body><h1 id="getting-started-with-image-processing">Getting Started with Image Processing</h1>
+<p>I have been working on digital image processing for sometime now, and I was learning a lot of stuff recently. I thought I should put together a very basic getting started guide on image processing, which could help a lot of enthusiasts. This aritcle is greatly borrowed from the <a href="https://codewords.recurse.com/issues/six/image-processing-101">Image Processing - 101 Sher Minn Chong</a>. This article, as I have planned, will be multi-part, and will be as detail as possible from my own understanding of the concepts.</p>
 <h2 id="digital-image">Digital Image</h2>
 <p>Digital images are fundamentally a finite number of pixels distributed in X and Y axis, and are stored on the disk as a two (or more) dimentional array of integers or more complex datastructers, in rows and columns. Any 2D digital image can be viewed as a matrix of size NxM. Each element in the matrix represents a pixel. A <a href="https://en.wikipedia.org/wiki/Pixel">pixel</a>, its definition, and how a pixel is displayed on a screen or how it is printed on a paper, are out of the context of this article. Following is a hypothetical representation of a flower as a digital image.</p>
 <div class="figure">
-<img src="%7B%7B%20site.url%20%7D%7D/images/digital-image-rep.png">
+<img src="images/digital-image-rep.png">
 
 </div>
 <p>There are a few points to be noted here.</p>
@@ -22,8 +23,8 @@
 </ul>
 <p>Now, if you think about it, an absolute minimum palette should have at least two colors in it. Suppose my palette of colors have only black and white. Here is an image, that I can represent using this palette.</p>
 <div class="figure">
-<img src="%7B%7Bsite.url%7D%7D/images/bit_depth_1bit.jpg" alt="width=50%">
-<p class="caption">width=50%</p>
+<img src="images/bit_depth_1bit.jpg">
+
 </div>
 <p>Now, for indexing two colors, we need a minimum of one-bit of storage. If the bit is <code>0</code> &#x2014;&gt; the color is black, and if it is <code>1</code> &#x2014;&gt; the color is white. Such images are commonly referred to as <a href="https://en.wikipedia.org/wiki/Monochrome">monochrome</a> images. Every pixel in a monochrome image is either 1 or 0.</p>
 <p>But what if I need more colors to realistically reproduce an image? Basically, I need more bits to represent each pixel. Thats it! Suppose instead of just 1 bit, I use 2 bits to represent each pixel. I can now show 4 different colors. Take a look at my new palette.</p>
@@ -36,15 +37,15 @@
 </blockquote>
 <p>Now, just by adding one more bit, I have gratly improved the quality of the image. The image below shows the difference.</p>
 <div class="figure">
-<img src="%7B%7Bsite.url%7D%7D/images/bit_depth_2bit.jpg" alt="width=50%">
-<p class="caption">width=50%</p>
+<img src="images/bit_depth_2bit.jpg">
+
 </div>
 <p>The number of bits used to represent a pixel is called the <a href="https://en.wikipedia.org/wiki/Color_depth">bit depth or color depth</a> in digital image processing. Most images we now find on the web has 8-bit or higher depth. Using just 8 bits, you can display 256 different colors.</p>
 <h2 id="mode-13h">Mode 13h</h2>
 <p>While this is an unrelated topic, I think this is worth mentioning about the non-planar graphics mode in VGA. The VGA hardware included a <a href="https://en.wikipedia.org/wiki/Mode_13h">special graphics mode</a> where each pixel drawn on the screen was represented by 8-bits in the graphics memory. There were 256 indexed predefined colors in the palette, and this mode was enabled when the <code>AL</code> value is <code>0x13</code> and <code>AH</code> value is <code>0x00</code> and BIOS interrupt <a href="https://en.wikipedia.org/wiki/INT_10"><code>10h</code></a> is executed. Even before this, BBC Micro had a smaller palette of 8 colors using its 3-bit color graphics adapter. Read more about different color depths <a href="https://en.wikipedia.org/wiki/Color_depth">here</a>. The default 256-color VGA palette is shown below.</p>
 <div class="figure">
-<img src="%7B%7Bsite.url%7D%7D/images/vga_palette_13h.png" alt="width=30%">
-<p class="caption">width=30%</p>
+<img src="images/vga_palette_13h.png">
+
 </div>
 <h2 id="multi-channel-images-color-images">Multi-Channel Images (Color Images)</h2>
 <p>So far we have discussed only single channel images, where each pixel in the image is represented by a single number. This brings one limitation as the number of shades (or colors basically) we want to have in an image increases. Suppose you have an image with some pixels with colors wide apart in the spectrum of colors. For simplicity, I&apos;m representing such an image in a small matrix as shown below.</p>
