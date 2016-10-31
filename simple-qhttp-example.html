@@ -1,0 +1,122 @@
+<html>
+    <head>
+         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+         <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+         <script>hljs.initHighlightingOnLoad();</script>
+         <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+         <link rel="stylesheet" type="text/css" href="css/post.css">
+    </head>
+    <body><p>Reading time : Less than 10 minutes Qt provides a very good class named Qhttp for doing http requests and to get response from the web. This class is thread safe and easy to use. To begin with, create a Qt console application and name it DoHttp, and add a reference about network usage in your project file.</p>
+<p>Now add a new class to the project to handle the Qhttp object. You have to inherit from QObject to implement signals and slots. So set QObject as base class.</p>
+<div class="figure">
+<img src="images/qthttp.png">
+
+</div>
+<p>Add a Qhttp object to your new class and declare a couple of slots to handle signals emitted by it. Take a look at the header file.</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#ifndef HANDLER_H</span>
+<span class="ot">#define HANDLER_H</span>
+
+<span class="ot">#include &lt;QObject&gt;</span>
+<span class="ot">#include &lt;QHttp&gt;</span>
+<span class="ot">#include &lt;QDebug&gt;</span>
+
+<span class="kw">class</span> Handler : <span class="kw">public</span> <span class="ot">QObject</span>
+{
+    <span class="kw">Q_OBJECT</span>
+<span class="kw">public</span>:
+    <span class="kw">explicit</span> Handler(<span class="ot">QObject</span> *parent = <span class="dv">0</span>);
+    <span class="dt">void</span> doHttp();
+
+<span class="kw">signals</span>:
+
+<span class="kw">public</span> <span class="kw">slots</span>:
+    <span class="dt">void</span> stateChanged ( <span class="dt">int</span> state );
+    <span class="dt">void</span> responseHeaderReceived ( <span class="dt">const</span> QHttpResponseHeader &amp; resp );
+    <span class="dt">void</span> requestFinished ( <span class="dt">int</span> id, <span class="dt">bool</span> error );
+<span class="kw">private</span>:
+    QHttp *http;
+};
+
+<span class="ot">#endif </span><span class="co">// HANDLER_H</span></code></pre></div>
+<p>Finally, expand all the methods. The responseHeaderRecieved() signal is emitted by the Qhttp object when it receives the header for the response. Headers contains a couple of data including this content type and size. Once the request is finished, the requestFinished() signal is emitted. Don&#x2019;t get confused with signals and slots. Our class implements all of the slots by the same name as the corresponding signal emitted by the Qhttp object. Take a look the source code.</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &quot;handler.h&quot;</span>
+
+Handler::Handler(<span class="ot">QObject</span> *parent) :<span class="ot">QObject</span>(parent)  {
+    http = <span class="kw">new</span> QHttp(<span class="kw">this</span>);
+    <span class="fu">connect</span>(http, <span class="kw">SIGNAL</span>(stateChanged(<span class="dt">int</span>)), <span class="kw">this</span>, <span class="kw">SLOT</span>(stateChanged(<span class="dt">int</span>)));
+    <span class="fu">connect</span>(http, <span class="kw">SIGNAL</span>(responseHeaderReceived(QHttpResponseHeader)), <span class="kw">this</span>, <span class="kw">SLOT</span>(responseHeaderReceived(QHttpResponseHeader)));
+    <span class="fu">connect</span>(http, <span class="kw">SIGNAL</span>(requestFinished(<span class="dt">int</span>,<span class="dt">bool</span>)), <span class="kw">this</span>, <span class="kw">SLOT</span>(requestFinished(<span class="dt">int</span>,<span class="dt">bool</span>)));
+}
+
+<span class="dt">void</span> Handler::doHttp()  {
+    http-&gt;setHost(<span class="st">&quot;google.com&quot;</span>);
+    http-&gt;get(<span class="st">&quot;/&quot;</span>);
+}
+
+<span class="dt">void</span> Handler::stateChanged(<span class="dt">int</span> state)   {
+    <span class="kw">switch</span>(state)   {
+    <span class="kw">case</span> <span class="dv">0</span>:
+        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Unconnected&quot;</span>;
+        <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="dv">1</span>:
+        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Host Lookup&quot;</span>;
+        <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="dv">2</span>:
+        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Connecting&quot;</span>;
+        <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="dv">3</span>:
+        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Sending&quot;</span>;
+        <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="dv">4</span>:
+        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Reading&quot;</span>;
+        <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="dv">5</span>:
+        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Connect&quot;</span>;
+        <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="dv">6</span>:
+        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Closing&quot;</span>;
+        <span class="kw">break</span>;
+    }
+}
+
+<span class="dt">void</span> Handler::responseHeaderReceived(<span class="dt">const</span> QHttpResponseHeader &amp;resp)   {
+    <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Size : &quot;</span> &lt;&lt; resp.contentLength();
+    <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Type : &quot;</span> &lt;&lt; resp.contentType();
+    <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Status Code : &quot;</span> &lt;&lt; resp.statusCode();
+}
+
+<span class="dt">void</span> Handler::requestFinished(<span class="dt">int</span> id, <span class="dt">bool</span> error)   {
+    <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Request Id : &quot;</span> &lt;&lt; id;
+    <span class="kw">if</span>(error)   {
+        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Error&quot;</span>;
+    }   <span class="kw">else</span>    {
+        <span class="fu">qDebug</span>() &lt;&lt; http-&gt;readAll();
+    }
+}</code></pre></div>
+<p>Finally, include the class, make an object and run it.</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;QtCore/QCoreApplication&gt;</span>
+<span class="ot">#include &quot;handler.h&quot;</span>
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> *argv[])    {
+    <span class="ot">QCoreApplication</span> a(argc, argv);
+    Handler _handler;
+    _handler.doHttp();
+    <span class="kw">return</span> a.exec();
+}</code></pre></div>
+<p>Take a look at the output.</p>
+<div class="figure">
+<img src="images/qthttp-output.png">
+
+</div>
+
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    </body>
+</html>
