@@ -5,6 +5,14 @@
          <script>hljs.initHighlightingOnLoad();</script>
          <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
          <link rel="stylesheet" type="text/css" href="css/post.css">
+         <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-20813670-9', 'auto');
+            ga('send', 'pageview');
+        </script>
     </head>
     <body><h1 id="google-cloud-vision-api">Google Cloud Vision API</h1>
 <p>Google Cloud Vision API provides a REST API for developers to understand the contents of images. In my personal experience, it is currently the best working solution for object detection from images, compared to custom trained HAAR/LBP classifiers or IBM&apos;s Watson. Although it is still in beta, it provides very good results with object detection problems. Currently the API provides the following types of algorithms, each specific to a feature type.</p>

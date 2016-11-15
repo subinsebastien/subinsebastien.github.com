@@ -5,8 +5,17 @@
          <script>hljs.initHighlightingOnLoad();</script>
          <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
          <link rel="stylesheet" type="text/css" href="css/post.css">
+         <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-20813670-9', 'auto');
+            ga('send', 'pageview');
+        </script>
     </head>
-    <body><p>I have used both <strong>OpenCV</strong> Library and Qt Creator IDE back in my academic days. I have developed or more precisely experimented with both a lot. In my blog, you may find a couple of articles about both as well. A couple of years ago, I switched to OSX and my general interests were in Android mobile apps development using Java. Recently, I have got a chance to work with OpenCV again. I&apos;m one of the guy who prefers an IDE over command line tools and text editors to work on projects. So, this article is about setting up and using the best C++ IDE ever, the <strong>Qt Creator</strong> for developing OpenCV projects.</p>
+    <body><h1 id="developing-opencv-applications-using-qt-creator">Developing OpenCV Applications using Qt Creator</h1>
+<p>I have used both <strong>OpenCV</strong> Library and Qt Creator IDE back in my academic days. I have developed or more precisely experimented with both a lot. In my blog, you may find a couple of articles about both as well. A couple of years ago, I switched to OSX and my general interests were in Android mobile apps development using Java. Recently, I have got a chance to work with OpenCV again. I&apos;m one of the guy who prefers an IDE over command line tools and text editors to work on projects. So, this article is about setting up and using the best C++ IDE ever, the <strong>Qt Creator</strong> for developing OpenCV projects.</p>
 <h2 id="installing-opencv-on-mac-osx">Installing OpenCV on Mac OSX</h2>
 <p>There exist an open source package manager called <a href="http://brew.sh" title="Home Brew">brew</a> for mac. If you don&apos;t have brew installed on your machine, install brew first.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash">$ <span class="kw">ruby</span> -e <span class="st">&quot;</span><span class="ot">$(</span><span class="kw">curl</span> -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span class="ot">)</span><span class="st">&quot;</span></code></pre></div>
