@@ -1,0 +1,69 @@
+<html>
+    <head>
+         <title>Napster&apos;s Experiments with Freedom</title>
+         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+         <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+         <script>hljs.initHighlightingOnLoad();</script>
+         <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+         <link rel="stylesheet" type="text/css" href="css/post.css">
+         <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-20813670-9', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </head>
+    <body><h1 id="simple-chunked-data-handling-in-nodejsexpressjs">Simple Chunked Data Handling in NodeJS/ExpressJS</h1>
+<p>There are often cases where you actually get streamed data from certain systems and you actually want to stream the same to your clients. One good use-case is where Elasticsearch provides data streams, where you only get chunks of the original result at your application server layer. This data, you can either hold in-memory and then send to clients as a whole. But, this can risk your application server going out-of-memory if the data handled is really large size. Besides, most of the http clients supports chunked response handling. They can orchestrate the data together at the end, or in certain cases process directly on the chunk of data available.</p>
+<div class="figure">
+<img src="images/chunked-res.png">
+
+</div>
+<p>The following example shows a simple chunked data server. This express app waits 500ms before sending each piece of the response data.</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> express <span class="op">=</span> <span class="at">require</span>(<span class="st">&apos;express&apos;</span>)<span class="op">;</span>
+<span class="kw">var</span> app <span class="op">=</span> <span class="at">express</span>()<span class="op">;</span>
+<span class="kw">var</span> sentence <span class="op">=</span> [<span class="st">&quot;The&quot;</span><span class="op">,</span> <span class="st">&quot;quick&quot;</span><span class="op">,</span> <span class="st">&quot;brown&quot;</span><span class="op">,</span> <span class="st">&quot;fox&quot;</span><span class="op">,</span> <span class="st">&quot;jumps&quot;</span><span class="op">,</span> <span class="st">&quot;over&quot;</span><span class="op">,</span> <span class="st">&quot;the&quot;</span><span class="op">,</span> <span class="st">&quot;lazy&quot;</span><span class="op">,</span> <span class="st">&quot;dog&quot;</span>]<span class="op">;</span>
+
+<span class="va">app</span>.<span class="at">get</span>(<span class="st">&apos;/&apos;</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="op">=&gt;</span> <span class="op">{</span>
+   <span class="kw">var</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>
+   <span class="kw">var</span> regId <span class="op">=</span> <span class="at">setInterval</span>(() <span class="op">=&gt;</span> <span class="op">{</span>
+       <span class="va">res</span>.<span class="at">write</span>(sentence[i<span class="op">++</span>])<span class="op">;</span>
+       <span class="cf">if</span>(i <span class="op">&gt;=</span> <span class="va">sentence</span>.<span class="at">length</span>) <span class="op">{</span>
+           <span class="va">res</span>.<span class="at">end</span>()<span class="op">;</span>
+           <span class="at">clearInterval</span>(regId)<span class="op">;</span>
+           <span class="cf">return</span><span class="op">;</span>
+       <span class="op">}</span>
+   <span class="op">},</span> <span class="dv">500</span>)<span class="op">;</span>
+<span class="op">}</span>)<span class="op">;</span>
+
+<span class="va">app</span>.<span class="at">listen</span>(<span class="dv">11000</span><span class="op">,</span> () <span class="op">=&gt;</span> <span class="op">{}</span>)<span class="op">;</span></code></pre></div>
+<p>Just try running this server on your machine and see how it works perfectly fine with your existing browsers or clients such as curl. On the other hand, you can actually leverage the chunked-ness of your server, and actually work with chunks if you are really keen about performance.</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> http <span class="op">=</span> <span class="at">require</span>(<span class="st">&apos;http&apos;</span>)<span class="op">;</span>
+
+<span class="va">http</span>.<span class="at">get</span>(<span class="op">{</span>
+   <span class="dt">hostname</span><span class="op">:</span> <span class="st">&apos;localhost&apos;</span><span class="op">,</span>
+   <span class="dt">port</span><span class="op">:</span> <span class="dv">11000</span><span class="op">,</span>
+   <span class="dt">path</span><span class="op">:</span> <span class="st">&apos;/&apos;</span><span class="op">,</span>
+   <span class="dt">agent</span><span class="op">:</span> <span class="kw">false</span>
+<span class="op">}</span>).<span class="at">on</span>(<span class="st">&apos;response&apos;</span><span class="op">,</span> (response) <span class="op">=&gt;</span> <span class="op">{</span>
+   <span class="va">response</span>.<span class="at">on</span>(<span class="st">&apos;data&apos;</span><span class="op">,</span> (chunk) <span class="op">=&gt;</span> <span class="op">{</span>
+       <span class="co">// Do your processing on the chunk here</span>
+       <span class="va">console</span>.<span class="at">log</span>(<span class="va">chunk</span>.<span class="at">toString</span>())<span class="op">;</span>
+   <span class="op">}</span>)<span class="op">;</span> 
+<span class="op">}</span>)<span class="op">;</span></code></pre></div>
+<p>Very simple and straight forward as you would expect. You may also put together these chunks and get the final sentence in the response callback. But, most clients does this automatically for you, unless you are using something as low level as the <a href="https://nodejs.org/api/http.html">http</a> module.</p>
+<p>Thanks for reading.</p>
+
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    </body>
+</html>
