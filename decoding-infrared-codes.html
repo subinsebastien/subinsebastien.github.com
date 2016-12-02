@@ -1,0 +1,104 @@
+<html>
+    <head>
+         <title>Napster&apos;s Experiments with Freedom</title>
+         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+         <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+         <script>hljs.initHighlightingOnLoad();</script>
+         <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+         <link rel="stylesheet" type="text/css" href="css/post.css">
+         <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-20813670-9', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </head>
+    <body><h1 id="decoding-infrared-codes">Decoding Infrared Codes</h1>
+<p>I was trying to remotely maneuver a prototype robot I have made last week. If you happen to read it, you might know about it. I had an infrared receiver named&#xA0;<a href="http://t.umblr.com/redirect?z=http%3A%2F%2Fwww.micropik.com%2FPDF%2Ftsop17xx.pdf&amp;t=YjAzMzkxMGIzM2RmZWJhNzJjMGRlYjBmMWRkMTI0MTJjNjdjNzNiMCxMem10TVVHMA%3D%3D&amp;b=t%3ALX5p5KDoIXDXw2AOu5I9Ew&amp;m=1">TSOP1738</a>&#xA0;and a few different remote controls left useless from a car audio system and a TV here. I had IR LEDs as well, but to avoid unnecessary complexity I chose to use one of the remote controls over building one on my own with the LEDs. Here is a study I have made to make this thing work as I expected.</p>
+<div class="figure">
+<img src="images/arduino_tsop_wireup.jpg">
+
+</div>
+<p>First thing to do was to check what kind of signal I was getting out of the TSOP module when I press a button on a remote control. So I wired up the module to an Arduino as shown in the above image. Pin #3 is the output of the TSOP, which is wired to the Arduino&#x2019;s pin #2 and power supply is taken out of the 5V-GND header of the board. The reason why I wired up it with Arduino is that I didn&#x2019;t have a separate 5V power supply here ;). Anyway I hooked up my oscilloscope&#x2019;s probes to the TSOP module and pressed a button on the remote control. Bingo! I got a signal that looks like the following.</p>
+<div class="figure">
+<img src="images/ir_signal_cro.png">
+
+</div>
+<p>The TSOP module&#x2019;s output is not bare IR pulses sent by the remote control. TSOP&#xA0;<strong>demodulates</strong>&#xA0;(removes the 38Khz carrier frequency) the signal and presents a digitally usable output. It does also block off some noise, I don&#x2019;t really know much about it. Anyway, I pressed different buttons on the remote control and I got significantly similar signals all the time. These were the characteristics generally.</p>
+<ol style="list-style-type: decimal">
+<li>All the signals started with a&#xA0;<em>LOW</em>&#xA0;pulse which is quite long compared to the other pulses in the entire stretch. This portion of the signal is called the&#xA0;<strong>start burst</strong>. It was around 6000 micro seconds long as I measured roughly using the oscilloscope&#x2019;s rulers.</li>
+<li>Right after the start burst, there is a long&#xA0;<em>HIGH</em>&#xA0;pulse as well. This portion is not as long as the start burst, but affirmatively longer than the other pulses. It was around 4000 micro seconds in time.</li>
+<li>After these two pulses, there were&#xA0;<strong>32</strong>&#xA0;trailing&#xA0;<em>HIGH</em>&#xA0;pulses equally separated. Each of them is either somewhere around&#xA0;<strong>2000</strong>&#xA0;micro seconds, or around&#xA0;<strong>600</strong>&#xA0;micro seconds.</li>
+</ol>
+<p>The start burst and the high pulse after that are marked in the image above. As I learned from&#xA0;<a href="http://t.umblr.com/redirect?z=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DBUvFGTxZBG8&amp;t=MjBmYzFjYTY2YzJmNzM5MGJiMjgwZDM5OTA4N2E4ZmVhY2Y3NTRiMixMem10TVVHMA%3D%3D&amp;b=t%3ALX5p5KDoIXDXw2AOu5I9Ew&amp;m=1">this video</a>, there are different types of encoding techniques like&#xA0;<a href="http://t.umblr.com/redirect?z=http%3A%2F%2Fen.wikipedia.org%2Fwiki%2FRC-5&amp;t=NDA5NGIxZWQ2NDEwZjU3YmNkYjgzN2IxYmE4YzUwMjA0ZDBlOGE4NyxMem10TVVHMA%3D%3D&amp;b=t%3ALX5p5KDoIXDXw2AOu5I9Ew&amp;m=1">RC5</a>&#xA0;or the&#xA0;<a href="http://t.umblr.com/redirect?z=http%3A%2F%2Fwiki.altium.com%2Fdisplay%2FADOH%2FNEC%2BInfrared%2BTransmission%2BProtocol&amp;t=NTI4YzVkZWIzYTRiNTIzM2ZlNjA2ZDM0MjYyNmEwZDIxNjUxMTEyMSxMem10TVVHMA%3D%3D&amp;b=t%3ALX5p5KDoIXDXw2AOu5I9Ew&amp;m=1">NEC protocol</a>&#xA0;etc. I&#x2019;m not quite sure which encoding does the remote control I have here use anyway. But I chose to code the 2000uS long pulses as logical&#xA0;<strong>1</strong>&#x2019;s and 600uS long ones as logical&#xA0;<strong>0</strong>&#x2019;s. I decoded the first button on the remote control as the following.</p>
+<blockquote>
+<p>11100000 00011111 10100000 01011111</p>
+</blockquote>
+<p>The second byte is the inverse of the first and the fourth byte is the inverse of the third. I think it is some mechanism to reduce errors. As I gone through encoding each keys manually, I figured out that the first 16 bits are the same for all keys. I later learned that it could be a device ID or something. Leaving that behind, the last 16 bits gave me usable data to find which button on the remote control has been pressed. See below the quite intuitive C code I used with the Arduino to decode each key&#x2019;s code values.</p>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="dt">int</span> irPin      = <span class="dv">2</span>;    <span class="co">//Sensor pin 1 wired to Arduino&apos;s pin 2</span>
+<span class="dt">int</span> start_bit  = <span class="dv">2200</span>; <span class="co">//Start bit threshold (Microseconds)</span>
+<span class="dt">int</span> bin_1      = <span class="dv">1000</span>; <span class="co">//Binary 1 threshold (Microseconds)</span>
+<span class="dt">int</span> bin_0      = <span class="dv">400</span>;  <span class="co">//Binary 0 threshold (Microseconds)</span>
+
+<span class="dt">void</span> setup() {
+  pinMode(irPin, INPUT);
+  Serial.begin(<span class="dv">9600</span>);
+  Serial.println(<span class="st">&quot;Waiting:&quot;</span>);
+}
+
+<span class="dt">void</span> loop() {
+  <span class="dt">unsigned</span> <span class="dt">int</span> key = getIRKey();          <span class="co">//Fetch the key</span>
+  <span class="kw">if</span>(key != <span class="dv">65535</span>)  { <span class="co">//That is -1 aka invalid key</span>
+    Serial.println(<span class="st">&quot;Key:&quot;</span> + key);
+  }
+}
+
+<span class="dt">int</span> getIRKey() {
+  <span class="dt">int</span> data[<span class="dv">32</span>];
+  <span class="dt">int</span> i;
+
+  <span class="kw">while</span>(pulseIn(irPin, LOW) &lt; start_bit); <span class="co">//Wait for a start bit</span>
+  
+  <span class="kw">for</span>(i = <span class="dv">0</span> ; i &lt; <span class="dv">32</span> ; i++)
+    data[i] = pulseIn(irPin, HIGH); <span class="co">//Start measuring bits, I only want high pulses</span>
+  
+  <span class="kw">for</span>(i = <span class="dv">0</span> ; i &lt; <span class="dv">32</span> ; i++)  {
+    <span class="kw">if</span>(!((data[i] &gt; <span class="dv">400</span> &amp;&amp; data[i] &lt; <span class="dv">1000</span>) || (data[i] &gt; <span class="dv">1700</span> &amp;&amp; data[i] &lt; <span class="dv">3000</span>)))  { <span class="co">//Filter out anything that seems  erroneous</span>
+      Serial.println(<span class="st">&quot;Invalid Signal&quot;</span>);
+      <span class="kw">return</span> -<span class="dv">1</span>;
+    }
+  }
+  
+  <span class="dt">int</span> key_data[<span class="dv">16</span>];
+  <span class="kw">for</span>(i = <span class="dv">16</span> ; i &lt; <span class="dv">32</span> ; i++)  <span class="co">//Parse them</span>
+  {
+    <span class="kw">if</span>(data[i] &gt; bin_1) <span class="co">//is it a 1?</span>
+      key_data[i<span class="dv">-16</span>] = <span class="dv">1</span>;
+    <span class="kw">else</span> <span class="kw">if</span>(data[i] &gt; bin_0) <span class="co">//is it a 0?</span>
+      key_data[i<span class="dv">-16</span>] = <span class="dv">0</span>;
+    <span class="kw">else</span>
+      <span class="kw">return</span> -<span class="dv">1</span>; <span class="co">//Flag the data as invalid; I don&apos;t know what it is! Return -1 on invalid data</span>
+  }
+  
+  <span class="dt">unsigned</span> <span class="dt">int</span> result = <span class="dv">0</span>;
+  <span class="kw">for</span>(i = <span class="dv">0</span> ; i &lt; <span class="dv">16</span> ; i++)  { <span class="co">//Convert key_data bits to integer</span>
+    <span class="kw">if</span>(key_data[i] == <span class="dv">1</span>)
+      result |= (<span class="dv">1</span>&lt;&lt;(i));
+  }
+  <span class="kw">return</span> result; <span class="co">//Return key number</span>
+}</code></pre></div>
+<p>Lately I got into some inconsistency problems and noise issues. I fixed a few of them, but I still have some pain in the ass kind of problems remaining.&#xA0;<a href="http://t.umblr.com/redirect?z=http%3A%2F%2Felectronics.stackexchange.com%2Fquestions%2F78959%2Fhow-to-get-consistent-codes-from-ir-receiver-module-tsop1738&amp;t=ZGZkYmQ5ODEwNDkxYmRhNWMzMGFiMGI3ODIzYjA1ODU2OWY4YmEwOSxMem10TVVHMA%3D%3D&amp;b=t%3ALX5p5KDoIXDXw2AOu5I9Ew&amp;m=1">Here&#x2019;s</a>&#xA0;one of them.</p>
+
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    </body>
+</html>
