@@ -15,7 +15,7 @@
             ga('send', 'pageview');
         </script>
     </head>
-    <body><h1 id="esp8266-experiments">ESP8266 Experiments</h1>
+    <body><h1 id="esp8266-basics">ESP8266 Basics</h1>
 <p>I have purchased an extremely cheap WiFi module based on the ESP8266 chip produced by some Chinese manufacturer. This tiny board is very popular these days in the IoT community, because of the low cost, ease of use and lower power consumption. It is available for less than $5 per unit in India through Amazon.</p>
 <h2 id="the-hardware">The hardware</h2>
 <div class="figure">
@@ -24,7 +24,7 @@
 </div>
 <p>There are a number of <a href="https://github.com/esp8266/esp8266-wiki/wiki/Hardware_versions">version of boards</a> available based on ESP8266 chip. The one I have is the ESP-01-rev02 which has 8 pins exposed from the board. The pin layout is as follows.</p>
 <div class="figure">
-<img src="images/esp-01-pinout.png" alt="ESP-01-rev01 Pin Layout">
+<img src="images/esp-01-pinout.jpg" alt="ESP-01-rev01 Pin Layout">
 <p class="caption"><em>ESP-01-rev01 Pin Layout</em></p>
 </div>
 <p>The board is relatively well soldered, and there is a printing that reads <strong>AI Cloud Inside</strong> on the board. As you might have already figured out, this is a serial device. Two of the GPIO pins are exposed along with RX, TX Vcc and GND.</p>
@@ -37,7 +37,7 @@
 <p class="caption"><em>USB to TTL Module</em></p>
 </div>
 <p>It is a PL2303 based module from Prolific Technologies. The macOs doesn&apos;t have built in support for this chip. It needs a kernel extension driver, which you can directly download from the Prolific website. If you are running a different OS, you may find the driver at the same place as well. Here is the link to the <a href="http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=229&amp;pcid=41">driver download website</a>. Once the driver is installed properly, the adapter will be listed as <code>/dev/tty.usbserial</code> as soon as you connect the device to your USB port.</p>
-<p>To test the USB-TTL adapter, use a jumper to connect the RX-TX pins as shown in the following image.</p>
+<p>To test the USB-TTL adapter, use a jumper to connect the RX-TX pins as shown in the following image. This configuration is usually called a RX-TX loopback.</p>
 <div class="figure">
 <img src="images/usb-ttl-2.jpg" alt="USB to TTL Test Configuration">
 <p class="caption"><em>USB to TTL Test Configuration</em></p>
@@ -56,7 +56,7 @@
 </div>
 <p>Note that the <code>CH_PD</code> (Chip Enable) and the <code>RST</code> (Reset) pins are pulled up to 3.3v (Vcc). Other configurations of these two pins are required for different boot modes supported by the module.</p>
 <blockquote>
-<p><strong>Note:</strong> <em>There are 3.3v and 5v pins available from the USB-TTL converter. But the current provided by the converter is not enough to drive the ESP module, as per some of the articles I came across. Although I haven&apos;t tried powering the module with these pins. I will update the article if I do in future.</em></p>
+<p>Note:- There are 3.3v and 5v pins available from the USB-TTL converter. But the current provided by the converter is not enough to drive the ESP module, as per some of the articles I came across. Although I haven&apos;t tried powering the module with these pins. I will update the article if I do in future.</p>
 </blockquote>
 <p>Now we are ready to issue AT Commands to the WiFi module. The full AT commands reference is available <a href="https://github.com/espressif/ESP8266_AT/wiki">here</a>. The very useful ones are listed below.</p>
 <table>
@@ -85,7 +85,7 @@
 <td>CWMODE</td>
 <td>AT+CWMODE=1</td>
 <td>OK</td>
-<td>Set the module mode. 1 &#x2014;&gt; Station Mode, 2 &#x2014;&gt; AP mode, 3 &#x2014;&gt; Hybrid Mode</td>
+<td>Set the module mode.1 &#x2014;&gt; Station Mode, 2 &#x2014;&gt; AP mode, 3 &#x2014;&gt; Hybrid Mode</td>
 </tr>
 <tr class="odd">
 <td>CWLAP</td>
