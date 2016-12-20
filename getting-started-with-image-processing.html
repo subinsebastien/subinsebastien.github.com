@@ -18,15 +18,15 @@
     <body><h1 id="getting-started-with-image-processing">Getting Started with Image Processing</h1>
 <p>I have been working on digital image processing for sometime now, and I was learning a lot of stuff recently. I thought I should put together a very basic getting started guide on image processing, which could help a lot of enthusiasts. This aritcle is greatly borrowed from the <a href="https://codewords.recurse.com/issues/six/image-processing-101">Image Processing - 101 Sher Minn Chong</a>. This article, as I have planned, will be multi-part, and will be as detail as possible from my own understanding of the concepts.</p>
 <h2 id="digital-image">Digital Image</h2>
-<p>Digital images are fundamentally a finite number of pixels distributed in X and Y axis, and are stored on the disk as a two (or more) dimentional array of integers or more complex datastructers, in rows and columns. Any 2D digital image can be viewed as a matrix of size NxM. Each element in the matrix represents a pixel. A <a href="https://en.wikipedia.org/wiki/Pixel">pixel</a>, its definition, and how a pixel is displayed on a screen or how it is printed on a paper, are out of the context of this article. Following is a hypothetical representation of a flower as a digital image.</p>
+<p>Digital images are fundamentally a finite number of pixels distributed in X and Y axis, and are stored on the disk as a two (or more) dimentional array of integers or more complex datastructers, in rows and columns. Any 2D digital image can be viewed as a matrix of size NxM. Each element in the matrix represents a pixel. A <a href="https://en.wikipedia.org/wiki/Pixel">pixel</a>, and its definition, and how a pixel is displayed on a screen or even how it is printed on a paper, are out of the context of this article. Following is a hypothetical representation of a flower as a digital image.</p>
 <div class="figure">
 <img src="images/digital-image-rep.png">
 
 </div>
 <p>There are a few points to be noted here.</p>
 <ul>
-<li>The image is grayscale - which means, there are only different shades of grey in the palette of colors a pixel in the image can have.</li>
-<li>All the colors in the palette is indexed - ie, the shades of grays are indexed from 0 to 9.</li>
+<li>The image is grayscale - which means, there are only different shades of grey, in the palette of colors, a pixel in the image can take.</li>
+<li>All the colors in the palette are indexed - ie, the shades of grays are indexed from 0 to 9.</li>
 <li>The index of the color of a particular pixel is the value of the corresponding element in the matrix.</li>
 <li>The display system, reads this value, and look for the color in the color palette using the said number as the index in the palette.</li>
 </ul>
@@ -36,13 +36,13 @@
 
 </div>
 <p>Now, for indexing two colors, we need a minimum of one-bit of storage. If the bit is <code>0</code> &#x2014;&gt; the color is black, and if it is <code>1</code> &#x2014;&gt; the color is white. Such images are commonly referred to as <a href="https://en.wikipedia.org/wiki/Monochrome">monochrome</a> images. Every pixel in a monochrome image is either 1 or 0.</p>
-<p>But what if I need more colors to realistically reproduce an image? Basically, I need more bits to represent each pixel. Thats it! Suppose instead of just 1 bit, I use 2 bits to represent each pixel. I can now show 4 different colors. Take a look at my new palette.</p>
+<p>But what if I need more colors to realistically reproduce an image? Basically, I need more bits to represent each pixel. That&apos;s it! Suppose instead of just 1 bit, I use 2 bits to represent each pixel. I can now show 4 different colors. Take a look at my new palette.</p>
 <div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="bn">00</span> --&gt; Black
 <span class="bn">01</span> --&gt; Dark Gray
 <span class="dv">10</span> --&gt; Light Gray
 <span class="dv">11</span> --&gt; White</code></pre></div>
 <blockquote>
-<p>Note : You <em>don&apos;t</em> have to limit your palette to shades of gray only. I can use any four colors to build my palette. We will cover such palettes down the line.</p>
+<p>Note : You <em>don&apos;t</em> have to limit your palette to shades of gray only. I can use any four colors to build my palette. We will cover such palettes down the line. I just use these colours for simplicity sake.</p>
 </blockquote>
 <p>Now, just by adding one more bit, I have gratly improved the quality of the image. The image below shows the difference.</p>
 <div class="figure">
@@ -50,18 +50,16 @@
 
 </div>
 <p>The number of bits used to represent a pixel is called the <a href="https://en.wikipedia.org/wiki/Color_depth">bit depth or color depth</a> in digital image processing. Most images we now find on the web has 8-bit or higher depth. Using just 8 bits, you can display 256 different colors.</p>
+<h2 id="multi-channel-images-color-images">Multi-Channel Images (Color Images)</h2>
+<p>So far we have discussed only single channel indexed images, where each pixel in the image is represented by a single number. This brings one limitation as the number of shades (or colors basically) we want to have in an image increases. Suppose you have an image with some pixels with colors wide apart in the spectrum of colors. This will cause a memory access problem since the direct address space need to display an image on a screen will be large. The concept of planar graphics brings a solution to this problem. Each image is represented as multiple planes. Each plane would represent a part of the pixel data (and not the entire pixel data).</p>
+<h2 id="color-models">Color Models</h2>
+<p>There are various methods to make use of the planar model of graphics. One is to adopt the physical nature of light and colours. There are three primary colours in nature, namely Red, Green and Blue. All other colours are basically composition of these three colours by various amounts. For example Red and Green without blue will give us Yellow. This concept brings us a RGB colour model, where each plane will represent either the Red, Green or Blue component of the image.</p>
 <h2 id="mode-13h">Mode 13h</h2>
 <p>While this is an unrelated topic, I think this is worth mentioning about the non-planar graphics mode in VGA. The VGA hardware included a <a href="https://en.wikipedia.org/wiki/Mode_13h">special graphics mode</a> where each pixel drawn on the screen was represented by 8-bits in the graphics memory. There were 256 indexed predefined colors in the palette, and this mode was enabled when the <code>AL</code> value is <code>0x13</code> and <code>AH</code> value is <code>0x00</code> and BIOS interrupt <a href="https://en.wikipedia.org/wiki/INT_10"><code>10h</code></a> is executed. Even before this, BBC Micro had a smaller palette of 8 colors using its 3-bit color graphics adapter. Read more about different color depths <a href="https://en.wikipedia.org/wiki/Color_depth">here</a>. The default 256-color VGA palette is shown below.</p>
 <div class="figure">
 <img src="images/vga_palette_13h.png">
 
 </div>
-<h2 id="multi-channel-images-color-images">Multi-Channel Images (Color Images)</h2>
-<p>So far we have discussed only single channel images, where each pixel in the image is represented by a single number. This brings one limitation as the number of shades (or colors basically) we want to have in an image increases. Suppose you have an image with some pixels with colors wide apart in the spectrum of colors. For simplicity, I&apos;m representing such an image in a small matrix as shown below.</p>
-<pre><code>17          812937923   121312
-129873      76129       9120
-192836192   8237        2987312124</code></pre>
-<p>This is a very small 3-pixel by 3-pixel image. Assuming all the colors in the image is in between 0 and 4294967295. Meaning, the bit-depth required to represent each pixel in this image is now 32-bits, which is very large. This fundamentally means, the size of the file on disk will be large.</p>
 
         <div id="disqus_thread"></div>  
         <script type="text/javascript">

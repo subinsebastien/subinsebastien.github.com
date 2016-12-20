@@ -17,10 +17,6 @@
     </head>
     <body><h1 id="simple-chunked-data-handling-in-nodejsexpressjs">Simple Chunked Data Handling in NodeJS/ExpressJS</h1>
 <p>There are often cases where you actually get streamed data from certain systems and you actually want to stream the same to your clients. One good use-case is where Elasticsearch provides data streams, where you only get chunks of the original result at your application server layer. This data, you can either hold in-memory and then send to clients as a whole. But, this can risk your application server going out-of-memory if the data handled is really large size. Besides, most of the http clients supports chunked response handling. They can orchestrate the data together at the end, or in certain cases process directly on the chunk of data available.</p>
-<div class="figure">
-<img src="images/chunked-res.png">
-
-</div>
 <p>The following example shows a simple chunked data server. This express app waits 500ms before sending each piece of the response data.</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> express <span class="op">=</span> <span class="at">require</span>(<span class="st">&apos;express&apos;</span>)<span class="op">;</span>
 <span class="kw">var</span> app <span class="op">=</span> <span class="at">express</span>()<span class="op">;</span>
@@ -54,6 +50,10 @@
    <span class="op">}</span>)<span class="op">;</span> 
 <span class="op">}</span>)<span class="op">;</span></code></pre></div>
 <p>Very simple and straight forward as you would expect. You may also put together these chunks and get the final sentence in the response callback. But, most clients does this automatically for you, unless you are using something as low level as the <a href="https://nodejs.org/api/http.html">http</a> module.</p>
+<div class="figure">
+<img src="images/chunked-res.png" alt="Notice the server response">
+<p class="caption"><em>Notice the server response</em></p>
+</div>
 <p>Thanks for reading.</p>
 
         <div id="disqus_thread"></div>  
