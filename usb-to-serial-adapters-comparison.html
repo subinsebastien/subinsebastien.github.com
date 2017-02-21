@@ -1,0 +1,105 @@
+<html>
+    <head>
+         <title>Napster&apos;s Experiments with Freedom</title>
+         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+         <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+         <script>hljs.initHighlightingOnLoad();</script>
+         <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+         <link rel="stylesheet" type="text/css" href="css/post.css">
+         <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-20813670-9', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </head>
+    <body><h1 id="usb-to-serial-adapters-comparison">USB to Serial Adapters Comparison</h1>
+<p>This article is to compare a set of USB-to-Serial adapters from different manufactures. I have personally purchased and used a couple of them and I think it would make sense to compare these and find out which is the best. The protocol adapters discussed in this article are the following. The host machine used for the comparison tests is a Late-2013 MacBook Pro.</p>
+<ol style="list-style-type: decimal">
+<li>CH340G</li>
+<li>PL2303</li>
+<li>CP2102</li>
+<li>FT232RL</li>
+</ol>
+<p>All of these devices have some common traits. All have one 5v and 3v3 output along with the TX, RX and the ground.</p>
+<h3 id="ch340g">CH340G</h3>
+<div class="figure">
+<img src="images/usb-to-ttl-ch340g.jpg" alt="CH340G Based USB-Serial Adapter">
+<p class="caption"><em>CH340G Based USB-Serial Adapter</em></p>
+</div>
+<p>This chip comes from a chinese manufacturer named <a href="http://www.wch.cn">WCH</a>. The board is relatively big compared to other products available in the market. Thanks to its gold plating around the board. The board has not anything more than a few electronics apart from the chip itself. The board I have comes directly from china, and the build quality is very good. The only problem is that, <strong><em>it doesn&apos;t fucking work!</em></strong>. The driver (basically a kext on mac) broken something on my machine. Whenever this device is plugged into my USB port, either the mac restarts, or it does not boot at all. Looks like something is really wrong with this device. I have also noticed that a number of cheap Arduino clones comes with this chip, and I recommend not to buy any devices interfaced by this particular chip, if you are using a mac.</p>
+<h3 id="pl2303">PL2303</h3>
+<div class="figure">
+<img src="images/usb-to-ttl-pl2303.jpg" alt="A USB to Serial adapter based on PL2303">
+<p class="caption"><em>A USB to Serial adapter based on PL2303</em></p>
+</div>
+<p>This built by <a href="http://www.prolific.com.tw">Prolific Technologies</a>, and it is a decent device. The board comes with 4, 5 or 6 pins. The one I have has 5 pins. This is a decently built device, and works perfectly well on most operating systems. Again, most of the electronics is within the chip itself. The board is often covered in a plastic enclosure, prevents dust and dirt accumulating. Prolific provides necessary drivers for this device, and works very well on mac platform. Some variants also provide flow control pins, but I have not used it.</p>
+<h3 id="cp2102">CP2102</h3>
+<div class="figure">
+<img src="images/usb-to-ttl-cp2102.jpg" alt="CP2102 Based USB-Serial Adapter">
+<p class="caption"><em>CP2102 Based USB-Serial Adapter</em></p>
+</div>
+<p>Out of all devices I tested, this one is the best because of the availability of technical support and documentation available online. This chip is produced by <a href="http://www.silabs.com">Silicon Labs</a>. The form factor of the chip is also very small and the boards also are very small because of the same reason. This device also needs a kext to function. But once the driver is installed, everything works as expected. I have mainly tried this for driving small serial devices and never faced an issue with CP2102 or PL2303. Both the devices are dead cheap also.</p>
+<h3 id="ft232rl">FT232RL</h3>
+<div class="figure">
+<img src="images/usb-to-ttl-ft232rl.jpg" alt="FT232RL based usb-serial adapter">
+<p class="caption"><em>FT232RL based usb-serial adapter</em></p>
+</div>
+<p>This could be the oldest of all these USB-TTL chips. While it is still dead cheap, it is relatively expensive to the other devices discussed in this article. This chip is produced by <a href="usb-to-ttl-ft232rl.jpg">FTDI</a>, and drivers for all popular operating systems are available on their website. Once driver is installed correctly, this is a very reliable board to work with your electronics projects. The chip itself is relatively big, and most board comes with a USB-B-Mini connector. You should be able to find a cable for that pretty easily. I particularly like this design because, you can move around with your laptop, while all the electronics is connected to your machine through a flexible cable, unlike the other adapters discussed above.</p>
+<h3 id="drivers">DRIVERS</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Device</th>
+<th>WINDOWS</th>
+<th>Linux</th>
+<th>MAC</th>
+<th>ANDROID</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CH340G</td>
+<td><a href="http://www.wch.cn/download/CH341SER_ZIP.html">YES</a></td>
+<td><a href="http://www.wch.cn/download/CH341SER_LINUX_ZIP.html">YES</a></td>
+<td><a href="http://www.wch.cn/download/CH341SER_MAC_ZIP.html">YES</a></td>
+<td><a href="http://www.wch.cn/download/CH341SER_ANDROID_ZIP.html">YES</a></td>
+</tr>
+<tr class="even">
+<td>PL2303</td>
+<td><a href="http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=225&amp;pcid=41">YES</a></td>
+<td>NO</td>
+<td><a href="http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=229&amp;pcid=41">YES</a></td>
+<td><a href="http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=230&amp;pcid=41">YES</a></td>
+</tr>
+<tr class="odd">
+<td>CP2102</td>
+<td><a href="http://www.silabs.com/documents/public/software/CP210x_Windows_Drivers.zip">YES</a></td>
+<td><a href="http://www.silabs.com/documents/login/software/Linux-3-x-x-VCP-Driver-Source.zip">YES</a></td>
+<td><a href="http://www.silabs.com/documents/public/software/Mac_OSX_VCP_Driver.zip">YES</a></td>
+<td><a href="http://www.silabs.com/documents/public/application-notes/AN809.pdf">YES</a>*</td>
+</tr>
+<tr class="even">
+<td>FT232RL</td>
+<td><a href="http://www.ftdichip.com/Drivers/CDM/CDM%20v2.12.24%20WHQL%20Certified.zip">YES</a></td>
+<td><a href="http://www.ftdichip.com/Drivers/VCP/Linux/ftdi_sio.tar.gz">YES</a></td>
+<td><a href="http://www.ftdichip.com/Drivers/VCP/MacOSX/FTDIUSBSerialDriver_v2_3.dmg">YES</a></td>
+<td>NO</td>
+</tr>
+</tbody>
+</table>
+<p>*Doable by instructions linked</p>
+
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    </body>
+</html>
