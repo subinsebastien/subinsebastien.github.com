@@ -23,7 +23,7 @@
 <img src="images/ml-google-trends.png" alt="Machine Learning Google Search Trends">
 <p class="caption">Machine Learning Google Search Trends</p>
 </div>
-<p>The science of dealing with large set of data, and trying to make some sense out of it, was here for many decades. The concept of neural networks on the other hand has a different ultimate goal, Artificial Intelligence. While we are way behind schedule on creating out first true AI, people are applying the concept of neural networks into large data sets and producing very interesting results. For example, an engineer can feed millions of videos into a neural network, and <a href="https://www.wired.com/2012/06/google-x-neural-network/">group together those videos in which a cat appears</a>! While this may sound silly, the computer learns the concept of a &quot;cat&quot; without explicitly giving it the properties or features of a cat. This is classic example of a set of problems defined in machine learning called <a href="https://en.wikipedia.org/wiki/Cluster_analysis">Clustering</a>.</p>
+<p>The science of dealing with large set of data, and trying to make some sense out of it, was here for many decades. The concept of neural networks on the other hand has a different ultimate goal, Artificial Intelligence. While we are way behind schedule on creating our first true AI, people are applying the concept of neural networks into large data sets and producing very interesting results. For example, an engineer can feed millions of videos into a neural network, and <a href="https://www.wired.com/2012/06/google-x-neural-network/">group together those videos in which a cat appears</a>! While this may sound silly, the computer learns the concept of a &quot;cat&quot; without explicitly giving it the properties or features of a cat. This is a classic example of a set of problems defined in machine learning called <a href="https://en.wikipedia.org/wiki/Cluster_analysis">Clustering</a>.</p>
 <h3 id="what-are-neural-networks">What are neural networks?</h3>
 <div class="figure">
 <img src="images/ml-ann.png" alt="Artificial Neural Network">
@@ -31,18 +31,18 @@
 </div>
 <p>A neuron is the fundamental building block of a human brain. Neurons are connected to each other a forms a messy complex network in our brains. Scientists have produced a mathematical model of this basic architecture of human brain, and are trying to emulate the same on computers, and they call it the Artificial Neural Networks. The basics of this model is very simple. A neutron can have connections to N number of other neurons. Each of these individual connections have different strengths or weights. These neurons are arranged into layers. Neurons in the same layer are not connected to each other.</p>
 <h3 id="so-what-is-machine-learning-again">So what is machine learning again?</h3>
-<p>In very simple words, it is a way to teach a computer to perform a task instead of explicitly programming it. In the past, we used programming to perform a task using computer. We defined functions using a set of instructions the computer can understand, and the computer produced outputs by operating on the input. Now, what if the computer can write its own function by looking at a set of inputs and corresponding outputs? This is exactly machine learning. Consider the following function.</p>
+<p>In very simple words, it is a way to teach a computer to perform a task instead of explicitly programming it. In the past, we used programming to perform a task using computer. We defined functions using a set of instructions the computer can understand, and the computer produced outputs by operating on the input. Now, what if the computer can write its own version of programs by looking at a set of inputs and corresponding outputs? This is exactly what is called machine learning. Consider the following function.</p>
 <div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="dt">int</span> mult(x, y) { <span class="kw">return</span> x * y; }
  |         |              |
  |         |              + -- <span class="co">// The operation</span>
  |         + ----------------- <span class="co">// The input</span>
  + --------------------------- <span class="co">// The result</span></code></pre></div>
-<p>Every function maps a set of <strong>input</strong> to a corresponding <strong>output</strong> by performing some <strong>operations</strong>. Now, imagine, if the computer can figure out the above function, buy simply looking at the following list of values.</p>
+<p>A function maps a set of <strong>input</strong> to a corresponding <strong>output</strong> by performing some <strong>operations</strong>. Now, imagine, if a computer can figure out the above program on its own, by simply looking at the following list of inputs and outputs.</p>
 <table>
 <thead>
 <tr class="header">
 <th>FEATURES</th>
-<th>TARGETS</th>
+<th>Labels</th>
 </tr>
 </thead>
 <tbody>
@@ -76,14 +76,14 @@
 </tr>
 </tbody>
 </table>
-<p>*In machine learning terms, inputs are called Features and outputs are called Targets.</p>
-<p>Fundamentally, what we do is, a sort of reverse engineering. We feed the computers the desired results of a task, and asking the computer to invent the task itself! This particular type of problem (operate on inputs, and find a result on continuous line of values), is called regression.</p>
+<p>*In machine learning terms, inputs are called Features and outputs are called Labels or Target.</p>
+<p>Fundamentally, what we do is, a sort of reverse engineering. We feed the computers the desired results of a task, and asking the computer to invent the <em>task</em> itself! This particular type of problem (operate on inputs, and find a result on continuous line of values), is called regression.</p>
 <h3 id="types-of-machine-learning">Types of machine learning</h3>
 <div class="figure">
 <img src="images/ml-types.png" alt="Types of machine learning">
 <p class="caption">Types of machine learning</p>
 </div>
-<p>Machine learning is primarily classified into three major categories. Supervised learning, unsupervised learning, and reinforcement learning. The supervised learning differs from the unsupervised one, just by the fact that, in case of unsupervised learning, the <strong>TARGETS</strong> will not be used for training. The machine is supposed to learn by the <strong>FEATURES</strong> set only. (We will discuss how this is useful in a future session) <a href="https://en.wikipedia.org/wiki/Reinforcement_learning">Reinforcement learning</a> is not in the scope of this article.</p>
+<p>Machine learning is primarily classified into three major categories. Supervised learning, unsupervised learning, and reinforcement learning. The supervised learning differs from the unsupervised one, just by the fact that, in case of unsupervised learning, the <strong>LABELS</strong> will not be used for training. The machine is supposed to learn by the <strong>FEATURES</strong> set only. (We will discuss how this is useful in a future session) <a href="https://en.wikipedia.org/wiki/Reinforcement_learning">Reinforcement learning</a> is not in the scope of this article.</p>
 <p>I think this gives a good start into the world of machine learning. In the next article we will discuss in detail about learning, by focusing on <strong>Regression</strong> problems. And I would personally recommend enrolling into that machine learning course by Andrew NG on coursera, even if you don&apos;t like math!</p>
 
         <div id="disqus_thread"></div>  
