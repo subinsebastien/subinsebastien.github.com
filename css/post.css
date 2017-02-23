@@ -28,3 +28,8 @@ th {
 img {
     max-width: 50em;
 }
+
+p.caption {
+    font-style: italic;
+    color: #666;
+}

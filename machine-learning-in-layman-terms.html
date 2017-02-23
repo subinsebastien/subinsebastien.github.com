@@ -33,16 +33,16 @@
 <h3 id="so-what-is-machine-learning-again">So what is machine learning again?</h3>
 <p>In very simple words, it is a way to teach a computer to perform a task instead of explicitly programming it. In the past, we used programming to perform a task using computer. We defined functions using a set of instructions the computer can understand, and the computer produced outputs by operating on the input. Now, what if the computer can write its own version of programs by looking at a set of inputs and corresponding outputs? This is exactly what is called machine learning. Consider the following function.</p>
 <div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="dt">int</span> mult(x, y) { <span class="kw">return</span> x * y; }
- |         |              |
- |         |              + -- <span class="co">// The operation</span>
- |         + ----------------- <span class="co">// The input</span>
- + --------------------------- <span class="co">// The result</span></code></pre></div>
+&#xA0;| &#xA0; &#xA0; &#xA0; &#xA0; |&#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; |
+&#xA0;| &#xA0; &#xA0; &#xA0; &#xA0; |&#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; + -- <span class="co">// The operation</span>
+&#xA0;| &#xA0; &#xA0; &#xA0; &#xA0; + ----------------- <span class="co">// The input</span>
+&#xA0;+ --------------------------- <span class="co">// The result</span></code></pre></div>
 <p>A function maps a set of <strong>input</strong> to a corresponding <strong>output</strong> by performing some <strong>operations</strong>. Now, imagine, if a computer can figure out the above program on its own, by simply looking at the following list of inputs and outputs.</p>
 <table>
 <thead>
 <tr class="header">
-<th>FEATURES</th>
-<th>Labels</th>
+<th><strong>FEATURES</strong></th>
+<th><strong>Labels</strong></th>
 </tr>
 </thead>
 <tbody>
@@ -77,7 +77,8 @@
 </tbody>
 </table>
 <p>*In machine learning terms, inputs are called Features and outputs are called Labels or Target.</p>
-<p>Fundamentally, what we do is, a sort of reverse engineering. We feed the computers the desired results of a task, and asking the computer to invent the <em>task</em> itself! This particular type of problem (operate on inputs, and find a result on continuous line of values), is called regression.</p>
+<p>Fundamentally, what we do is, a sort of reverse engineering. We feed the computers the inputs and desired results of an operation, and asking the computer to invent the <strong><em>operation</em></strong> itself! This particular type of problem (operate on inputs, and find a result on continuous line of values), is called regression.</p>
+<p><strong>Note</strong>:- <em>This particular example above is very naive and never going to be a practical ML problem. A useful example would be, given the <strong>sale price</strong> of all houses in a town for the past 10 years, and given their living <strong>area</strong>, and the <strong>age</strong> of a house, we can train a computer to predict the sale price of a new house given those inputs. Note that, there is no direct correlation between the input and output.</em></p>
 <h3 id="types-of-machine-learning">Types of machine learning</h3>
 <div class="figure">
 <img src="images/ml-types.png" alt="Types of machine learning">
