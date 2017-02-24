@@ -16,7 +16,7 @@
         </script>
     </head>
     <body><h1 id="machine-learning-in-layman-terms">Machine Learning in Layman Terms</h1>
-<p>This article is hopefully the first article in a series of articles to come. The topic we will discuss in this series will be Machine Learning. This series of article is planned to be based on the <a href="https://www.coursera.org/learn/machine-learning">Stanford Uni ML course I&apos;m enrolled into on Coursera</a>. But, the entire point of such a series of article is to be different from the course itself. These articles will not have any complex math in it. All concepts will be discussed using intuition. Lets get started.</p>
+<p>This article is hopefully the first one in a series of articles to come. The topic we will discuss in this series will be Machine Learning. This series of article is planned to be based on the <a href="https://www.coursera.org/learn/machine-learning">Stanford Uni ML course I&apos;m enrolled into on Coursera</a>. But, the entire point of such a series of article is to be different from the course itself. These articles will not have any complex math in it. All concepts will be discussed using intuition. Lets get started.</p>
 <h3 id="what-is-machine-learning">What is machine learning?</h3>
 <p>The term Machine Learning became popular recently. If you look at the past 10 years of google search index trends for the phrase &quot;Machine Learning&quot;, you get the following.</p>
 <div class="figure">
@@ -32,53 +32,58 @@
 <p>A neuron is the fundamental building block of a human brain. Neurons are connected to each other a forms a messy complex network in our brains. Scientists have produced a mathematical model of this basic architecture of human brain, and are trying to emulate the same on computers, and they call it the Artificial Neural Networks. The basics of this model is very simple. A neutron can have connections to N number of other neurons. Each of these individual connections have different strengths or weights. These neurons are arranged into layers. Neurons in the same layer are not connected to each other.</p>
 <h3 id="so-what-is-machine-learning-again">So what is machine learning again?</h3>
 <p>In very simple words, it is a way to teach a computer to perform a task instead of explicitly programming it. In the past, we used programming to perform a task using computer. We defined functions using a set of instructions the computer can understand, and the computer produced outputs by operating on the input. Now, what if the computer can write its own version of programs by looking at a set of inputs and corresponding outputs? This is exactly what is called machine learning. Consider the following function.</p>
-<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="dt">int</span> mult(x, y) { <span class="kw">return</span> x * y; }
-&#xA0;| &#xA0; &#xA0; &#xA0; &#xA0; |&#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; |
-&#xA0;| &#xA0; &#xA0; &#xA0; &#xA0; |&#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; + -- <span class="co">// The operation</span>
-&#xA0;| &#xA0; &#xA0; &#xA0; &#xA0; + ----------------- <span class="co">// The input</span>
-&#xA0;+ --------------------------- <span class="co">// The result</span></code></pre></div>
-<p>A function maps a set of <strong>input</strong> to a corresponding <strong>output</strong> by performing some <strong>operations</strong>. Now, imagine, if a computer can figure out the above program on its own, by simply looking at the following list of inputs and outputs.</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span>(floorArea) <span class="op">{</span>
+  <span class="kw">var</span> pricePerSqFt <span class="op">=</span> <span class="dv">100</span><span class="op">;</span>
+  <span class="cf">return</span> floorArea <span class="op">*</span> pricePerSqft<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>The input of the function is the floor area of a building in square foots. And given that, in that particular town, average price of one square foot is 100. We can easily calculate the price of a house by multiplying these two values. But, this value might not be the real selling price because of several reasons. Say for example, in my town, if the area is less than 1000 square foots, the demand is high, because in my town, most home owners are small families. That trend cannot be leveraged using a simple function like this. But, imagine, if we are feeding that sort of fine detailing to this function, the function itself becomes very complex. There is still a chance that we might miss out one important parameter or the other.</p>
+<h3 id="a-better-way">A Better Way?</h3>
+<p>But suppose, you have access to 10 years of historical data of all real estate transactions in your town. This database includes real selling price, and floor area of all buildings sold in the past 10 years. A batch of data is given below.</p>
 <table>
 <thead>
 <tr class="header">
-<th><strong>FEATURES</strong></th>
-<th><strong>Labels</strong></th>
+<th>FLOOR AREA</th>
+<th>ACTUAL SELLING PRICE</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>2,4</td>
-<td>8</td>
+<td>800</td>
+<td>96000</td>
 </tr>
 <tr class="even">
-<td>3,2</td>
-<td>6</td>
+<td>1200</td>
+<td>108000</td>
 </tr>
 <tr class="odd">
-<td>4,4</td>
-<td>16</td>
+<td>1560</td>
+<td>124800</td>
 </tr>
 <tr class="even">
-<td>6,2</td>
-<td>12</td>
+<td>2300</td>
+<td>322000</td>
 </tr>
 <tr class="odd">
-<td>4,1</td>
-<td>4</td>
+<td>1000</td>
+<td>100000</td>
 </tr>
 <tr class="even">
-<td>3,4</td>
-<td>12</td>
+<td>450</td>
+<td>63000</td>
 </tr>
 <tr class="odd">
-<td>2,5</td>
-<td>10</td>
+<td>3200</td>
+<td>480000</td>
 </tr>
 </tbody>
 </table>
-<p>*In machine learning terms, inputs are called Features and outputs are called Labels or Target.</p>
-<p>Fundamentally, what we do is, a sort of reverse engineering. We feed the computers the inputs and desired results of an operation, and asking the computer to invent the <strong><em>operation</em></strong> itself! This particular type of problem (operate on inputs, and find a result on continuous line of values), is called regression.</p>
-<p><strong>Note</strong>:- <em>This particular example above is very naive and never going to be a practical ML problem. A useful example would be, given the <strong>sale price</strong> of all houses in a town for the past 10 years, and given their living <strong>area</strong>, and the <strong>age</strong> of a house, we can train a computer to predict the sale price of a new house given those inputs. Note that, there is no direct correlation between the input and output.</em></p>
+<p><strong>Note:-</strong> <em>In Machine Learning (ML), the inputs are called <strong>features</strong>, and output set is called <strong>target</strong>. In this case, the set of floor area is a feature, and selling price is the target.</em></p>
+<p>See, we already have missed out a lot of insights without this data. Very small houses, still have a decent base price, probably because land price is also affecting the house price. Also, very large houses tend to have very high price ~140 per square foot, probably because, such large houses are made with all sort of luxuries into it, and probably is in a premium neighbourhood. Now, what if based on these data, a computer can write (learn) its own function to predict the selling price of a house?</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span>(floorArea) <span class="op">{</span>
+  <span class="co">// A function written by the computer itself</span>
+<span class="op">}</span></code></pre></div>
+<p>This function above, will always return a better prediction than our human version of the same function we have seen above. Why? Because, it can detect all sorts of patterns and features within the data. This process is machine learning!</p>
+<p><strong>Note:-</strong> <em>This particular problem, where a set of features and targets are given, and the machine is expected to predict a specific value on a continuous line of values, is called regression. In this case, it is a very simple version of regression called Linear Regression. We will discuss this in detail in another article.</em></p>
 <h3 id="types-of-machine-learning">Types of machine learning</h3>
 <div class="figure">
 <img src="images/ml-types.png" alt="Types of machine learning">
