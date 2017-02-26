@@ -1,0 +1,81 @@
+<html>
+    <head>
+         <title>Napster&apos;s Experiments with Freedom</title>
+         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+         <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+         <script>hljs.initHighlightingOnLoad();</script>
+         <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+         <link rel="stylesheet" type="text/css" href="css/post.css">
+         <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-20813670-9', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </head>
+    <body><h1 id="supervised-and-unsupervised-learning">Supervised and Unsupervised Learning</h1>
+<p>In the last article, we have seen the broad classification of Machine Learning problems. Supervised and Unsupervised learning are discussed and used widely in appropriate problems. Lets see both in a little detail.</p>
+<h3 id="the-grouping-task">The grouping task</h3>
+<p>In real-life, we come across a lot of grouping problems. Group students by their percentage of marks into grades from A to D, group vehicles by their size and utility, so that appropriate tax can be charged, group similar fruits from fruit basket etc. Grouping a number of objects into sets is relatively a simple task for a human. A three year old can group fruits into different baskets. But, for a computer to solve this, there are a number of hurdles. First of all, computers have no prior knowledge about any objects at all. But, we can provide the computer with features of objects, like texture of a fruit, or the shape of a vehicle etc. But, as and when the computer sees a new object with a slight difference in the provided features, it fails immediately.</p>
+<h3 id="classification">Classification</h3>
+<p>Classification is one type of grouping task. In classification, we have a predefined, finite number of classes into which all objects in the given problem set should belong. Lets see an example of a highway toll gate. There could only be a finite number of gates for all types of vehicles that could possibly go through the toll. Suppose these gates are <strong><em>labelled</em></strong> as <strong>CARS</strong>, <strong>VANS</strong> and <strong>TRUCKS</strong>. And in this case, vehicles are coming to the toll gate <em>one-by-one</em>. Now, suppose a <strong>AUTO RICKSHAW</strong> comes into the toll gate. Which is the most appropriate gate through which it can get across? Obviously the <strong>CARS</strong> gate. This decision is made by a human, because he knows the <strong><em>features</em></strong> of auto rickshaw matches the best with cars, not with the vans or with the trucks, even though an auto rickshaw is not precisely fit for a car. Now, to make this decision, the toll operator needs <em>prior knowledge</em> of features of both cars, vans and trucks. Without this knowledge, the toll operator may classify an auto rickshaw as a van or a truck.</p>
+<h3 id="clustering">Clustering</h3>
+<p>Imagine the same example given above. But this time, instead of vehicles coming to the toll gate one-by-one, 1000 vehicles comes into the toll gate, <em>all at once</em>. And, individual gates at the toll has no labels on them. Instead, just N-number of un-labelled gates are provided. Now, even though the toll operator has never seen any vehicles in his life before, he can group them by shape, size number of seats etc. This time also, auto rickshaws gets grouped along with cars, not because it has many features of a class called <strong>CARS</strong> (in fact there are no classes here), but both cars and auto rickshaws share a number of features like size, weight and number of seats. The toll operator attains a similar result as in classification, even without prior knowledge of vehicles.</p>
+<h3 id="supervised-vs.-unsupervised">Supervised Vs. Unsupervised</h3>
+<p>The classification discussed above is an example of supervised learning, and clustering is an example of unsupervised learning. Here is a <a href="http://stackoverflow.com/a/38841376/519814">table discussing both</a>.</p>
+<table>
+<colgroup>
+<col width="24%">
+<col width="37%">
+<col width="37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criteria</th>
+<th>Classification</th>
+<th>Clustering</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Prior knowledge of classes</td>
+<td>YES</td>
+<td>NO</td>
+</tr>
+<tr class="even">
+<td>Use cases</td>
+<td>Put a new sample into a known class</td>
+<td>Suggest groups by looking at the entire sample set at once</td>
+</tr>
+<tr class="odd">
+<td>Data Needs</td>
+<td>Samples with class labels for training, and an unlabelled sample for classification.</td>
+<td>Samples without any labelling. All samples are provided to the algorithm at once.</td>
+</tr>
+<tr class="even">
+<td>Number of classes</td>
+<td>KNOWN</td>
+<td>UNKNOWN</td>
+</tr>
+<tr class="odd">
+<td>Decision making</td>
+<td>Based on training obtained</td>
+<td>By trying to find patterns in the data</td>
+</tr>
+</tbody>
+</table>
+<p>The term <em>supervised</em> is often confusing. It gives a false impression that, for the learning, someone has to supervise, typically a human. This is simply wrong. And the unsupervised learning, practically, it is not a <em>&quot;learning&quot;</em>. It is just a process of finding patterns in the data to explore(understand) the data better. I hope this article was helpful.</p>
+
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    </body>
+</html>
