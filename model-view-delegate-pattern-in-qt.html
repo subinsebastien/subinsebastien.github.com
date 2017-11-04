@@ -1,0 +1,301 @@
+<html>
+    <head>
+         <title>Napster&apos;s Experiments with Freedom</title>
+         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+         <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+         <script>hljs.initHighlightingOnLoad();</script>
+         <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+         <link rel="stylesheet" type="text/css" href="css/post.css">
+         <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-20813670-9', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </head>
+    <body><h1 id="model-view-delegate-pattern-in-qt">Model-View-Delegate Pattern in Qt</h1>
+<div class="figure">
+<img src="images/qt-mvd.png" alt="The Qt&apos;s Model-View-Delegate Pattern">
+<p class="caption">The Qt&apos;s Model-View-Delegate Pattern</p>
+</div>
+<p>Qt provides out of the box support for model-view-delegate programming. Many of our day-to-day programming problems can fit very well into this pattern as well. In this article I will explain some basic ideas about how to build a simple model-view based application.</p>
+<h2 id="the-problem">The Problem</h2>
+<p>You have to develop a simple software for calculating checksum. The basic requirements are listed below.</p>
+<ol style="list-style-type: decimal">
+<li>A table should show a bunch of errors.</li>
+<li>The first column in the table should show a human-readable error text.</li>
+<li>The second column should have an integer code, for all error texts.</li>
+<li>A combobox should show all the available errors in the table.</li>
+<li>The combobox should only show human-readable error text.</li>
+<li>A text box, which will accept a string from the user.</li>
+<li>A push button, which will take the message and the error code, and will calculate modulo-256 checksum.</li>
+<li>This checksum should be displayed on the GUI.</li>
+<li>The error table should provide action-buttons, to add, delete items from and to the table.</li>
+<li>The table content should be editable by double click.</li>
+<li>When the user double clicks on the error code, the GUI should show a slider with a range of [0-255] to select the error code value.</li>
+</ol>
+<h2 id="understanding-the-problem-in-detail">Understanding the problem in detail</h2>
+<p>Basically, there is some data, a list of errors. Each error is composed of two parts. A human readable error text, and an integer error code. This data should be displayed by two different GUI widgets at the same time. Namely a <strong>table</strong> as well as a <strong>combobox</strong>. While the table can show the data fully, the combobox only can show the error text. The advantage of combobox over a table is that, the selection is explicitly made by the user. And finally, when you click on a button, get the selected data, and do some basic computation to find checksum. In case, if the user decides to edit the error codes, they should be able to do it, using a slider control.</p>
+<h2 id="step-1-building-a-model">Step-1 : Building a Model</h2>
+<p>I have built a table with a couple of random error texts and code that goes into our model.</p>
+<table>
+<thead>
+<tr class="header">
+<th>ERROR TEXT</th>
+<th>ERROR CODE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>No Error</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Data Fault</td>
+<td>15</td>
+</tr>
+<tr class="odd">
+<td>Unknown Input</td>
+<td>35</td>
+</tr>
+<tr class="even">
+<td>Unsupported Baud Rate</td>
+<td>44</td>
+</tr>
+<tr class="odd">
+<td>Reset Counter</td>
+<td>70</td>
+</tr>
+<tr class="even">
+<td>Control Port Inactive</td>
+<td>189</td>
+</tr>
+</tbody>
+</table>
+<p>Qt supports a bunch of classes with which you can easily build your models. For this problem, I have chosen <a href="http://doc.qt.io/qt-4.8/qstandarditemmodel.html">QStandardItemModel</a> class. The process of setting your data into a model is pretty much manual.</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">// Your data can come from anywhere.</span>
+<span class="co">// A file, database, network.</span>
+<span class="co">// I&apos;m hard-coding for this example.</span>
+<span class="ot">QStringList</span> error_texts;
+<span class="ot">QList</span>&lt;<span class="dt">int</span>&gt; error_codes;
+error_texts &lt;&lt; <span class="st">&quot;No Error&quot;</span>
+            &lt;&lt; <span class="st">&quot;Data Fault&quot;</span>
+            &lt;&lt; <span class="st">&quot;Unknown Input&quot;</span>
+            &lt;&lt; <span class="st">&quot;Unsupported Baud Rate&quot;</span>
+            &lt;&lt; <span class="st">&quot;Reset Counter&quot;</span>
+            &lt;&lt; <span class="st">&quot;Control Port Inactive&quot;</span>;
+    
+error_codes &lt;&lt; <span class="dv">0</span>
+            &lt;&lt; <span class="dv">15</span>
+            &lt;&lt; <span class="dv">35</span>
+            &lt;&lt; <span class="dv">44</span>
+            &lt;&lt; <span class="dv">70</span>
+            &lt;&lt; <span class="dv">189</span>;
+
+<span class="co">// Now, Build your Model and load the data</span>
+model = <span class="kw">new</span> <span class="ot">QStandardItemModel</span>(error_codes.size(), <span class="dv">2</span>, <span class="kw">this</span>);
+<span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>, n = error_codes.size(); i &lt; n; i++)
+{
+    model-&gt;setData(model-&gt;index(i, <span class="dv">0</span>), error_texts.at(i));
+    model-&gt;setData(model-&gt;index(i, <span class="dv">1</span>), error_codes.at(i));
+}</code></pre></div>
+<p>Now you have your model ready. Now it is time to build the GUI for the application. Many Qt widgets supports the <code>setModel()</code> method out of the box.</p>
+<blockquote>
+<p>Note : that Qt has both item-based and model-based widgets in the toolbox. Since we are planning our project to be model-view based, always choose Item-Views (Model-Based) instead of Item-Widgets (Item-Based).</p>
+</blockquote>
+<div class="figure">
+<img src="images/qt-mvd-pattern-gui.png" alt="A simple gui with model based views">
+<p class="caption">A simple gui with model based views</p>
+</div>
+<p>Set the model to appropriate views on the GUI.</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">// Set the model to our widgets.</span>
+ui-&gt;tbl_error-&gt;setModel(model);
+ui-&gt;cmbx_error-&gt;setModel(model);</code></pre></div>
+<div class="figure">
+<img src="images/qt-mvd-pattern-gui-loaded.png" alt="With not much of programming, the widgets are loaded and ready.">
+<p class="caption">With not much of programming, the widgets are loaded and ready.</p>
+</div>
+<p>Note that both the combo box as well as the table shares the same data. Combo box shows, only the first column in the model. But combobox&apos;s current selection index can be used to navigate through the model, to find the error code we need.</p>
+<h2 id="step-2-adddelete-actions-on-the-model">Step-2 : Add/Delete Actions on the Model</h2>
+<p>Lets quickly implement the Add and Delete options provided to the model. This is pretty straight forward. As soon as you modify the model, all the associated views gets updated with the new data. Define slots for clicks on both the Add and Delete buttons.</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">void</span> Dialog::on_btn_delete_clicked()
+{
+    <span class="ot">QItemSelectionModel</span>* selection = ui-&gt;tbl_error-&gt;selectionModel();
+    <span class="kw">if</span>(selection-&gt;hasSelection())
+    {
+        <span class="kw">if</span>(!selection-&gt;selectedRows().isEmpty())
+        {
+            QModelIndexList indexes = selection-&gt;selectedRows();
+            <span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>, n = indexes.count(); i &lt; n; i++)
+            {
+                model-&gt;removeRow(indexes.at(i).row());
+            }
+        }
+    }
+}
+
+<span class="dt">void</span> Dialog::on_btn_add_clicked()
+{
+    model-&gt;insertRow(model-&gt;rowCount());
+}</code></pre></div>
+<p>That was quick. With this much code, you should be able to select rows from the table, and delete them, and add rows to the bottom of the table. Interesting fact is that, as soon as the table data is updated, the combobox is also updated. Qt&apos;s Model-View system uses internal signals and slots to update all connected items.</p>
+<blockquote>
+<p>Note: that you can double click on any table cell and edit the data. This behaviour is provided by the default delegate used by the QTableView. For integers, a spin box is provided by the default delegate. This behaviour can be changed using custom Delegates.</p>
+</blockquote>
+<h2 id="step-3-introducing-a-delegate">Step-3 : Introducing a Delegate</h2>
+<p>A delegate is some class, to which you offload some work, which is to be done on your behalf. In case of model-view-delegate pattern, the delegate decides how the model is presented on the view, and how the updates from the view gets transported back to the model. Qt provides a number of classes which might suit your specific delegation problem. For this example, I&apos;m using <a href="http://doc.qt.io/qt-5/qitemdelegate.html">QItemDelegate</a>. QItemDelegate is an abstract class, and there a bunch of mandatory overrides.</p>
+<table>
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>VIRTUAL FUNCTION SIGNATURE</th>
+<th>WHAT DOES IT DO?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const;</code></td>
+<td>When you want to edit an item in a model, this function decides what type of editor widget is provided to you.</td>
+</tr>
+<tr class="even">
+<td><code>void setEditorData(QWidget * editor, const QModelIndex &amp; index) const;</code></td>
+<td>When you enter into edit mode, this function will set initial values to the editor widget provided by createEditor() override. This value ideally comes from the model.</td>
+</tr>
+<tr class="odd">
+<td><code>void setModelData(QWidget * editor, QAbstractItemModel * model, const QModelIndex &amp; index) const;</code></td>
+<td>When you are about to exit edit mode, this function will set the updated value from the editor widget back to the model.</td>
+</tr>
+<tr class="even">
+<td><code>void updateEditorGeometry(QWidget * editor, const QStyleOptionViewItem &amp; option, const QModelIndex &amp; index) const;</code></td>
+<td>This function will decide, how the editor widget is presented in a view.</td>
+</tr>
+</tbody>
+</table>
+<p>As per our requirement, we need to provide a slider widget, instead of the default editor, when the user try to edit the error-codes in the error table. Lets implement our custom delegate keeping this in mind.</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/*** mdelegate.h ***/</span>
+
+<span class="ot">#ifndef MDELEGATE_H</span>
+<span class="ot">#define MDELEGATE_H</span>
+
+<span class="ot">#include &lt;QWidget&gt;</span>
+<span class="ot">#include &lt;QSlider&gt;</span>
+<span class="ot">#include &lt;QAbstractItemModel&gt;</span>
+<span class="ot">#include &lt;QStyleOptionViewItem&gt;</span>
+<span class="ot">#include &lt;QItemDelegate&gt;</span>
+<span class="ot">#include &lt;QLineEdit&gt;</span>
+
+<span class="kw">class</span> MDelegate : <span class="kw">public</span> <span class="ot">QItemDelegate</span>
+{
+<span class="kw">public</span>:
+    MDelegate();
+    <span class="ot">QWidget</span>* createEditor(<span class="ot">QWidget</span> *parent, <span class="dt">const</span> <span class="ot">QStyleOptionViewItem</span> &amp;option, <span class="dt">const</span> <span class="ot">QModelIndex</span> &amp;index) <span class="dt">const</span>;
+    <span class="dt">void</span> setEditorData(<span class="ot">QWidget</span> * editor, <span class="dt">const</span> <span class="ot">QModelIndex</span> &amp; index) <span class="dt">const</span>;
+    <span class="dt">void</span> setModelData(<span class="ot">QWidget</span> * editor, <span class="ot">QAbstractItemModel</span> * model, <span class="dt">const</span> <span class="ot">QModelIndex</span> &amp; index) <span class="dt">const</span>;
+    <span class="dt">void</span> updateEditorGeometry(<span class="ot">QWidget</span> * editor, <span class="dt">const</span> <span class="ot">QStyleOptionViewItem</span> &amp; option, <span class="dt">const</span> <span class="ot">QModelIndex</span> &amp; index) <span class="dt">const</span>;
+};
+
+<span class="ot">#endif </span><span class="co">// MDELEGATE_H</span>
+
+<span class="co">/*** mdelegate.cpp ***/</span>
+
+<span class="ot">#include &quot;mdelegate.h&quot;</span>
+
+MDelegate::MDelegate()
+{
+
+}
+
+<span class="ot">QWidget</span>* MDelegate::createEditor(<span class="ot">QWidget</span> *parent, <span class="dt">const</span> <span class="ot">QStyleOptionViewItem</span> &amp;option, <span class="dt">const</span> <span class="ot">QModelIndex</span> &amp;index) <span class="dt">const</span>
+{
+    <span class="kw">switch</span> (index.column()) {
+    <span class="kw">case</span> <span class="dv">0</span>:
+        <span class="kw">return</span> <span class="kw">new</span> <span class="ot">QLineEdit</span>(parent);
+    <span class="kw">case</span> <span class="dv">1</span>:
+        <span class="ot">QSlider</span>* slider = <span class="kw">new</span> <span class="ot">QSlider</span>(parent);
+        slider-&gt;setOrientation(<span class="ot">Qt::</span>Horizontal);
+        slider-&gt;setAutoFillBackground(<span class="kw">true</span>);
+        slider-&gt;setMaximum(<span class="dv">255</span>);
+        <span class="kw">return</span> slider;
+    }
+}
+
+<span class="dt">void</span> MDelegate::setEditorData(<span class="ot">QWidget</span> * editor, <span class="dt">const</span> <span class="ot">QModelIndex</span> &amp; index) <span class="dt">const</span>
+{
+    <span class="kw">switch</span> (index.column()) {
+    <span class="kw">case</span> <span class="dv">0</span>:
+    {
+        <span class="ot">QString</span> text = index.model()-&gt;data(index, <span class="ot">Qt::</span>EditRole).toString();
+        <span class="ot">QLineEdit</span>* line = <span class="kw">static_cast</span>&lt;<span class="ot">QLineEdit</span>*&gt;(editor);
+        line-&gt;setText(text);
+        <span class="kw">break</span>;
+    }
+    <span class="kw">case</span> <span class="dv">1</span>:
+    {
+        <span class="dt">int</span> value = index.model()-&gt;data(index, <span class="ot">Qt::</span>EditRole).toInt();
+        <span class="ot">QSlider</span>* slider = <span class="kw">static_cast</span>&lt;<span class="ot">QSlider</span>*&gt;(editor);
+        slider-&gt;setValue(value);
+        <span class="kw">break</span>;
+    }
+    }
+}
+
+<span class="dt">void</span> MDelegate::setModelData(<span class="ot">QWidget</span> * editor, <span class="ot">QAbstractItemModel</span> * model, <span class="dt">const</span> <span class="ot">QModelIndex</span> &amp; index) <span class="dt">const</span>
+{
+    <span class="kw">switch</span> (index.column()) {
+    <span class="kw">case</span> <span class="dv">0</span>:
+    {
+        <span class="ot">QLineEdit</span>* line = <span class="kw">static_cast</span>&lt;<span class="ot">QLineEdit</span>*&gt;(editor);
+        model-&gt;setData(index, line-&gt;text(), <span class="ot">Qt::</span>EditRole);
+        <span class="kw">break</span>;
+    }
+    <span class="kw">case</span> <span class="dv">1</span>:
+    {
+        <span class="ot">QSlider</span> *slider = <span class="kw">static_cast</span>&lt;<span class="ot">QSlider</span>*&gt;(editor);
+        model-&gt;setData(index, slider-&gt;value(), <span class="ot">Qt::</span>EditRole);
+        <span class="kw">break</span>;
+    }
+    }
+}
+
+<span class="dt">void</span> MDelegate::updateEditorGeometry(<span class="ot">QWidget</span> * editor, <span class="dt">const</span> <span class="ot">QStyleOptionViewItem</span> &amp; option, <span class="dt">const</span> <span class="ot">QModelIndex</span> &amp; index) <span class="dt">const</span>
+{
+    editor-&gt;setGeometry(option.rect);
+}</code></pre></div>
+<p>Although this is a bit of code, it is pretty straight forward. If the editing happens in the first column, we just deal with a simple QLineEdit. If it is the second column, where the error codes are located, we use a QSlider. Lets see how well it works.</p>
+<div class="figure">
+<img src="images/qt-mvd-pattern-gui-delegate.png" alt="The slider nicely fits into the cell geometry">
+<p class="caption">The slider nicely fits into the cell geometry</p>
+</div>
+<p>Now, our model-view-delegate work is completely done. The only thing now left is calculating our checksum when the user clicks on the Build button. Although it is pretty irrelevant how this is done to this project, lets add that code as well.</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">void</span> Dialog::on_btn_build_clicked()
+{
+    <span class="ot">QByteArray</span> bytes = ui-&gt;txt_msg-&gt;text().toLocal8Bit();
+    <span class="dt">int</span> index = ui-&gt;cmbx_error-&gt;currentIndex();
+    <span class="dt">int</span> error_code = model-&gt;data(model-&gt;index(index, <span class="dv">1</span>)).toInt();
+    bytes.append(error_code);
+
+    <span class="dt">uint8_t</span> sum = <span class="dv">0</span>;
+    <span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; bytes.count(); i++)
+    {
+        sum += bytes.at(i);
+    }
+    ui-&gt;txt_checksum-&gt;setText(<span class="ot">QString</span>(<span class="st">&quot;Modulo 256 Checksum = %1&quot;</span>).arg(sum));
+}</code></pre></div>
+<p>Hope you have enjoyed this article. To learn more about Model/View programming pattern using Qt, I recommend reading the official documentation as well. Here is the <a href="http://doc.qt.io/qt-5/model-view-programming.html">link</a> to the same.</p>
+
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    </body>
+</html>
