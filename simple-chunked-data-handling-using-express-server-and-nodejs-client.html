@@ -15,7 +15,18 @@
             ga('send', 'pageview');
         </script>
     </head>
-    <body><h1 id="simple-chunked-data-handling-in-nodejsexpressjs">Simple Chunked Data Handling in NodeJS/ExpressJS</h1>
+    <body>
+		<a href="index.html"><img width="32px" src="images/site_icon.gif"></a>
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    <h1 id="simple-chunked-data-handling-in-nodejsexpressjs">Simple Chunked Data Handling in NodeJS/ExpressJS</h1>
 <p>There are often cases where you actually get streamed data from certain systems and you actually want to stream the same to your clients. One good use-case is where Elasticsearch provides data streams, where you only get chunks of the original result at your application server layer. This data, you can either hold in-memory and then send to clients as a whole. But, this can risk your application server going out-of-memory if the data handled is really large size. Besides, most of the http clients supports chunked response handling. They can orchestrate the data together at the end, or in certain cases process directly on the chunk of data available.</p>
 <p>The following example shows a simple chunked data server. This express app waits 500ms before sending each piece of the response data.</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> express <span class="op">=</span> <span class="at">require</span>(<span class="st">&apos;express&apos;</span>)<span class="op">;</span>
@@ -55,15 +66,5 @@
 <p class="caption"><em>Notice the server response</em></p>
 </div>
 <p>Thanks for reading.</p>
-
-        <div id="disqus_thread"></div>  
-        <script type="text/javascript">
-            var disqus_shortname = 'subinsebastien';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-    </body>
+</body>
 </html>

@@ -15,7 +15,18 @@
             ga('send', 'pageview');
         </script>
     </head>
-    <body><h1 id="deploying-parse-server-on-aws">Deploying Parse Server on AWS</h1>
+    <body>
+		<a href="index.html"><img width="32px" src="images/site_icon.gif"></a>
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    <h1 id="deploying-parse-server-on-aws">Deploying Parse Server on AWS</h1>
 <p>Parse.com has announced shut down a few months ago, and they are planning complete the process by the end of the year 2016. They have done a pretty good job in helping developers migrating to other platforms, including Amazon Web Services. I have experimented with their automated tools, and One-Click deployment solution, and this article discusses about what I think the best way to setup a web-app from a Parse.com background.</p>
 <h2 id="baby-steps">Baby Steps</h2>
 <p>At the minimum, here is what we are going to do. These steps assumes that, you already have an AWS account setup.</p>
@@ -89,15 +100,5 @@ $ <span class="kw">brew</span> install awsebcli</code></pre></div>
 <p><strong>4. Using API Gateway Service</strong></p>
 <p>AWS also provides an API Gateway service. If you are planning to expose a REST api from your web app, this would be an ideal choice. API Gateway comes with caching and several other features to improve the performance of your API. <a href="https://aws.amazon.com/api-gateway/">Read More</a>.</p>
 <p>Thanks for Reading.</p>
-
-        <div id="disqus_thread"></div>  
-        <script type="text/javascript">
-            var disqus_shortname = 'subinsebastien';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-    </body>
+</body>
 </html>

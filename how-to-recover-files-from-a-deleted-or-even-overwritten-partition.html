@@ -15,7 +15,18 @@
             ga('send', 'pageview');
         </script>
     </head>
-    <body><h1 id="how-to-recover-files-from-a-deleted-or-even-overwritten-partition">How to recover files from a deleted or even overwritten partition</h1>
+    <body>
+		<a href="index.html"><img width="32px" src="images/site_icon.gif"></a>
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    <h1 id="how-to-recover-files-from-a-deleted-or-even-overwritten-partition">How to recover files from a deleted or even overwritten partition</h1>
 <p>First of all, this is something that happened to me and, it is just a post about how I recovered myself from the mess. You are gonna slap me if I tell you how idiotic I was to loose all my data anyway. I was updating my Linux Mint 14 laptop with Linux Mint 15 RC, which has been released yesterday by a fresh reinstall. As usual I backed up all my files in the /home/napster folder, which is nothing but my home folder, to another spare PC here and since all of my critical documents are on Dropbox and Google Drive, that part was pretty safe. Before starting gone-deadly installation, my TOSHIBA-250GB HDD looked something like the following.</p>
 <div class="figure">
 <img src="images/before.png">
@@ -44,15 +55,5 @@
 <li>Once rebooted, the partitions will be restored and the files in it may found to have incorrect permissions or even some files or folders cannot be accessed at all. Check&#xA0;<strong>chmod</strong>&#xA0;command to see how you could fix this problem.</li>
 </ol>
 <p>Ok, so that&#x2019;s the story, I have executed all the steps above, and successfully recovered almost all the files without being corrupted. I faced some boot related issues after the recovery, but I&#x2019;m not sure yet if it is caused by the recovery process or not. Also, the most important files were recovered and so, a bad day became a good day afterall for me! :)</p>
-
-        <div id="disqus_thread"></div>  
-        <script type="text/javascript">
-            var disqus_shortname = 'subinsebastien';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-    </body>
+</body>
 </html>

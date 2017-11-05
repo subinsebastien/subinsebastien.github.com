@@ -15,7 +15,18 @@
             ga('send', 'pageview');
         </script>
     </head>
-    <body><h1 id="simple-qhttp-example">Simple QHTTP Example</h1>
+    <body>
+		<a href="index.html"><img width="32px" src="images/site_icon.gif"></a>
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    <h1 id="simple-qhttp-example">Simple QHTTP Example</h1>
 <p>Reading time : Less than 10 minutes Qt provides a very good class named Qhttp for doing http requests and to get response from the web. This class is thread safe and easy to use. To begin with, create a Qt console application and name it DoHttp, and add a reference about network usage in your project file.</p>
 <p>Now add a new class to the project to handle the Qhttp object. You have to inherit from QObject to implement signals and slots. So set QObject as base class.</p>
 <div class="figure">
@@ -118,15 +129,5 @@ Handler::Handler(<span class="ot">QObject</span> *parent) :<span class="ot">QObj
 <img src="images/qthttp-output.png">
 
 </div>
-
-        <div id="disqus_thread"></div>  
-        <script type="text/javascript">
-            var disqus_shortname = 'subinsebastien';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-    </body>
+</body>
 </html>

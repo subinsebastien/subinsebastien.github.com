@@ -15,7 +15,18 @@
             ga('send', 'pageview');
         </script>
     </head>
-    <body><h1 id="supervised-and-unsupervised-learning">Supervised and Unsupervised Learning</h1>
+    <body>
+		<a href="index.html"><img width="32px" src="images/site_icon.gif"></a>
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    <h1 id="supervised-and-unsupervised-learning">Supervised and Unsupervised Learning</h1>
 <p>In the last article, we have seen the broad classification of Machine Learning problems. Supervised and Unsupervised learning are discussed and used widely in appropriate problems. Lets see both in a little detail.</p>
 <h3 id="the-grouping-task">The grouping task</h3>
 <p>In real-life, we come across a lot of grouping problems. Group students by their percentage of marks into grades from A to D, group vehicles by their size and utility, so that appropriate tax can be charged, group similar fruits from fruit basket etc. Grouping a number of objects into sets is relatively a simple task for a human. A three year old can group fruits into different baskets. But, for a computer to solve this, there are a number of hurdles. First of all, computers have no prior knowledge about any objects at all. But, we can provide the computer with features of objects, like texture of a fruit, or the shape of a vehicle etc. But, as and when the computer sees a new object with a slight difference in the provided features, it fails immediately.</p>
@@ -67,15 +78,5 @@
 </tbody>
 </table>
 <p>The term <em>supervised</em> is often confusing. It gives a false impression that, for the learning, someone has to supervise, typically a human. This is simply wrong. And the unsupervised learning, practically, it is not a <em>&quot;learning&quot;</em>. It is just a process of finding patterns in the data to explore(understand) the data better. I hope this article was helpful.</p>
-
-        <div id="disqus_thread"></div>  
-        <script type="text/javascript">
-            var disqus_shortname = 'subinsebastien';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-    </body>
+</body>
 </html>

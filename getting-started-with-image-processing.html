@@ -15,7 +15,18 @@
             ga('send', 'pageview');
         </script>
     </head>
-    <body><h1 id="getting-started-with-image-processing">Getting Started with Image Processing</h1>
+    <body>
+		<a href="index.html"><img width="32px" src="images/site_icon.gif"></a>
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    <h1 id="getting-started-with-image-processing">Getting Started with Image Processing</h1>
 <p>I have been working on digital image processing for sometime now, and I was learning a lot of stuff recently. I thought I should put together a very basic getting started guide on image processing, which could help a lot of enthusiasts. This aritcle is greatly borrowed from the <a href="https://codewords.recurse.com/issues/six/image-processing-101">Image Processing - 101 Sher Minn Chong</a>. This article, as I have planned, will be multi-part, and will be as detail as possible from my own understanding of the concepts.</p>
 <h2 id="digital-image">Digital Image</h2>
 <p>Digital images are fundamentally a finite number of pixels distributed in X and Y axis, and are stored on the disk as a two (or more) dimentional array of integers or more complex datastructers, in rows and columns. Any 2D digital image can be viewed as a matrix of size NxM. Each element in the matrix represents a pixel. A <a href="https://en.wikipedia.org/wiki/Pixel">pixel</a>, and its definition, and how a pixel is displayed on a screen or even how it is printed on a paper, are out of the context of this article. Following is a hypothetical representation of a flower as a digital image.</p>
@@ -60,15 +71,5 @@
 <img src="images/vga_palette_13h.png">
 
 </div>
-
-        <div id="disqus_thread"></div>  
-        <script type="text/javascript">
-            var disqus_shortname = 'subinsebastien';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-    </body>
+</body>
 </html>

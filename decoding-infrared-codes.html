@@ -15,7 +15,18 @@
             ga('send', 'pageview');
         </script>
     </head>
-    <body><h1 id="decoding-infrared-codes">Decoding Infrared Codes</h1>
+    <body>
+		<a href="index.html"><img width="32px" src="images/site_icon.gif"></a>
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    <h1 id="decoding-infrared-codes">Decoding Infrared Codes</h1>
 <p>I was trying to remotely maneuver a prototype robot I have made last week. If you happen to read it, you might know about it. I had an infrared receiver named&#xA0;<a href="http://t.umblr.com/redirect?z=http%3A%2F%2Fwww.micropik.com%2FPDF%2Ftsop17xx.pdf&amp;t=YjAzMzkxMGIzM2RmZWJhNzJjMGRlYjBmMWRkMTI0MTJjNjdjNzNiMCxMem10TVVHMA%3D%3D&amp;b=t%3ALX5p5KDoIXDXw2AOu5I9Ew&amp;m=1">TSOP1738</a>&#xA0;and a few different remote controls left useless from a car audio system and a TV here. I had IR LEDs as well, but to avoid unnecessary complexity I chose to use one of the remote controls over building one on my own with the LEDs. Here is a study I have made to make this thing work as I expected.</p>
 <div class="figure">
 <img src="images/arduino_tsop_wireup.jpg">
@@ -90,15 +101,5 @@
   <span class="kw">return</span> result; <span class="co">//Return key number</span>
 }</code></pre></div>
 <p>Lately I got into some inconsistency problems and noise issues. I fixed a few of them, but I still have some pain in the ass kind of problems remaining.&#xA0;<a href="http://t.umblr.com/redirect?z=http%3A%2F%2Felectronics.stackexchange.com%2Fquestions%2F78959%2Fhow-to-get-consistent-codes-from-ir-receiver-module-tsop1738&amp;t=ZGZkYmQ5ODEwNDkxYmRhNWMzMGFiMGI3ODIzYjA1ODU2OWY4YmEwOSxMem10TVVHMA%3D%3D&amp;b=t%3ALX5p5KDoIXDXw2AOu5I9Ew&amp;m=1">Here&#x2019;s</a>&#xA0;one of them.</p>
-
-        <div id="disqus_thread"></div>  
-        <script type="text/javascript">
-            var disqus_shortname = 'subinsebastien';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-    </body>
+</body>
 </html>

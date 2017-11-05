@@ -15,7 +15,18 @@
             ga('send', 'pageview');
         </script>
     </head>
-    <body><h1 id="water-level-monitor-using-hc-sr04-and-labview">Water Level Monitor using HC-SR04 and LabView</h1>
+    <body>
+		<a href="index.html"><img width="32px" src="images/site_icon.gif"></a>
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    <h1 id="water-level-monitor-using-hc-sr04-and-labview">Water Level Monitor using HC-SR04 and LabView</h1>
 <p>I have been working with ultrasonic range sensor HC-SR04 and got this wild idea to use it as a water level monitor from the internet. Despite having some concerns about using it for water level monitoring in a production environment, I decided to put together a prototype to experiment with it.</p>
 <h2 id="the-hc-sr04-ultrasonic-range-sensor">The HC-SR04 Ultrasonic Range Sensor</h2>
 <div class="figure">
@@ -139,15 +150,5 @@
 <li>The LabView read loop looks a little slow for some reason. I personally have no idea why this is so. Needs investigation.</li>
 <li>In the field, the communication between the monitor and the sensor should be done wirelessly. My plan is to put a ESP8266 into the picture. What is your idea?</li>
 </ol>
-
-        <div id="disqus_thread"></div>  
-        <script type="text/javascript">
-            var disqus_shortname = 'subinsebastien';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-    </body>
+</body>
 </html>

@@ -15,7 +15,18 @@
             ga('send', 'pageview');
         </script>
     </head>
-    <body><h1 id="the-booting-process">The Booting Process</h1>
+    <body>
+		<a href="index.html"><img width="32px" src="images/site_icon.gif"></a>
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    <h1 id="the-booting-process">The Booting Process</h1>
 <p>Ever wondered how computers startup? Or where does the term <a href="https://en.wikipedia.org/wiki/Booting"><strong>booting</strong></a> come from in the first place? I was personally experimenting with boot-loaders (the program that loads an operating system from a disk to the memory in its simplest functionality), and came across several core concepts behind the booing-process of a computer.</p>
 <div class="figure">
 <img src="images/windows-xp-boot-screen.png">
@@ -77,15 +88,5 @@ dw 0xaa55</code></pre>
 <h2 id="the-rest-of-the-process">The rest of the process</h2>
 <p>This example boot loader does nothing but printing a message to the console. As you can see, a trivial task like this takes a lot of effort and understanding of the underlaying system. Some calls this <a href="https://en.wikipedia.org/wiki/Bare_machine">bare-metal</a> programming, as there is not much of an abstraction available like in other programming environments. The next task would obviously to create a second stage boot loader and load and execute it from this level. We might also want to switch to <a href="https://en.wikipedia.org/wiki/Protected_mode">32-bit protected mode</a> since the 16-bit real mode in which all first stage boot-loaders run is not memory-secure. Will keep posting updates on this blog.</p>
 <p>Thanks for reading.</p>
-
-        <div id="disqus_thread"></div>  
-        <script type="text/javascript">
-            var disqus_shortname = 'subinsebastien';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-    </body>
+</body>
 </html>

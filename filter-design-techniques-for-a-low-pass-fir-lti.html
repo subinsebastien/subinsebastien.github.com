@@ -15,7 +15,18 @@
             ga('send', 'pageview');
         </script>
     </head>
-    <body><h1 id="filter-design-techniques-for-a-low-pass-fir-lti-system">Filter design techniques for a Low-pass FIR (LTI) System</h1>
+    <body>
+		<a href="index.html"><img width="32px" src="images/site_icon.gif"></a>
+        <div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    <h1 id="filter-design-techniques-for-a-low-pass-fir-lti-system">Filter design techniques for a Low-pass FIR (LTI) System</h1>
 <p>I came across certain interesting Digital Signal Processing techniques past week. One of them been a problem statement and its solution for a finite impulse response filter design. I thought it would be great to put up the same as an article on the blog. Problem Statement Calculate the filter coefficients for a low-pass FIR filter with cut-off frequency 1000Hz where the sampling frequency is 5Khz. Consider the filter passband gain as unity, and the impulse response sequence length is 7. Use a Hamming window to remove spectral leakage.</p>
 <p>Pass band gain is given to be unity. \(ie,\)</p>
 <p><br><span class="math display">$$
@@ -75,15 +86,5 @@ $$</span><br></p>
 <p>\(h(2) = 0.0234\)</p>
 <p>\(h(3) = 0\)</p>
 <p>These are the required filter coefficients. Further, this sequence can be converted to a realisable system by calculating transfer functions.</p>
-
-        <div id="disqus_thread"></div>  
-        <script type="text/javascript">
-            var disqus_shortname = 'subinsebastien';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-    </body>
+</body>
 </html>
