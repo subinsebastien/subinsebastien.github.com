@@ -15,18 +15,7 @@
             ga('send', 'pageview');
         </script>
     </head>
-    <body>
-		<a href="index.html"><img width="32px" src="images/site_icon.gif"></a>
-        <div id="disqus_thread"></div>  
-        <script type="text/javascript">
-            var disqus_shortname = 'subinsebastien';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-    <h1 id="simple-function-generator-circuit-using-xr2206">Simple Function Generator Circuit using XR2206</h1>
+    <body><h1 id="simple-function-generator-circuit-using-xr2206">Simple Function Generator Circuit using XR2206</h1>
 <p>The function generator IC&#xA0;<a href="https://github.com/subinsebastien/rowfiles/blob/master/21.8.13/XR2206.pdf">XR2206</a>&#xA0;from EXAR corporation is pretty popular among hobbyists. Although, it is popular, the company stopped the production of this IC earlier in 2011. Yet, it is available in some local shops and of course on ebay. I have a few here in my home workshop, and I worked with one of them today to develop a small function generator for my personal use. The application circuit from the datasheet worked just fine.&#xA0;</p>
 <div class="figure">
 <img src="images/xr2206-circuit.png">
@@ -37,5 +26,15 @@
 <p><strong>F = 1 / RC</strong></p>
 </blockquote>
 <p><strong>F</strong>&#xA0;is the required frequency of the output signal. The variable resistor connected to pin number 3 determines the amplitude of the output signal. The relation between this resistor (R3) and the Vpp can be found in figure-3 on the&#xA0;<a href="https://github.com/subinsebastien/rowfiles/blob/master/21.8.13/XR2206.pdf">datasheet</a>. I used volume control type pot meters for these variable resistors so that I can turn it while the circuit is working, and see the output variations on the oscilloscope screen.</p>
-</body>
+
+		<div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    </body>
 </html>

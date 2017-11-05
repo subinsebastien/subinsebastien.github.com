@@ -15,18 +15,7 @@
             ga('send', 'pageview');
         </script>
     </head>
-    <body>
-		<a href="index.html"><img width="32px" src="images/site_icon.gif"></a>
-        <div id="disqus_thread"></div>  
-        <script type="text/javascript">
-            var disqus_shortname = 'subinsebastien';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-    <h1 id="esp8266-basics">ESP8266 Basics</h1>
+    <body><h1 id="esp8266-basics">ESP8266 Basics</h1>
 <p>I have purchased an extremely cheap WiFi module based on the ESP8266 chip produced by some Chinese manufacturer. This tiny board is very popular these days in the IoT community, because of the low cost, ease of use and lower power consumption. It is available for less than $5 per unit in India through Amazon.</p>
 <h2 id="the-hardware">The hardware</h2>
 <div class="figure">
@@ -125,5 +114,15 @@
 </tbody>
 </table>
 <p>The responses should be visible in the receive window in the CoolTerm software. If everything is working fine, the TX,RX LEDs on both the USB-TTL converter as well as the ESP-01 module should blink when you issue commands. The red LED on the ESP-01 should be steady and blue one should indicate the activity.</p>
-</body>
+
+		<div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    </body>
 </html>

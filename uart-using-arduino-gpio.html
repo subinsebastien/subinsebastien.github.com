@@ -15,18 +15,7 @@
             ga('send', 'pageview');
         </script>
     </head>
-    <body>
-		<a href="index.html"><img width="32px" src="images/site_icon.gif"></a>
-        <div id="disqus_thread"></div>  
-        <script type="text/javascript">
-            var disqus_shortname = 'subinsebastien';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-    <h1 id="uart-using-arduino-gpio">UART Using Arduino GPIO</h1>
+    <body><h1 id="uart-using-arduino-gpio">UART Using Arduino GPIO</h1>
 <p>This weekend I tried using an Arduino to do UART communication using the <a href="https://www.arduino.cc/en/Reference/DigitalWrite">digitalWrite()</a> and the <a href="https://www.arduino.cc/en/Reference/DelayMicroseconds">delayMicroSeconds()</a> methods provided by the Arduino library. My primary goal was to find out if I can simulate the working of any simple serial communication libraries, simply by using GPIO pins and artificial delays. Before getting into the experiment, here is some basic information about UART. Universal Asynchronous Receive Transmit is basically the simplest form of serial communication in comparison with I2C or other such comparable methods. UART at a minimum needs 2 wires to establish a communication, namely an RX or TX and a Ground (GND). If you send something through the TX line, the receiver should be able to receive the data at their RX pin, and vice versa. Generally the TX line is kept high, and a LOW (digital zero) with reasonable width is sent to denote the start of data transmission. Similarly, you may send one or two HIGH (digital one) to denote the end of transmission as well. Additionally, there is one bit called parity bit, which can be sent right before the stop bits, and this parity bit can be used for a very rudimentary error checking. You may read more about how parity bit works <a href="https://en.wikipedia.org/wiki/Parity_bit">here</a>. For the rest of the experiment, I&apos;m not using parity bit. The following image explains this in detail.</p>
 <div class="figure">
 <img src="images/uart-basic.png">
@@ -183,5 +172,15 @@
 
 </div>
 <p>Anyway, it looks like <code>14400 bits/second</code> is the highest achievable data rate with an Arduino UNO/Duemilanove with simple digitalWrite() and delayMicroSeconds() methods. I will look into this in depth and will update, if I could reach a conclusive finding, and a higher data rate with the same setup.</p>
-</body>
+
+		<div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    </body>
 </html>

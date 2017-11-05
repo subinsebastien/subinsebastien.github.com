@@ -15,18 +15,7 @@
             ga('send', 'pageview');
         </script>
     </head>
-    <body>
-		<a href="index.html"><img width="32px" src="images/site_icon.gif"></a>
-        <div id="disqus_thread"></div>  
-        <script type="text/javascript">
-            var disqus_shortname = 'subinsebastien';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-    <h1 id="developing-opencv-applications-using-qt-creator">Developing OpenCV Applications using Qt Creator</h1>
+    <body><h1 id="developing-opencv-applications-using-qt-creator">Developing OpenCV Applications using Qt Creator</h1>
 <p>I have used both <strong>OpenCV</strong> Library and Qt Creator IDE back in my academic days. I have developed or more precisely experimented with both a lot. In my blog, you may find a couple of articles about both as well. A couple of years ago, I switched to OSX and my general interests were in Android mobile apps development using Java. Recently, I have got a chance to work with OpenCV again. I&apos;m one of the guy who prefers an IDE over command line tools and text editors to work on projects. So, this article is about setting up and using the best C++ IDE ever, the <strong>Qt Creator</strong> for developing OpenCV projects.</p>
 <h2 id="installing-opencv-on-mac-osx">Installing OpenCV on Mac OSX</h2>
 <p>There exist an open source package manager called <a href="http://brew.sh" title="Home Brew">brew</a> for mac. If you don&apos;t have brew installed on your machine, install brew first.</p>
@@ -84,5 +73,15 @@ $ <span class="kw">make</span></code></pre></div>
 <p>In case, if Qt Creator fails find the <code>cmake</code> binary, you can manually point the cmake location. To find the location of cmake on a Linux/OSX machine, run.</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash">$ <span class="kw">which</span> cmake</code></pre></div>
 <p>You can also configure this at a later point from <strong>Preferences &gt; Build &amp; Run &gt; CMake &gt; Add</strong>.</p>
-</body>
+
+		<div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    </body>
 </html>
