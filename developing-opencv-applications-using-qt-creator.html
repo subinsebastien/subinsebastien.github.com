@@ -16,15 +16,15 @@
         </script>
     </head>
     <body><h1 id="developing-opencv-applications-using-qt-creator">Developing OpenCV Applications using Qt Creator</h1>
-<p>I have used both <strong>OpenCV</strong> Library and Qt Creator IDE back in my academic days. I have developed or more precisely experimented with both a lot. In my blog, you may find a couple of articles about both as well. A couple of years ago, I switched to OSX and my general interests were in Android mobile apps development using Java. Recently, I have got a chance to work with OpenCV again. I&apos;m one of the guy who prefers an IDE over command line tools and text editors to work on projects. So, this article is about setting up and using the best C++ IDE ever, the <strong>Qt Creator</strong> for developing OpenCV projects.</p>
+<p>I have used both <strong>OpenCV</strong> Library and Qt Creator IDE back in my academic days. I have developed or more precisely experimented with both a lot. In my blog, you may find a couple of articles about both as well. A couple of years ago, I switched to OSX and my general interests were in Android mobile apps development using Java. Recently, I have got a chance to work with OpenCV again. I&#x2019;m one of the guy who prefers an IDE over command line tools and text editors to work on projects. So, this article is about setting up and using the best C++ IDE ever, the <strong>Qt Creator</strong> for developing OpenCV projects.</p>
 <h2 id="installing-opencv-on-mac-osx">Installing OpenCV on Mac OSX</h2>
-<p>There exist an open source package manager called <a href="http://brew.sh" title="Home Brew">brew</a> for mac. If you don&apos;t have brew installed on your machine, install brew first.</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash">$ <span class="kw">ruby</span> -e <span class="st">&quot;</span><span class="ot">$(</span><span class="kw">curl</span> -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span class="ot">)</span><span class="st">&quot;</span></code></pre></div>
+<p>There exist an open source package manager called <a href="http://brew.sh" title="Home Brew">brew</a> for mac. If you don&#x2019;t have brew installed on your machine, install brew first.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1">$ <span class="ex">ruby</span> -e <span class="st">&quot;</span><span class="va">$(</span><span class="ex">curl</span> -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span class="va">)</span><span class="st">&quot;</span></a></code></pre></div>
 <p>Once brew is up and running good, install OpenCV from the science tap.</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash">$ <span class="kw">brew</span> tap homebrew/science
-$ <span class="kw">brew</span> install opencv</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1">$ <span class="ex">brew</span> tap homebrew/science</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">$ <span class="ex">brew</span> install opencv</a></code></pre></div>
 <p>Note that on almost all machines, the <a href="http://stackoverflow.com/questions/18038764/can-not-brew-install-gcc48-on-mac">gcc compilation step takes a lot of time</a>. Give enough time, get a coffee or something, and in an hour or so, it will be ready. You can see the installations files using the following command.</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash">$ <span class="kw">brew</span> list opencv</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1">$ <span class="ex">brew</span> list opencv</a></code></pre></div>
 <blockquote>
 <p>OpenCV 3.x has been released recently. If you want to leverage the coolest features, try installing opencv3</p>
 </blockquote>
@@ -32,46 +32,46 @@ $ <span class="kw">brew</span> install opencv</code></pre></div>
 <p>This is also quite straight forward. Go to Qt website and download Qt and buy the appropriate license. If you want to run Qt for free, you should develop and release all of your Qt Create projects as FOSS project compliant with GPLv2/3. For individual non-commercial GPL use, you may head to the <a href="https://download.qt.io/official_releases/qtcreator/">Download site here</a>. Download the <em>.dmg</em> file and drag the Qt Creator App into the global <strong>/Applications</strong> folder. You have now both OpenCV and Qt Creator installed and ready.</p>
 <h2 id="creating-an-opencv-project-and-adding-cmake-support">Creating an OpenCV Project and adding CMake Support</h2>
 <p>An OpenCV project can be nothing but a single C/C++ file. Here is an example below.</p>
-<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="ot">#include &lt;stdio.h&gt;</span>
-<span class="ot">#include &lt;opencv2/opencv.hpp&gt;</span>
-
-using namespace cv;
-
-<span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span>** argv ) {
-    <span class="kw">if</span> ( argc != <span class="dv">2</span> ) {
-        printf(<span class="st">&quot;usage: DisplayImage.out &lt;Image_Path&gt;</span><span class="ch">\n</span><span class="st">&quot;</span>);
-        <span class="kw">return</span> -<span class="dv">1</span>;
-    }
-    
-    Mat image;
-    image = imread( argv[<span class="dv">1</span>], <span class="dv">1</span> );
-    
-    <span class="kw">if</span> ( !image.data ) {
-        printf(<span class="st">&quot;No image data </span><span class="ch">\n</span><span class="st">&quot;</span>);
-        <span class="kw">return</span> -<span class="dv">1</span>;
-    }
-    namedWindow(<span class="st">&quot;Display Image&quot;</span>, WINDOW_AUTOSIZE );
-    imshow(<span class="st">&quot;Display Image&quot;</span>, image);
-    waitKey(<span class="dv">0</span>);
-    <span class="kw">return</span> <span class="dv">0</span>;
-}</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="pp">#include </span><span class="im">&lt;opencv2/opencv.hpp&gt;</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">using namespace cv;</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span>** argv ) {</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">    <span class="cf">if</span> ( argc != <span class="dv">2</span> ) {</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">        printf(<span class="st">&quot;usage: DisplayImage.out &lt;Image_Path&gt;</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">        <span class="cf">return</span> <span class="dv">-1</span>;</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">    }</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">    </a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">    Mat image;</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">    image = imread( argv[<span class="dv">1</span>], <span class="dv">1</span> );</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">    </a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">    <span class="cf">if</span> ( !image.data ) {</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">        printf(<span class="st">&quot;No image data </span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">        <span class="cf">return</span> <span class="dv">-1</span>;</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">    }</a>
+<a class="sourceLine" id="cb4-19" data-line-number="19">    namedWindow(<span class="st">&quot;Display Image&quot;</span>, WINDOW_AUTOSIZE );</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">    imshow(<span class="st">&quot;Display Image&quot;</span>, image);</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21">    waitKey(<span class="dv">0</span>);</a>
+<a class="sourceLine" id="cb4-22" data-line-number="22">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb4-23" data-line-number="23">}</a></code></pre></div>
 <p>It does nothing but opens an image file and shows it in a named window. Now, to compile this, you can manually use <code>g++</code> or whatever C++ compiler you have on your machine. But, rather, we need to add support for <a href="https://cmake.org">CMake</a>, so that Qt Creator can pickup the project. My <strong>CMakeLists.txt</strong> file looks something like below. Note that, the file name should be exactly the same.</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">cmake_minimum_required</span>(VERSION 2.8)
-<span class="kw">project</span>( DisplayImage )
-<span class="kw">find_package</span>( OpenCV REQUIRED )
-<span class="kw">include_directories</span>( <span class="ot">${OpenCV_INCLUDE_DIRS}</span> )
-<span class="kw">add_executable</span>( DisplayImage DisplayImage.cpp )
-<span class="kw">target_link_libraries</span>( DisplayImage <span class="ot">${OpenCV_LIBS}</span> )</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="ex">cmake_minimum_required</span>(VERSION 2.8)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="ex">project</span>( DisplayImage )</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="ex">find_package</span>( OpenCV REQUIRED )</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="ex">include_directories</span>( <span class="va">${OpenCV_INCLUDE_DIRS}</span> )</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="ex">add_executable</span>( DisplayImage DisplayImage.cpp )</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="ex">target_link_libraries</span>( DisplayImage <span class="va">${OpenCV_LIBS}</span> )</a></code></pre></div>
 <p>The CMake file explains which library to link, and what kind out output to build and such things. Bascially it generates a <a href="https://en.wikipedia.org/wiki/Makefile">MakeFile</a>, which can be used in the subsequent <code>make</code> step of the building process. Before firing up the Qt Creator, lets see if this builds the project correctly. For this step, lets use in-source-building. A nice CMake tutorial can be found <a href="http://mirkokiefer.com/blog/2013/03/cmake-by-example/">here</a>.</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash">$ <span class="kw">cmake</span> .
-$ <span class="kw">make</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1">$ <span class="fu">cmake</span> .</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">$ <span class="fu">make</span></a></code></pre></div>
 <p>This will build the source code and creates a binary name <strong>DisplayImage</strong>. You can try if it is working fine by supplying an image as an argument.</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash">$ <span class="kw">./DisplayImage</span> some_image.jpg</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1">$ <span class="ex">./DisplayImage</span> some_image.jpg</a></code></pre></div>
 <p>If this opens the image file in a named window, we are good so far. If it does not, we have messed up at some stages before. Check your OpenCV installation is good, and if required, reinstall it.</p>
 <h2 id="open-project-using-qt-creator">Open Project Using Qt Creator</h2>
 <p>This is now quite easy. Fire up Qt Creator, and look for out <strong>CMakeLists.txt</strong> file. Select it and it will open up a <strong>CMake Wizard</strong> dialog. Choose an out-of-source build folder this time, since we can keep the source tree clean with that configuration. This means, all your build related files will be inside this build folder, and the source folder will not be cluttered with any other files, other than your source code. Click Continue, and click <strong>Run CMake</strong> and it will generate a MakeFile for the project and we are done! Ta Da! Now, we have our first OpenCV project in Qt Creator ready to work with. Look how beautiful it is. <img src="images/qt-creator-opencv.png" alt="Qt Creator Showing OpenCV Project"></p>
 <p>In case, if Qt Creator fails find the <code>cmake</code> binary, you can manually point the cmake location. To find the location of cmake on a Linux/OSX machine, run.</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash">$ <span class="kw">which</span> cmake</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1">$ <span class="fu">which</span> cmake</a></code></pre></div>
 <p>You can also configure this at a later point from <strong>Preferences &gt; Build &amp; Run &gt; CMake &gt; Add</strong>.</p>
 
 		<div id="disqus_thread"></div>  

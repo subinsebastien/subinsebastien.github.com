@@ -17,17 +17,11 @@
     </head>
     <body><h1 id="decoding-infrared-codes">Decoding Infrared Codes</h1>
 <p>I was trying to remotely maneuver a prototype robot I have made last week. If you happen to read it, you might know about it. I had an infrared receiver named&#xA0;<a href="http://t.umblr.com/redirect?z=http%3A%2F%2Fwww.micropik.com%2FPDF%2Ftsop17xx.pdf&amp;t=YjAzMzkxMGIzM2RmZWJhNzJjMGRlYjBmMWRkMTI0MTJjNjdjNzNiMCxMem10TVVHMA%3D%3D&amp;b=t%3ALX5p5KDoIXDXw2AOu5I9Ew&amp;m=1">TSOP1738</a>&#xA0;and a few different remote controls left useless from a car audio system and a TV here. I had IR LEDs as well, but to avoid unnecessary complexity I chose to use one of the remote controls over building one on my own with the LEDs. Here is a study I have made to make this thing work as I expected.</p>
-<div class="figure">
-<img src="images/arduino_tsop_wireup.jpg">
-
-</div>
+<p><img src="images/arduino_tsop_wireup.jpg"></p>
 <p>First thing to do was to check what kind of signal I was getting out of the TSOP module when I press a button on a remote control. So I wired up the module to an Arduino as shown in the above image. Pin #3 is the output of the TSOP, which is wired to the Arduino&#x2019;s pin #2 and power supply is taken out of the 5V-GND header of the board. The reason why I wired up it with Arduino is that I didn&#x2019;t have a separate 5V power supply here ;). Anyway I hooked up my oscilloscope&#x2019;s probes to the TSOP module and pressed a button on the remote control. Bingo! I got a signal that looks like the following.</p>
-<div class="figure">
-<img src="images/ir_signal_cro.png">
-
-</div>
+<p><img src="images/ir_signal_cro.png"></p>
 <p>The TSOP module&#x2019;s output is not bare IR pulses sent by the remote control. TSOP&#xA0;<strong>demodulates</strong>&#xA0;(removes the 38Khz carrier frequency) the signal and presents a digitally usable output. It does also block off some noise, I don&#x2019;t really know much about it. Anyway, I pressed different buttons on the remote control and I got significantly similar signals all the time. These were the characteristics generally.</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>All the signals started with a&#xA0;<em>LOW</em>&#xA0;pulse which is quite long compared to the other pulses in the entire stretch. This portion of the signal is called the&#xA0;<strong>start burst</strong>. It was around 6000 micro seconds long as I measured roughly using the oscilloscope&#x2019;s rulers.</li>
 <li>Right after the start burst, there is a long&#xA0;<em>HIGH</em>&#xA0;pulse as well. This portion is not as long as the start burst, but affirmatively longer than the other pulses. It was around 4000 micro seconds in time.</li>
 <li>After these two pulses, there were&#xA0;<strong>32</strong>&#xA0;trailing&#xA0;<em>HIGH</em>&#xA0;pulses equally separated. Each of them is either somewhere around&#xA0;<strong>2000</strong>&#xA0;micro seconds, or around&#xA0;<strong>600</strong>&#xA0;micro seconds.</li>
@@ -37,58 +31,58 @@
 <p>11100000 00011111 10100000 01011111</p>
 </blockquote>
 <p>The second byte is the inverse of the first and the fourth byte is the inverse of the third. I think it is some mechanism to reduce errors. As I gone through encoding each keys manually, I figured out that the first 16 bits are the same for all keys. I later learned that it could be a device ID or something. Leaving that behind, the last 16 bits gave me usable data to find which button on the remote control has been pressed. See below the quite intuitive C code I used with the Arduino to decode each key&#x2019;s code values.</p>
-<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="dt">int</span> irPin      = <span class="dv">2</span>;    <span class="co">//Sensor pin 1 wired to Arduino&apos;s pin 2</span>
-<span class="dt">int</span> start_bit  = <span class="dv">2200</span>; <span class="co">//Start bit threshold (Microseconds)</span>
-<span class="dt">int</span> bin_1      = <span class="dv">1000</span>; <span class="co">//Binary 1 threshold (Microseconds)</span>
-<span class="dt">int</span> bin_0      = <span class="dv">400</span>;  <span class="co">//Binary 0 threshold (Microseconds)</span>
-
-<span class="dt">void</span> setup() {
-  pinMode(irPin, INPUT);
-  Serial.begin(<span class="dv">9600</span>);
-  Serial.println(<span class="st">&quot;Waiting:&quot;</span>);
-}
-
-<span class="dt">void</span> loop() {
-  <span class="dt">unsigned</span> <span class="dt">int</span> key = getIRKey();          <span class="co">//Fetch the key</span>
-  <span class="kw">if</span>(key != <span class="dv">65535</span>)  { <span class="co">//That is -1 aka invalid key</span>
-    Serial.println(<span class="st">&quot;Key:&quot;</span> + key);
-  }
-}
-
-<span class="dt">int</span> getIRKey() {
-  <span class="dt">int</span> data[<span class="dv">32</span>];
-  <span class="dt">int</span> i;
-
-  <span class="kw">while</span>(pulseIn(irPin, LOW) &lt; start_bit); <span class="co">//Wait for a start bit</span>
-  
-  <span class="kw">for</span>(i = <span class="dv">0</span> ; i &lt; <span class="dv">32</span> ; i++)
-    data[i] = pulseIn(irPin, HIGH); <span class="co">//Start measuring bits, I only want high pulses</span>
-  
-  <span class="kw">for</span>(i = <span class="dv">0</span> ; i &lt; <span class="dv">32</span> ; i++)  {
-    <span class="kw">if</span>(!((data[i] &gt; <span class="dv">400</span> &amp;&amp; data[i] &lt; <span class="dv">1000</span>) || (data[i] &gt; <span class="dv">1700</span> &amp;&amp; data[i] &lt; <span class="dv">3000</span>)))  { <span class="co">//Filter out anything that seems  erroneous</span>
-      Serial.println(<span class="st">&quot;Invalid Signal&quot;</span>);
-      <span class="kw">return</span> -<span class="dv">1</span>;
-    }
-  }
-  
-  <span class="dt">int</span> key_data[<span class="dv">16</span>];
-  <span class="kw">for</span>(i = <span class="dv">16</span> ; i &lt; <span class="dv">32</span> ; i++)  <span class="co">//Parse them</span>
-  {
-    <span class="kw">if</span>(data[i] &gt; bin_1) <span class="co">//is it a 1?</span>
-      key_data[i<span class="dv">-16</span>] = <span class="dv">1</span>;
-    <span class="kw">else</span> <span class="kw">if</span>(data[i] &gt; bin_0) <span class="co">//is it a 0?</span>
-      key_data[i<span class="dv">-16</span>] = <span class="dv">0</span>;
-    <span class="kw">else</span>
-      <span class="kw">return</span> -<span class="dv">1</span>; <span class="co">//Flag the data as invalid; I don&apos;t know what it is! Return -1 on invalid data</span>
-  }
-  
-  <span class="dt">unsigned</span> <span class="dt">int</span> result = <span class="dv">0</span>;
-  <span class="kw">for</span>(i = <span class="dv">0</span> ; i &lt; <span class="dv">16</span> ; i++)  { <span class="co">//Convert key_data bits to integer</span>
-    <span class="kw">if</span>(key_data[i] == <span class="dv">1</span>)
-      result |= (<span class="dv">1</span>&lt;&lt;(i));
-  }
-  <span class="kw">return</span> result; <span class="co">//Return key number</span>
-}</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="dt">int</span> irPin      = <span class="dv">2</span>;    <span class="co">//Sensor pin 1 wired to Arduino&apos;s pin 2</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="dt">int</span> start_bit  = <span class="dv">2200</span>; <span class="co">//Start bit threshold (Microseconds)</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="dt">int</span> bin_1      = <span class="dv">1000</span>; <span class="co">//Binary 1 threshold (Microseconds)</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="dt">int</span> bin_0      = <span class="dv">400</span>;  <span class="co">//Binary 0 threshold (Microseconds)</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="dt">void</span> setup() {</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">  pinMode(irPin, INPUT);</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">  Serial.begin(<span class="dv">9600</span>);</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">  Serial.println(<span class="st">&quot;Waiting:&quot;</span>);</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">}</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="dt">void</span> loop() {</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">  <span class="dt">unsigned</span> <span class="dt">int</span> key = getIRKey();          <span class="co">//Fetch the key</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">  <span class="cf">if</span>(key != <span class="dv">65535</span>)  { <span class="co">//That is -1 aka invalid key</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">    Serial.println(<span class="st">&quot;Key:&quot;</span> + key);</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">  }</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">}</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="dt">int</span> getIRKey() {</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">  <span class="dt">int</span> data[<span class="dv">32</span>];</a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">  <span class="dt">int</span> i;</a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">  <span class="cf">while</span>(pulseIn(irPin, LOW) &lt; start_bit); <span class="co">//Wait for a start bit</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">  </a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">  <span class="cf">for</span>(i = <span class="dv">0</span> ; i &lt; <span class="dv">32</span> ; i++)</a>
+<a class="sourceLine" id="cb1-26" data-line-number="26">    data[i] = pulseIn(irPin, HIGH); <span class="co">//Start measuring bits, I only want high pulses</span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27">  </a>
+<a class="sourceLine" id="cb1-28" data-line-number="28">  <span class="cf">for</span>(i = <span class="dv">0</span> ; i &lt; <span class="dv">32</span> ; i++)  {</a>
+<a class="sourceLine" id="cb1-29" data-line-number="29">    <span class="cf">if</span>(!((data[i] &gt; <span class="dv">400</span> &amp;&amp; data[i] &lt; <span class="dv">1000</span>) || (data[i] &gt; <span class="dv">1700</span> &amp;&amp; data[i] &lt; <span class="dv">3000</span>)))  { <span class="co">//Filter out anything that seems  erroneous</span></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30">      Serial.println(<span class="st">&quot;Invalid Signal&quot;</span>);</a>
+<a class="sourceLine" id="cb1-31" data-line-number="31">      <span class="cf">return</span> <span class="dv">-1</span>;</a>
+<a class="sourceLine" id="cb1-32" data-line-number="32">    }</a>
+<a class="sourceLine" id="cb1-33" data-line-number="33">  }</a>
+<a class="sourceLine" id="cb1-34" data-line-number="34">  </a>
+<a class="sourceLine" id="cb1-35" data-line-number="35">  <span class="dt">int</span> key_data[<span class="dv">16</span>];</a>
+<a class="sourceLine" id="cb1-36" data-line-number="36">  <span class="cf">for</span>(i = <span class="dv">16</span> ; i &lt; <span class="dv">32</span> ; i++)  <span class="co">//Parse them</span></a>
+<a class="sourceLine" id="cb1-37" data-line-number="37">  {</a>
+<a class="sourceLine" id="cb1-38" data-line-number="38">    <span class="cf">if</span>(data[i] &gt; bin_1) <span class="co">//is it a 1?</span></a>
+<a class="sourceLine" id="cb1-39" data-line-number="39">      key_data[i<span class="dv">-16</span>] = <span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb1-40" data-line-number="40">    <span class="cf">else</span> <span class="cf">if</span>(data[i] &gt; bin_0) <span class="co">//is it a 0?</span></a>
+<a class="sourceLine" id="cb1-41" data-line-number="41">      key_data[i<span class="dv">-16</span>] = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb1-42" data-line-number="42">    <span class="cf">else</span></a>
+<a class="sourceLine" id="cb1-43" data-line-number="43">      <span class="cf">return</span> <span class="dv">-1</span>; <span class="co">//Flag the data as invalid; I don&apos;t know what it is! Return -1 on invalid data</span></a>
+<a class="sourceLine" id="cb1-44" data-line-number="44">  }</a>
+<a class="sourceLine" id="cb1-45" data-line-number="45">  </a>
+<a class="sourceLine" id="cb1-46" data-line-number="46">  <span class="dt">unsigned</span> <span class="dt">int</span> result = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb1-47" data-line-number="47">  <span class="cf">for</span>(i = <span class="dv">0</span> ; i &lt; <span class="dv">16</span> ; i++)  { <span class="co">//Convert key_data bits to integer</span></a>
+<a class="sourceLine" id="cb1-48" data-line-number="48">    <span class="cf">if</span>(key_data[i] == <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb1-49" data-line-number="49">      result |= (<span class="dv">1</span>&lt;&lt;(i));</a>
+<a class="sourceLine" id="cb1-50" data-line-number="50">  }</a>
+<a class="sourceLine" id="cb1-51" data-line-number="51">  <span class="cf">return</span> result; <span class="co">//Return key number</span></a>
+<a class="sourceLine" id="cb1-52" data-line-number="52">}</a></code></pre></div>
 <p>Lately I got into some inconsistency problems and noise issues. I fixed a few of them, but I still have some pain in the ass kind of problems remaining.&#xA0;<a href="http://t.umblr.com/redirect?z=http%3A%2F%2Felectronics.stackexchange.com%2Fquestions%2F78959%2Fhow-to-get-consistent-codes-from-ir-receiver-module-tsop1738&amp;t=ZGZkYmQ5ODEwNDkxYmRhNWMzMGFiMGI3ODIzYjA1ODU2OWY4YmEwOSxMem10TVVHMA%3D%3D&amp;b=t%3ALX5p5KDoIXDXw2AOu5I9Ew&amp;m=1">Here&#x2019;s</a>&#xA0;one of them.</p>
 
 		<div id="disqus_thread"></div>  

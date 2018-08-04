@@ -16,11 +16,11 @@
         </script>
     </head>
     <body><h1 id="google-cloud-vision-api">Google Cloud Vision API</h1>
-<p>Google Cloud Vision API provides a REST API for developers to understand the contents of images. In my personal experience, it is currently the best working solution for object detection from images, compared to custom trained HAAR/LBP classifiers or IBM&apos;s Watson. Although it is still in beta, it provides very good results with object detection problems. Currently the API provides the following types of algorithms, each specific to a feature type.</p>
-<table style="width:88%;">
+<p>Google Cloud Vision API provides a REST API for developers to understand the contents of images. In my personal experience, it is currently the best working solution for object detection from images, compared to custom trained HAAR/LBP classifiers or IBM&#x2019;s Watson. Although it is still in beta, it provides very good results with object detection problems. Currently the API provides the following types of algorithms, each specific to a feature type.</p>
+<table>
 <colgroup>
-<col width="30%">
-<col width="56%">
+<col style="width: 34%">
+<col style="width: 65%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -55,116 +55,110 @@
 </tr>
 <tr class="odd">
 <td>IMAGE_PROPERTIES</td>
-<td>Compute a set of properties about the image (such as the image&apos;s dominant colors)</td>
+<td>Compute a set of properties about the image (such as the image&#x2019;s dominant colors)</td>
 </tr>
 </tbody>
 </table>
 <h2 id="request-example">Request Example</h2>
 <p>The following example uses curl</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash">$ <span class="kw">curl</span> -k -s -H <span class="st">&quot;Content-Type: application/json&quot;</span> https://vision.googleapis.com/v1/images:annotate?key=[YOUR_API_KEY] -d <span class="st">&apos;{ &quot;requests&quot;:[{ &quot;image&quot;:{ &quot;content&quot;:&quot;[IMAGE_AS_A_BASE_64_STRING]&quot;}, &quot;features&quot;:[{ &quot;type&quot;:&quot;LABEL_DETECTION&quot;, &quot;maxResults&quot;:10 }]}]}&apos;</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1">$ <span class="ex">curl</span> -k -s -H <span class="st">&quot;Content-Type: application/json&quot;</span> https://vision.googleapis.com/v1/images:annotate?key=[YOUR_API_KEY] -d <span class="st">&apos;{ &quot;requests&quot;:[{ &quot;image&quot;:{ &quot;content&quot;:&quot;[IMAGE_AS_A_BASE_64_STRING]&quot;}, &quot;features&quot;:[{ &quot;type&quot;:&quot;LABEL_DETECTION&quot;, &quot;maxResults&quot;:10 }]}]}&apos;</span></a></code></pre></div>
 <p>The <code>API_KEY</code> can be obtained from your <a href="https://console.cloud.google.com">Google Cloud Platform Console</a>. You may get a browser key, as it can also be used with Android. The image needs to be <a href="https://en.wikipedia.org/wiki/Base64">base64 encoded</a> before making the request. Base64 gives you a string, and you may use it directly in the request. Alternatively, you can use Google Cloud Storage URLs, if you have hosted your images on Cloud Storage buckets. Check my test image and the Cloud Vision API response below.</p>
 <p><strong>Test Image</strong></p>
-<div class="figure">
-<img src="images/gcv-test_image.jpg">
-
-</div>
+<p><img src="images/gcv-test_image.jpg"></p>
 <p><strong>Response</strong></p>
-<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
-  <span class="dt">&quot;responses&quot;</span><span class="fu">:</span> <span class="ot">[</span>
-    <span class="fu">{</span>
-      <span class="dt">&quot;labelAnnotations&quot;</span><span class="fu">:</span> <span class="ot">[</span>
-        <span class="fu">{</span>
-          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/09j2d&quot;</span><span class="fu">,</span>
-          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;clothing&quot;</span><span class="fu">,</span>
-          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.99011743</span>
-        <span class="fu">}</span><span class="ot">,</span>
-        <span class="fu">{</span>
-          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/083jv&quot;</span><span class="fu">,</span>
-          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;white&quot;</span><span class="fu">,</span>
-          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.92788029</span>
-        <span class="fu">}</span><span class="ot">,</span>
-        <span class="fu">{</span>
-          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/06rrc&quot;</span><span class="fu">,</span>
-          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;shoe&quot;</span><span class="fu">,</span>
-          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.91207343</span>
-        <span class="fu">}</span><span class="ot">,</span>
-        <span class="fu">{</span>
-          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/09j5n&quot;</span><span class="fu">,</span>
-          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;footwear&quot;</span><span class="fu">,</span>
-          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.89330035</span>
-        <span class="fu">}</span><span class="ot">,</span>
-        <span class="fu">{</span>
-          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/0fly7&quot;</span><span class="fu">,</span>
-          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;jeans&quot;</span><span class="fu">,</span>
-          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.75597358</span>
-        <span class="fu">}</span><span class="ot">,</span>
-        <span class="fu">{</span>
-          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/017ftj&quot;</span><span class="fu">,</span>
-          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;sunglasses&quot;</span><span class="fu">,</span>
-          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.71857065</span>
-        <span class="fu">}</span><span class="ot">,</span>
-        <span class="fu">{</span>
-          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/07mhn&quot;</span><span class="fu">,</span>
-          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;trousers&quot;</span><span class="fu">,</span>
-          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.70007712</span>
-        <span class="fu">}</span>
-      <span class="ot">]</span>
-    <span class="fu">}</span>
-  <span class="ot">]</span>
-<span class="fu">}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="dt">&quot;responses&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">      <span class="dt">&quot;labelAnnotations&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/09j2d&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;clothing&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.99011743</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/083jv&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;white&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.92788029</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/06rrc&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;shoe&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.91207343</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/09j5n&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22">          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;footwear&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23">          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.89330035</span></a>
+<a class="sourceLine" id="cb2-24" data-line-number="24">        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25">        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-26" data-line-number="26">          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/0fly7&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-27" data-line-number="27">          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;jeans&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-28" data-line-number="28">          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.75597358</span></a>
+<a class="sourceLine" id="cb2-29" data-line-number="29">        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb2-30" data-line-number="30">        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-31" data-line-number="31">          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/017ftj&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-32" data-line-number="32">          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;sunglasses&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-33" data-line-number="33">          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.71857065</span></a>
+<a class="sourceLine" id="cb2-34" data-line-number="34">        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb2-35" data-line-number="35">        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-36" data-line-number="36">          <span class="dt">&quot;mid&quot;</span><span class="fu">:</span> <span class="st">&quot;/m/07mhn&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-37" data-line-number="37">          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;trousers&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-38" data-line-number="38">          <span class="dt">&quot;score&quot;</span><span class="fu">:</span> <span class="fl">0.70007712</span></a>
+<a class="sourceLine" id="cb2-39" data-line-number="39">        <span class="fu">}</span></a>
+<a class="sourceLine" id="cb2-40" data-line-number="40">      <span class="ot">]</span></a>
+<a class="sourceLine" id="cb2-41" data-line-number="41">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb2-42" data-line-number="42">  <span class="ot">]</span></a>
+<a class="sourceLine" id="cb2-43" data-line-number="43"><span class="fu">}</span></a></code></pre></div>
 <h2 id="putting-together-an-android-app-with-the-api">Putting together an Android app with the API</h2>
-<p>I&apos;m using <a href="http://square.github.io/retrofit/">Retrofit</a> to work with the API. The following is my API interface.</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
-<span class="co">* Created by napster on 25/02/16.</span>
-<span class="co">    */</span>
-   <span class="kw">public</span> <span class="kw">interface</span> GoogleCloudVisionApi {
-    <span class="fu">@POST</span>(<span class="st">&quot;/images:annotate&quot;</span>)
-    LabelsResponse <span class="fu">detectObjects</span>(<span class="fu">@Query</span>(<span class="st">&quot;key&quot;</span>) String apikey, <span class="fu">@Body</span> ReqWrapper reqWrapper);
-   }</code></pre></div>
-<p>As you can see, I&apos;m using a <code>@Body</code> type, as I&apos;m wrapping the request object as a plain old java object.</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
-<span class="co">*  Created by napster on 25/02/16.</span>
-<span class="co">    */</span>
-   <span class="kw">public</span> <span class="kw">class</span> ReqWrapper {
-    <span class="kw">public</span> Request[] requests;
-
-    <span class="kw">public</span> <span class="fu">ReqWrapper</span>(Request[] requests) {
-        <span class="kw">this</span>.<span class="fu">requests</span> = requests;
-    }
-
-    <span class="kw">public</span> <span class="dt">static</span> <span class="kw">class</span> Request {
-        <span class="kw">public</span> Image image;
-        <span class="kw">public</span> Feature[] features;
-       
-        <span class="kw">public</span> Request(Image image, Feature[] features) {
-            <span class="kw">this</span>.<span class="fu">image</span> = image;
-            <span class="kw">this</span>.<span class="fu">features</span> = features;
-        }
-    }
-
-    <span class="kw">public</span> <span class="dt">static</span> <span class="kw">class</span> Image {
-        <span class="kw">public</span> String content;
-
-        <span class="kw">public</span> Image(String content) {
-            <span class="kw">this</span>.<span class="fu">content</span> = content;
-        }
-    }
-
-    <span class="kw">public</span> <span class="dt">static</span> <span class="kw">class</span> Feature {
-        <span class="kw">public</span> String type;
-        <span class="kw">public</span> <span class="dt">int</span> maxResults;
-       
-        <span class="kw">public</span> <span class="fu">Feature</span>(String type, <span class="dt">int</span> maxResults) {
-            <span class="kw">this</span>.<span class="fu">type</span> = type;
-            <span class="kw">this</span>.<span class="fu">maxResults</span> = maxResults;
-        }
-    }
-   }</code></pre></div>
-<p>Now, create an API connecter, declare required permissions in the manifest, and add a camera intent to capture random test images from around you. This is a good test case since, it actually reveals the capabilities of the Google Cloud Vision system, since the images are mostly noisy, and completely unknown to Google&apos;s ecosystem (such as Google Images). Here is what I&apos;ve got.</p>
-<div class="figure">
-<img src="images/gcv-android-test.png">
-
-</div>
+<p>I&#x2019;m using <a href="http://square.github.io/retrofit/">Retrofit</a> to work with the API. The following is my API interface.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">*</span> Created by napster on <span class="co">25/02/16.</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="co">*/</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">   <span class="kw">public</span> <span class="kw">interface</span> GoogleCloudVisionApi {</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="at">@POST</span>(<span class="st">&quot;/images:annotate&quot;</span>)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    LabelsResponse <span class="fu">detectObjects</span>(<span class="at">@Query</span>(<span class="st">&quot;key&quot;</span>) <span class="bu">String</span> apikey, <span class="at">@Body</span> ReqWrapper reqWrapper);</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">   }</a></code></pre></div>
+<p>As you can see, I&#x2019;m using a <code>@Body</code> type, as I&#x2019;m wrapping the request object as a plain old java object.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">*</span>  Created by napster on <span class="co">25/02/16.</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">    <span class="co">*/</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">   <span class="kw">public</span> <span class="kw">class</span> ReqWrapper {</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">    <span class="kw">public</span> <span class="bu">Request</span>[] requests;</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">    <span class="kw">public</span> <span class="fu">ReqWrapper</span>(<span class="bu">Request</span>[] requests) {</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">        <span class="kw">this</span>.<span class="fu">requests</span> = requests;</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">    }</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">    <span class="kw">public</span> <span class="dt">static</span> <span class="kw">class</span> <span class="bu">Request</span> {</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">        <span class="kw">public</span> <span class="bu">Image</span> image;</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">        <span class="kw">public</span> Feature[] features;</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">       </a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">        <span class="kw">public</span> <span class="bu">Request</span>(<span class="bu">Image</span> image, Feature[] features) {</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">            <span class="kw">this</span>.<span class="fu">image</span> = image;</a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">            <span class="kw">this</span>.<span class="fu">features</span> = features;</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">        }</a>
+<a class="sourceLine" id="cb4-19" data-line-number="19">    }</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21">    <span class="kw">public</span> <span class="dt">static</span> <span class="kw">class</span> <span class="bu">Image</span> {</a>
+<a class="sourceLine" id="cb4-22" data-line-number="22">        <span class="kw">public</span> <span class="bu">String</span> content;</a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb4-24" data-line-number="24">        <span class="kw">public</span> <span class="bu">Image</span>(<span class="bu">String</span> content) {</a>
+<a class="sourceLine" id="cb4-25" data-line-number="25">            <span class="kw">this</span>.<span class="fu">content</span> = content;</a>
+<a class="sourceLine" id="cb4-26" data-line-number="26">        }</a>
+<a class="sourceLine" id="cb4-27" data-line-number="27">    }</a>
+<a class="sourceLine" id="cb4-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb4-29" data-line-number="29">    <span class="kw">public</span> <span class="dt">static</span> <span class="kw">class</span> Feature {</a>
+<a class="sourceLine" id="cb4-30" data-line-number="30">        <span class="kw">public</span> <span class="bu">String</span> type;</a>
+<a class="sourceLine" id="cb4-31" data-line-number="31">        <span class="kw">public</span> <span class="dt">int</span> maxResults;</a>
+<a class="sourceLine" id="cb4-32" data-line-number="32">       </a>
+<a class="sourceLine" id="cb4-33" data-line-number="33">        <span class="kw">public</span> <span class="fu">Feature</span>(<span class="bu">String</span> type, <span class="dt">int</span> maxResults) {</a>
+<a class="sourceLine" id="cb4-34" data-line-number="34">            <span class="kw">this</span>.<span class="fu">type</span> = type;</a>
+<a class="sourceLine" id="cb4-35" data-line-number="35">            <span class="kw">this</span>.<span class="fu">maxResults</span> = maxResults;</a>
+<a class="sourceLine" id="cb4-36" data-line-number="36">        }</a>
+<a class="sourceLine" id="cb4-37" data-line-number="37">    }</a>
+<a class="sourceLine" id="cb4-38" data-line-number="38">   }</a></code></pre></div>
+<p>Now, create an API connecter, declare required permissions in the manifest, and add a camera intent to capture random test images from around you. This is a good test case since, it actually reveals the capabilities of the Google Cloud Vision system, since the images are mostly noisy, and completely unknown to Google&#x2019;s ecosystem (such as Google Images). Here is what I&#x2019;ve got.</p>
+<p><img src="images/gcv-android-test.png"></p>
 <p>You can read more about the Google Cloud Vision API <a href="https://cloud.google.com/vision/">here</a>.</p>
 
 		<div id="disqus_thread"></div>  

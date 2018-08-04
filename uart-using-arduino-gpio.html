@@ -16,90 +16,75 @@
         </script>
     </head>
     <body><h1 id="uart-using-arduino-gpio">UART Using Arduino GPIO</h1>
-<p>This weekend I tried using an Arduino to do UART communication using the <a href="https://www.arduino.cc/en/Reference/DigitalWrite">digitalWrite()</a> and the <a href="https://www.arduino.cc/en/Reference/DelayMicroseconds">delayMicroSeconds()</a> methods provided by the Arduino library. My primary goal was to find out if I can simulate the working of any simple serial communication libraries, simply by using GPIO pins and artificial delays. Before getting into the experiment, here is some basic information about UART. Universal Asynchronous Receive Transmit is basically the simplest form of serial communication in comparison with I2C or other such comparable methods. UART at a minimum needs 2 wires to establish a communication, namely an RX or TX and a Ground (GND). If you send something through the TX line, the receiver should be able to receive the data at their RX pin, and vice versa. Generally the TX line is kept high, and a LOW (digital zero) with reasonable width is sent to denote the start of data transmission. Similarly, you may send one or two HIGH (digital one) to denote the end of transmission as well. Additionally, there is one bit called parity bit, which can be sent right before the stop bits, and this parity bit can be used for a very rudimentary error checking. You may read more about how parity bit works <a href="https://en.wikipedia.org/wiki/Parity_bit">here</a>. For the rest of the experiment, I&apos;m not using parity bit. The following image explains this in detail.</p>
-<div class="figure">
-<img src="images/uart-basic.png">
-
-</div>
-<p>As you have notices, the receiver uses a sampling clock, which is generally running at 10 to 16 times the frequency of incoming data. Which means, the receiver samples at least 10 to 16 times during the period of one bit. Now, to achieve a similar waveform using Arduino, I need to select one output pin, and write digital HIGH and digital LOW with proper delays in between. For simplicity, the data I&apos;m planning to send is nothing but english character <code>A</code>. The capital <code>A</code> is in ASCII terms, represented as integer <code>65</code>. Step number one is to convert this to hexadecimal, <code>65</code> &#x2014;&gt; <code>0x41</code> &#x2014;&gt; <code>0100 0001</code>. Now, this data needs to be sent in a particular order. As you may have noticed in the above image, the most significant bit (MSB) is sent at the end of the signal, and the least significant bit (LSB) is sent first. So after re-ordering, the data we need to send looks like <code>1000 0010</code>. Lets look into the program I have written now.</p>
-<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="co">/**</span>
-<span class="co"> * A -&gt; 65 -&gt; 1000001 -&gt; 0100-0001 -&gt; 0x41</span>
-<span class="co"> * Data -&gt; 0-0100-0001-1</span>
-<span class="co"> * In serial we should send least significant bit first -&gt; so -&gt; 0-1000-0010-11</span>
-<span class="co"> */</span>
-
-<span class="dt">int</span> output = <span class="dv">13</span>;
-<span class="dt">int</span> delayd = <span class="dv">3333</span>;
-
-<span class="dt">void</span> setup() {
-  pinMode(output, OUTPUT);
-}
-
-<span class="dt">void</span> loop() {
-
-  delay(<span class="dv">1000</span>);
-
-  <span class="dt">int</span> data[] = { <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span> };
-
-  <span class="co">//</span>
-  <span class="co">// Start Bit</span>
-  <span class="co">//</span>
-
-  digitalWrite(output, LOW); <span class="co">// Start Bit</span>
-  delayMicroseconds(delayd);
-
-  <span class="co">//</span>
-  <span class="co">// Data</span>
-  <span class="co">//</span>
-  
-  <span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">8</span>; i++) {
-    <span class="kw">if</span>(data[i] == <span class="dv">1</span>) {
-      digitalWrite(output, HIGH);
-    } <span class="kw">else</span> {
-      digitalWrite(output, LOW);
-    }
-    delayMicroseconds(delayd);
-  }
-
-  <span class="co">//</span>
-  <span class="co">// Stop bit</span>
-  <span class="co">//</span>
-
-  digitalWrite(output, HIGH); <span class="co">// Stop bit</span>
-  delayMicroseconds(delayd);
-    
-}
-
-<span class="co">/**</span>
-<span class="co"> * 1 bit stays for 1/1000 sec -&gt; 1000 bits / sec</span>
-<span class="co"> */</span></code></pre></div>
+<p>This weekend I tried using an Arduino to do UART communication using the <a href="https://www.arduino.cc/en/Reference/DigitalWrite">digitalWrite()</a> and the <a href="https://www.arduino.cc/en/Reference/DelayMicroseconds">delayMicroSeconds()</a> methods provided by the Arduino library. My primary goal was to find out if I can simulate the working of any simple serial communication libraries, simply by using GPIO pins and artificial delays. Before getting into the experiment, here is some basic information about UART. Universal Asynchronous Receive Transmit is basically the simplest form of serial communication in comparison with I2C or other such comparable methods. UART at a minimum needs 2 wires to establish a communication, namely an RX or TX and a Ground (GND). If you send something through the TX line, the receiver should be able to receive the data at their RX pin, and vice versa. Generally the TX line is kept high, and a LOW (digital zero) with reasonable width is sent to denote the start of data transmission. Similarly, you may send one or two HIGH (digital one) to denote the end of transmission as well. Additionally, there is one bit called parity bit, which can be sent right before the stop bits, and this parity bit can be used for a very rudimentary error checking. You may read more about how parity bit works <a href="https://en.wikipedia.org/wiki/Parity_bit">here</a>. For the rest of the experiment, I&#x2019;m not using parity bit. The following image explains this in detail.</p>
+<p><img src="images/uart-basic.png"></p>
+<p>As you have notices, the receiver uses a sampling clock, which is generally running at 10 to 16 times the frequency of incoming data. Which means, the receiver samples at least 10 to 16 times during the period of one bit. Now, to achieve a similar waveform using Arduino, I need to select one output pin, and write digital HIGH and digital LOW with proper delays in between. For simplicity, the data I&#x2019;m planning to send is nothing but english character <code>A</code>. The capital <code>A</code> is in ASCII terms, represented as integer <code>65</code>. Step number one is to convert this to hexadecimal, <code>65</code> &#x2014;&gt; <code>0x41</code> &#x2014;&gt; <code>0100 0001</code>. Now, this data needs to be sent in a particular order. As you may have noticed in the above image, the most significant bit (MSB) is sent at the end of the signal, and the least significant bit (LSB) is sent first. So after re-ordering, the data we need to send looks like <code>1000 0010</code>. Lets look into the program I have written now.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"> * A -&gt; 65 -&gt; 1000001 -&gt; 0100-0001 -&gt; 0x41</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co"> * Data -&gt; 0-0100-0001-1</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"> * In serial we should send least significant bit first -&gt; so -&gt; 0-1000-0010-11</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co"> */</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="dt">int</span> output = <span class="dv">13</span>;</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="dt">int</span> delayd = <span class="dv">3333</span>;</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="dt">void</span> setup() {</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">  pinMode(output, OUTPUT);</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">}</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="dt">void</span> loop() {</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">  delay(<span class="dv">1000</span>);</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">  <span class="dt">int</span> data[] = { <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span> };</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">  <span class="co">//</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">  <span class="co">// Start Bit</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">  <span class="co">//</span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">  digitalWrite(output, LOW); <span class="co">// Start Bit</span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">  delayMicroseconds(delayd);</a>
+<a class="sourceLine" id="cb1-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27">  <span class="co">//</span></a>
+<a class="sourceLine" id="cb1-28" data-line-number="28">  <span class="co">// Data</span></a>
+<a class="sourceLine" id="cb1-29" data-line-number="29">  <span class="co">//</span></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30">  </a>
+<a class="sourceLine" id="cb1-31" data-line-number="31">  <span class="cf">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">8</span>; i++) {</a>
+<a class="sourceLine" id="cb1-32" data-line-number="32">    <span class="cf">if</span>(data[i] == <span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb1-33" data-line-number="33">      digitalWrite(output, HIGH);</a>
+<a class="sourceLine" id="cb1-34" data-line-number="34">    } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb1-35" data-line-number="35">      digitalWrite(output, LOW);</a>
+<a class="sourceLine" id="cb1-36" data-line-number="36">    }</a>
+<a class="sourceLine" id="cb1-37" data-line-number="37">    delayMicroseconds(delayd);</a>
+<a class="sourceLine" id="cb1-38" data-line-number="38">  }</a>
+<a class="sourceLine" id="cb1-39" data-line-number="39"></a>
+<a class="sourceLine" id="cb1-40" data-line-number="40">  <span class="co">//</span></a>
+<a class="sourceLine" id="cb1-41" data-line-number="41">  <span class="co">// Stop bit</span></a>
+<a class="sourceLine" id="cb1-42" data-line-number="42">  <span class="co">//</span></a>
+<a class="sourceLine" id="cb1-43" data-line-number="43"></a>
+<a class="sourceLine" id="cb1-44" data-line-number="44">  digitalWrite(output, HIGH); <span class="co">// Stop bit</span></a>
+<a class="sourceLine" id="cb1-45" data-line-number="45">  delayMicroseconds(delayd);</a>
+<a class="sourceLine" id="cb1-46" data-line-number="46">    </a>
+<a class="sourceLine" id="cb1-47" data-line-number="47">}</a>
+<a class="sourceLine" id="cb1-48" data-line-number="48"></a>
+<a class="sourceLine" id="cb1-49" data-line-number="49"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb1-50" data-line-number="50"><span class="co"> * 1 bit stays for 1/1000 sec -&gt; 1000 bits / sec</span></a>
+<a class="sourceLine" id="cb1-51" data-line-number="51"><span class="co"> */</span></a></code></pre></div>
 <p>This is fairly simple. But, you may be wondering why I have chosen the <code>delays = 3333</code>. This is based on the following table.</p>
-<div class="figure">
-<img src="images/uart-common-speeds.png">
-
-</div>
+<p><img src="images/uart-common-speeds.png"></p>
 <p>Now, this table will come handy down the line. If we reduce the delay between each bits, we can achieve higher data rates. I have compiled this program, and deployed to Arduino. Lets see the output for a second.</p>
-<div class="figure">
-<img src="images/uart-sending-a.png">
-
-</div>
+<p><img src="images/uart-sending-a.png"></p>
 <p>This is pretty decent. Now, lets try hooking it back to a serial port device (I run a laptop without an actual serial port, so I would just use one of the UART to USB adapter I have discussed in an <a href="http://xtel.in/usb-to-serial-adapters-comparison.html">earlier article</a>).</p>
-<div class="figure">
-<img src="images/uart-setup.jpg">
-
-</div>
+<p><img src="images/uart-setup.jpg"></p>
 <p>As you can see in the above image, my setup is pretty simple. One USB is connected to the Arduino, which sends data, and the data is received at a serial adaptor which is connected to the USB port on the other side. Now, simply look at the data coming from the serial adapter using CoolTerm.</p>
-<div class="figure">
-<img src="images/uart-coolterm.png">
-
-</div>
-<p>Things are butter smooth so far. Now, lets try achieving higher data rates. I&apos;m going to go step by step by reducing width of each bit. Here is my result as a table.</p>
-<table style="width:90%;">
+<p><img src="images/uart-coolterm.png"></p>
+<p>Things are butter smooth so far. Now, lets try achieving higher data rates. I&#x2019;m going to go step by step by reducing width of each bit. Here is my result as a table.</p>
+<table>
 <colgroup>
-<col width="13%">
-<col width="11%">
-<col width="8%">
-<col width="56%">
+<col style="width: 14%">
+<col style="width: 11%">
+<col style="width: 8%">
+<col style="width: 65%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -166,11 +151,8 @@
 </tr>
 </tbody>
 </table>
-<p>Looks like there is some tiny timing issues from this point onward. Also the <a href="https://en.wikipedia.org/wiki/Ringing_(signal)">ringing</a> may be causing some issues, I don&apos;t know for sure.</p>
-<div class="figure">
-<img src="images/uart-ringing.png">
-
-</div>
+<p>Looks like there is some tiny timing issues from this point onward. Also the <a href="https://en.wikipedia.org/wiki/Ringing_(signal)">ringing</a> may be causing some issues, I don&#x2019;t know for sure.</p>
+<p><img src="images/uart-ringing.png"></p>
 <p>Anyway, it looks like <code>14400 bits/second</code> is the highest achievable data rate with an Arduino UNO/Duemilanove with simple digitalWrite() and delayMicroSeconds() methods. I will look into this in depth and will update, if I could reach a conclusive finding, and a higher data rate with the same setup.</p>
 
 		<div id="disqus_thread"></div>  

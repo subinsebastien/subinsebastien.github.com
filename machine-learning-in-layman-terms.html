@@ -16,26 +16,24 @@
         </script>
     </head>
     <body><h1 id="machine-learning-in-layman-terms">Machine Learning in Layman Terms</h1>
-<p>This article is hopefully the first one in a series of articles to come. The topic we will discuss in this series will be Machine Learning. This series of article is planned to be based on the <a href="https://www.coursera.org/learn/machine-learning">Stanford Uni ML course I&apos;m enrolled into on Coursera</a>. But, the entire point of such a series of article is to be different from the course itself. These articles will not have any complex math in it. All concepts will be discussed using intuition. Lets get started.</p>
+<p>This article is hopefully the first one in a series of articles to come. The topic we will discuss in this series will be Machine Learning. This series of article is planned to be based on the <a href="https://www.coursera.org/learn/machine-learning">Stanford Uni ML course I&#x2019;m enrolled into on Coursera</a>. But, the entire point of such a series of article is to be different from the course itself. These articles will not have any complex math in it. All concepts will be discussed using intuition. Lets get started.</p>
 <h3 id="what-is-machine-learning">What is machine learning?</h3>
-<p>The term Machine Learning became popular recently. If you look at the past 10 years of google search index trends for the phrase &quot;Machine Learning&quot;, you get the following.</p>
-<div class="figure">
-<img src="images/ml-google-trends.png" alt="Machine Learning Google Search Trends">
-<p class="caption">Machine Learning Google Search Trends</p>
-</div>
-<p>The science of dealing with large set of data, and trying to make some sense out of it, was here for many decades. The concept of neural networks on the other hand has a different ultimate goal, Artificial Intelligence. While we are way behind schedule on creating our first true AI, people are applying the concept of neural networks into large data sets and producing very interesting results. For example, an engineer can feed millions of videos into a neural network, and <a href="https://www.wired.com/2012/06/google-x-neural-network/">group together those videos in which a cat appears</a>! While this may sound silly, the computer learns the concept of a &quot;cat&quot; without explicitly giving it the properties or features of a cat. This is a classic example of a set of problems defined in machine learning called <a href="https://en.wikipedia.org/wiki/Cluster_analysis">Clustering</a>.</p>
+<p>The term Machine Learning became popular recently. If you look at the past 10 years of google search index trends for the phrase &#x201C;Machine Learning&#x201D;, you get the following.</p>
+<figure>
+<img src="images/ml-google-trends.png" alt="Machine Learning Google Search Trends"><figcaption>Machine Learning Google Search Trends</figcaption>
+</figure>
+<p>The science of dealing with large set of data, and trying to make some sense out of it, was here for many decades. The concept of neural networks on the other hand has a different ultimate goal, Artificial Intelligence. While we are way behind schedule on creating our first true AI, people are applying the concept of neural networks into large data sets and producing very interesting results. For example, an engineer can feed millions of videos into a neural network, and <a href="https://www.wired.com/2012/06/google-x-neural-network/">group together those videos in which a cat appears</a>! While this may sound silly, the computer learns the concept of a &#x201C;cat&#x201D; without explicitly giving it the properties or features of a cat. This is a classic example of a set of problems defined in machine learning called <a href="https://en.wikipedia.org/wiki/Cluster_analysis">Clustering</a>.</p>
 <h3 id="what-are-neural-networks">What are neural networks?</h3>
-<div class="figure">
-<img src="images/ml-ann.png" alt="Artificial Neural Network">
-<p class="caption">Artificial Neural Network</p>
-</div>
+<figure>
+<img src="images/ml-ann.png" alt="Artificial Neural Network"><figcaption>Artificial Neural Network</figcaption>
+</figure>
 <p>A neuron is the fundamental building block of a human brain. Neurons are connected to each other a forms a messy complex network in our brains. Scientists have produced a mathematical model of this basic architecture of human brain, and are trying to emulate the same on computers, and they call it the Artificial Neural Networks. The basics of this model is very simple. A neutron can have connections to N number of other neurons. Each of these individual connections have different strengths or weights. These neurons are arranged into layers. Neurons in the same layer are not connected to each other.</p>
 <h3 id="so-what-is-machine-learning-again">So what is machine learning again?</h3>
 <p>In very simple words, it is a way to teach a computer to perform a task instead of explicitly programming it. In the past, we used programming to perform a task using computer. We defined functions using a set of instructions the computer can understand, and the computer produced outputs by operating on the input. Now, what if the computer can write its own version of programs by looking at a set of inputs and corresponding outputs? This is exactly what is called machine learning. Consider the following function.</p>
-<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span>(floorArea) <span class="op">{</span>
-  <span class="kw">var</span> pricePerSqFt <span class="op">=</span> <span class="dv">100</span><span class="op">;</span>
-  <span class="cf">return</span> floorArea <span class="op">*</span> pricePerSqft<span class="op">;</span>
-<span class="op">}</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">function</span>(floorArea) <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">var</span> pricePerSqFt <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="cf">return</span> floorArea <span class="op">*</span> pricePerSqft<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="op">}</span></a></code></pre></div>
 <p>The input of the function is the floor area of a building in square foots. And given that, in that particular town, average price of one square foot is 100. We can easily calculate the price of a house by multiplying these two values. But, this value might not be the real selling price because of several reasons. Say for example, in my town, if the area is less than 1000 square foots, the demand is high, because in my town, most home owners are small families. That trend cannot be leveraged using a simple function like this. But, imagine, if we are feeding that sort of fine detailing to this function, the function itself becomes very complex. There is still a chance that we might miss out one important parameter or the other.</p>
 <h3 id="a-better-way">A Better Way?</h3>
 <p>But suppose, you have access to 10 years of historical data of all real estate transactions in your town. This database includes real selling price, and floor area of all buildings sold in the past 10 years. A batch of data is given below.</p>
@@ -79,18 +77,17 @@
 </table>
 <p><strong>Note:-</strong> <em>In Machine Learning (ML), the inputs are called <strong>features</strong>, and output set is called <strong>target</strong>. In this case, the set of floor area is a feature, and selling price is the target.</em></p>
 <p>See, we already have missed out a lot of insights without this data. Very small houses, still have a decent base price, probably because land price is also affecting the house price. Also, very large houses tend to have very high price ~140 per square foot, probably because, such large houses are made with all sort of luxuries into it, and probably is in a premium neighbourhood. Now, what if based on these data, a computer can write (learn) its own function to predict the selling price of a house?</p>
-<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span>(floorArea) <span class="op">{</span>
-  <span class="co">// A function written by the computer itself</span>
-<span class="op">}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">function</span>(floorArea) <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="co">// A function written by the computer itself</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="op">}</span></a></code></pre></div>
 <p>This function above, will always return a better prediction than our human version of the same function we have seen above. Why? Because, it can detect all sorts of patterns and features within the data. This process is machine learning!</p>
 <p><strong>Note:-</strong> <em>This particular problem, where a set of features and targets are given, and the machine is expected to predict a specific value on a continuous line of values, is called regression. In this case, it is a very simple version of regression called Linear Regression. We will discuss this in detail in another article.</em></p>
 <h3 id="types-of-machine-learning">Types of machine learning</h3>
-<div class="figure">
-<img src="images/ml-types.png" alt="Types of machine learning">
-<p class="caption">Types of machine learning</p>
-</div>
+<figure>
+<img src="images/ml-types.png" alt="Types of machine learning"><figcaption>Types of machine learning</figcaption>
+</figure>
 <p>Machine learning is primarily classified into three major categories. Supervised learning, unsupervised learning, and reinforcement learning. The supervised learning differs from the unsupervised one, just by the fact that, in case of unsupervised learning, the <strong>LABELS</strong> will not be used for training. The machine is supposed to learn by the <strong>FEATURES</strong> set only. (We will discuss how this is useful in a future session) <a href="https://en.wikipedia.org/wiki/Reinforcement_learning">Reinforcement learning</a> is not in the scope of this article.</p>
-<p>I think this gives a good start into the world of machine learning. In the next article we will discuss in detail about learning, by focusing on <strong>Regression</strong> problems. And I would personally recommend enrolling into that machine learning course by Andrew NG on coursera, even if you don&apos;t like math!</p>
+<p>I think this gives a good start into the world of machine learning. In the next article we will discuss in detail about learning, by focusing on <strong>Regression</strong> problems. And I would personally recommend enrolling into that machine learning course by Andrew NG on coursera, even if you don&#x2019;t like math!</p>
 
 		<div id="disqus_thread"></div>  
         <script type="text/javascript">

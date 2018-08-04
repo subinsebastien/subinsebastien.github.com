@@ -16,14 +16,13 @@
         </script>
     </head>
     <body><h1 id="model-view-delegate-pattern-in-qt">Model-View-Delegate Pattern in Qt</h1>
-<div class="figure">
-<img src="images/qt-mvd.png" alt="The Qt&apos;s Model-View-Delegate Pattern">
-<p class="caption">The Qt&apos;s Model-View-Delegate Pattern</p>
-</div>
+<figure>
+<img src="images/qt-mvd.png" alt="The Qt&#x2019;s Model-View-Delegate Pattern"><figcaption>The Qt&#x2019;s Model-View-Delegate Pattern</figcaption>
+</figure>
 <p>Qt provides out of the box support for model-view-delegate programming. Many of our day-to-day programming problems can fit very well into this pattern as well. In this article I will explain some basic ideas about how to build a simple model-view based application.</p>
 <h2 id="the-problem">The Problem</h2>
 <p>You have to develop a simple software for calculating checksum. The basic requirements are listed below.</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>A table should show a bunch of errors.</li>
 <li>The first column in the table should show a human-readable error text.</li>
 <li>The second column should have an integer code, for all error texts.</li>
@@ -75,81 +74,79 @@
 </tbody>
 </table>
 <p>Qt supports a bunch of classes with which you can easily build your models. For this problem, I have chosen <a href="http://doc.qt.io/qt-4.8/qstandarditemmodel.html">QStandardItemModel</a> class. The process of setting your data into a model is pretty much manual.</p>
-<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">// Your data can come from anywhere.</span>
-<span class="co">// A file, database, network.</span>
-<span class="co">// I&apos;m hard-coding for this example.</span>
-<span class="ot">QStringList</span> error_texts;
-<span class="ot">QList</span>&lt;<span class="dt">int</span>&gt; error_codes;
-error_texts &lt;&lt; <span class="st">&quot;No Error&quot;</span>
-            &lt;&lt; <span class="st">&quot;Data Fault&quot;</span>
-            &lt;&lt; <span class="st">&quot;Unknown Input&quot;</span>
-            &lt;&lt; <span class="st">&quot;Unsupported Baud Rate&quot;</span>
-            &lt;&lt; <span class="st">&quot;Reset Counter&quot;</span>
-            &lt;&lt; <span class="st">&quot;Control Port Inactive&quot;</span>;
-    
-error_codes &lt;&lt; <span class="dv">0</span>
-            &lt;&lt; <span class="dv">15</span>
-            &lt;&lt; <span class="dv">35</span>
-            &lt;&lt; <span class="dv">44</span>
-            &lt;&lt; <span class="dv">70</span>
-            &lt;&lt; <span class="dv">189</span>;
-
-<span class="co">// Now, Build your Model and load the data</span>
-model = <span class="kw">new</span> <span class="ot">QStandardItemModel</span>(error_codes.size(), <span class="dv">2</span>, <span class="kw">this</span>);
-<span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>, n = error_codes.size(); i &lt; n; i++)
-{
-    model-&gt;setData(model-&gt;index(i, <span class="dv">0</span>), error_texts.at(i));
-    model-&gt;setData(model-&gt;index(i, <span class="dv">1</span>), error_codes.at(i));
-}</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">// Your data can come from anywhere.</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">// A file, database, network.</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">// I&apos;m hard-coding for this example.</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="ex">QStringList</span> error_texts;</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="ex">QList</span>&lt;<span class="dt">int</span>&gt; error_codes;</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">error_texts &lt;&lt; <span class="st">&quot;No Error&quot;</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">            &lt;&lt; <span class="st">&quot;Data Fault&quot;</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">            &lt;&lt; <span class="st">&quot;Unknown Input&quot;</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">            &lt;&lt; <span class="st">&quot;Unsupported Baud Rate&quot;</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">            &lt;&lt; <span class="st">&quot;Reset Counter&quot;</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">            &lt;&lt; <span class="st">&quot;Control Port Inactive&quot;</span>;</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">    </a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">error_codes &lt;&lt; <span class="dv">0</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">            &lt;&lt; <span class="dv">15</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">            &lt;&lt; <span class="dv">35</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">            &lt;&lt; <span class="dv">44</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">            &lt;&lt; <span class="dv">70</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">            &lt;&lt; <span class="dv">189</span>;</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">// Now, Build your Model and load the data</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">model = <span class="kw">new</span> <span class="ex">QStandardItemModel</span>(error_codes.size(), <span class="dv">2</span>, <span class="kw">this</span>);</a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="cf">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>, n = error_codes.size(); i &lt; n; i++)</a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">{</a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">    model-&gt;setData(model-&gt;index(i, <span class="dv">0</span>), error_texts.at(i));</a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">    model-&gt;setData(model-&gt;index(i, <span class="dv">1</span>), error_codes.at(i));</a>
+<a class="sourceLine" id="cb1-26" data-line-number="26">}</a></code></pre></div>
 <p>Now you have your model ready. Now it is time to build the GUI for the application. Many Qt widgets supports the <code>setModel()</code> method out of the box.</p>
 <blockquote>
 <p>Note : that Qt has both item-based and model-based widgets in the toolbox. Since we are planning our project to be model-view based, always choose Item-Views (Model-Based) instead of Item-Widgets (Item-Based).</p>
 </blockquote>
-<div class="figure">
-<img src="images/qt-mvd-pattern-gui.png" alt="A simple gui with model based views">
-<p class="caption">A simple gui with model based views</p>
-</div>
+<figure>
+<img src="images/qt-mvd-pattern-gui.png" alt="A simple gui with model based views"><figcaption>A simple gui with model based views</figcaption>
+</figure>
 <p>Set the model to appropriate views on the GUI.</p>
-<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">// Set the model to our widgets.</span>
-ui-&gt;tbl_error-&gt;setModel(model);
-ui-&gt;cmbx_error-&gt;setModel(model);</code></pre></div>
-<div class="figure">
-<img src="images/qt-mvd-pattern-gui-loaded.png" alt="With not much of programming, the widgets are loaded and ready.">
-<p class="caption">With not much of programming, the widgets are loaded and ready.</p>
-</div>
-<p>Note that both the combo box as well as the table shares the same data. Combo box shows, only the first column in the model. But combobox&apos;s current selection index can be used to navigate through the model, to find the error code we need.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">// Set the model to our widgets.</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">ui-&gt;tbl_error-&gt;setModel(model);</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">ui-&gt;cmbx_error-&gt;setModel(model);</a></code></pre></div>
+<figure>
+<img src="images/qt-mvd-pattern-gui-loaded.png" alt="With not much of programming, the widgets are loaded and ready."><figcaption>With not much of programming, the widgets are loaded and ready.</figcaption>
+</figure>
+<p>Note that both the combo box as well as the table shares the same data. Combo box shows, only the first column in the model. But combobox&#x2019;s current selection index can be used to navigate through the model, to find the error code we need.</p>
 <h2 id="step-2-adddelete-actions-on-the-model">Step-2 : Add/Delete Actions on the Model</h2>
 <p>Lets quickly implement the Add and Delete options provided to the model. This is pretty straight forward. As soon as you modify the model, all the associated views gets updated with the new data. Define slots for clicks on both the Add and Delete buttons.</p>
-<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">void</span> Dialog::on_btn_delete_clicked()
-{
-    <span class="ot">QItemSelectionModel</span>* selection = ui-&gt;tbl_error-&gt;selectionModel();
-    <span class="kw">if</span>(selection-&gt;hasSelection())
-    {
-        <span class="kw">if</span>(!selection-&gt;selectedRows().isEmpty())
-        {
-            QModelIndexList indexes = selection-&gt;selectedRows();
-            <span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>, n = indexes.count(); i &lt; n; i++)
-            {
-                model-&gt;removeRow(indexes.at(i).row());
-            }
-        }
-    }
-}
-
-<span class="dt">void</span> Dialog::on_btn_add_clicked()
-{
-    model-&gt;insertRow(model-&gt;rowCount());
-}</code></pre></div>
-<p>That was quick. With this much code, you should be able to select rows from the table, and delete them, and add rows to the bottom of the table. Interesting fact is that, as soon as the table data is updated, the combobox is also updated. Qt&apos;s Model-View system uses internal signals and slots to update all connected items.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="dt">void</span> Dialog::on_btn_delete_clicked()</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">{</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="ex">QItemSelectionModel</span>* selection = ui-&gt;tbl_error-&gt;selectionModel();</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">    <span class="cf">if</span>(selection-&gt;hasSelection())</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    {</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">        <span class="cf">if</span>(!selection-&gt;selectedRows().isEmpty())</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">        {</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">            QModelIndexList indexes = selection-&gt;selectedRows();</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">            <span class="cf">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>, n = indexes.count(); i &lt; n; i++)</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">            {</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">                model-&gt;removeRow(indexes.at(i).row());</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">            }</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">        }</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">    }</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">}</a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="dt">void</span> Dialog::on_btn_add_clicked()</a>
+<a class="sourceLine" id="cb3-18" data-line-number="18">{</a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">    model-&gt;insertRow(model-&gt;rowCount());</a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">}</a></code></pre></div>
+<p>That was quick. With this much code, you should be able to select rows from the table, and delete them, and add rows to the bottom of the table. Interesting fact is that, as soon as the table data is updated, the combobox is also updated. Qt&#x2019;s Model-View system uses internal signals and slots to update all connected items.</p>
 <blockquote>
 <p>Note: that you can double click on any table cell and edit the data. This behaviour is provided by the default delegate used by the QTableView. For integers, a spin box is provided by the default delegate. This behaviour can be changed using custom Delegates.</p>
 </blockquote>
 <h2 id="step-3-introducing-a-delegate">Step-3 : Introducing a Delegate</h2>
-<p>A delegate is some class, to which you offload some work, which is to be done on your behalf. In case of model-view-delegate pattern, the delegate decides how the model is presented on the view, and how the updates from the view gets transported back to the model. Qt provides a number of classes which might suit your specific delegation problem. For this example, I&apos;m using <a href="http://doc.qt.io/qt-5/qitemdelegate.html">QItemDelegate</a>. QItemDelegate is an abstract class, and there a bunch of mandatory overrides.</p>
+<p>A delegate is some class, to which you offload some work, which is to be done on your behalf. In case of model-view-delegate pattern, the delegate decides how the model is presented on the view, and how the updates from the view gets transported back to the model. Qt provides a number of classes which might suit your specific delegation problem. For this example, I&#x2019;m using <a href="http://doc.qt.io/qt-5/qitemdelegate.html">QItemDelegate</a>. QItemDelegate is an abstract class, and there a bunch of mandatory overrides.</p>
 <table>
 <colgroup>
-<col width="50%">
-<col width="50%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -177,115 +174,114 @@ ui-&gt;cmbx_error-&gt;setModel(model);</code></pre></div>
 </tbody>
 </table>
 <p>As per our requirement, we need to provide a slider widget, instead of the default editor, when the user try to edit the error-codes in the error table. Lets implement our custom delegate keeping this in mind.</p>
-<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/*** mdelegate.h ***/</span>
-
-<span class="ot">#ifndef MDELEGATE_H</span>
-<span class="ot">#define MDELEGATE_H</span>
-
-<span class="ot">#include &lt;QWidget&gt;</span>
-<span class="ot">#include &lt;QSlider&gt;</span>
-<span class="ot">#include &lt;QAbstractItemModel&gt;</span>
-<span class="ot">#include &lt;QStyleOptionViewItem&gt;</span>
-<span class="ot">#include &lt;QItemDelegate&gt;</span>
-<span class="ot">#include &lt;QLineEdit&gt;</span>
-
-<span class="kw">class</span> MDelegate : <span class="kw">public</span> <span class="ot">QItemDelegate</span>
-{
-<span class="kw">public</span>:
-    MDelegate();
-    <span class="ot">QWidget</span>* createEditor(<span class="ot">QWidget</span> *parent, <span class="dt">const</span> <span class="ot">QStyleOptionViewItem</span> &amp;option, <span class="dt">const</span> <span class="ot">QModelIndex</span> &amp;index) <span class="dt">const</span>;
-    <span class="dt">void</span> setEditorData(<span class="ot">QWidget</span> * editor, <span class="dt">const</span> <span class="ot">QModelIndex</span> &amp; index) <span class="dt">const</span>;
-    <span class="dt">void</span> setModelData(<span class="ot">QWidget</span> * editor, <span class="ot">QAbstractItemModel</span> * model, <span class="dt">const</span> <span class="ot">QModelIndex</span> &amp; index) <span class="dt">const</span>;
-    <span class="dt">void</span> updateEditorGeometry(<span class="ot">QWidget</span> * editor, <span class="dt">const</span> <span class="ot">QStyleOptionViewItem</span> &amp; option, <span class="dt">const</span> <span class="ot">QModelIndex</span> &amp; index) <span class="dt">const</span>;
-};
-
-<span class="ot">#endif </span><span class="co">// MDELEGATE_H</span>
-
-<span class="co">/*** mdelegate.cpp ***/</span>
-
-<span class="ot">#include &quot;mdelegate.h&quot;</span>
-
-MDelegate::MDelegate()
-{
-
-}
-
-<span class="ot">QWidget</span>* MDelegate::createEditor(<span class="ot">QWidget</span> *parent, <span class="dt">const</span> <span class="ot">QStyleOptionViewItem</span> &amp;option, <span class="dt">const</span> <span class="ot">QModelIndex</span> &amp;index) <span class="dt">const</span>
-{
-    <span class="kw">switch</span> (index.column()) {
-    <span class="kw">case</span> <span class="dv">0</span>:
-        <span class="kw">return</span> <span class="kw">new</span> <span class="ot">QLineEdit</span>(parent);
-    <span class="kw">case</span> <span class="dv">1</span>:
-        <span class="ot">QSlider</span>* slider = <span class="kw">new</span> <span class="ot">QSlider</span>(parent);
-        slider-&gt;setOrientation(<span class="ot">Qt::</span>Horizontal);
-        slider-&gt;setAutoFillBackground(<span class="kw">true</span>);
-        slider-&gt;setMaximum(<span class="dv">255</span>);
-        <span class="kw">return</span> slider;
-    }
-}
-
-<span class="dt">void</span> MDelegate::setEditorData(<span class="ot">QWidget</span> * editor, <span class="dt">const</span> <span class="ot">QModelIndex</span> &amp; index) <span class="dt">const</span>
-{
-    <span class="kw">switch</span> (index.column()) {
-    <span class="kw">case</span> <span class="dv">0</span>:
-    {
-        <span class="ot">QString</span> text = index.model()-&gt;data(index, <span class="ot">Qt::</span>EditRole).toString();
-        <span class="ot">QLineEdit</span>* line = <span class="kw">static_cast</span>&lt;<span class="ot">QLineEdit</span>*&gt;(editor);
-        line-&gt;setText(text);
-        <span class="kw">break</span>;
-    }
-    <span class="kw">case</span> <span class="dv">1</span>:
-    {
-        <span class="dt">int</span> value = index.model()-&gt;data(index, <span class="ot">Qt::</span>EditRole).toInt();
-        <span class="ot">QSlider</span>* slider = <span class="kw">static_cast</span>&lt;<span class="ot">QSlider</span>*&gt;(editor);
-        slider-&gt;setValue(value);
-        <span class="kw">break</span>;
-    }
-    }
-}
-
-<span class="dt">void</span> MDelegate::setModelData(<span class="ot">QWidget</span> * editor, <span class="ot">QAbstractItemModel</span> * model, <span class="dt">const</span> <span class="ot">QModelIndex</span> &amp; index) <span class="dt">const</span>
-{
-    <span class="kw">switch</span> (index.column()) {
-    <span class="kw">case</span> <span class="dv">0</span>:
-    {
-        <span class="ot">QLineEdit</span>* line = <span class="kw">static_cast</span>&lt;<span class="ot">QLineEdit</span>*&gt;(editor);
-        model-&gt;setData(index, line-&gt;text(), <span class="ot">Qt::</span>EditRole);
-        <span class="kw">break</span>;
-    }
-    <span class="kw">case</span> <span class="dv">1</span>:
-    {
-        <span class="ot">QSlider</span> *slider = <span class="kw">static_cast</span>&lt;<span class="ot">QSlider</span>*&gt;(editor);
-        model-&gt;setData(index, slider-&gt;value(), <span class="ot">Qt::</span>EditRole);
-        <span class="kw">break</span>;
-    }
-    }
-}
-
-<span class="dt">void</span> MDelegate::updateEditorGeometry(<span class="ot">QWidget</span> * editor, <span class="dt">const</span> <span class="ot">QStyleOptionViewItem</span> &amp; option, <span class="dt">const</span> <span class="ot">QModelIndex</span> &amp; index) <span class="dt">const</span>
-{
-    editor-&gt;setGeometry(option.rect);
-}</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co">/*** mdelegate.h ***/</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="pp">#ifndef MDELEGATE_H</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="pp">#define MDELEGATE_H</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="pp">#include </span><span class="im">&lt;QWidget&gt;</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="pp">#include </span><span class="im">&lt;QSlider&gt;</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="pp">#include </span><span class="im">&lt;QAbstractItemModel&gt;</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="pp">#include </span><span class="im">&lt;QStyleOptionViewItem&gt;</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="pp">#include </span><span class="im">&lt;QItemDelegate&gt;</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="pp">#include </span><span class="im">&lt;QLineEdit&gt;</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="kw">class</span> MDelegate : <span class="kw">public</span> <span class="ex">QItemDelegate</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">{</a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">    MDelegate();</a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">    <span class="ex">QWidget</span>* createEditor(<span class="ex">QWidget</span> *parent, <span class="at">const</span> <span class="ex">QStyleOptionViewItem</span> &amp;option, <span class="at">const</span> <span class="ex">QModelIndex</span> &amp;index) <span class="at">const</span>;</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">    <span class="dt">void</span> setEditorData(<span class="ex">QWidget</span> * editor, <span class="at">const</span> <span class="ex">QModelIndex</span> &amp; index) <span class="at">const</span>;</a>
+<a class="sourceLine" id="cb4-19" data-line-number="19">    <span class="dt">void</span> setModelData(<span class="ex">QWidget</span> * editor, <span class="ex">QAbstractItemModel</span> * model, <span class="at">const</span> <span class="ex">QModelIndex</span> &amp; index) <span class="at">const</span>;</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">    <span class="dt">void</span> updateEditorGeometry(<span class="ex">QWidget</span> * editor, <span class="at">const</span> <span class="ex">QStyleOptionViewItem</span> &amp; option, <span class="at">const</span> <span class="ex">QModelIndex</span> &amp; index) <span class="at">const</span>;</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21">};</a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="pp">#endif </span><span class="co">// MDELEGATE_H</span></a>
+<a class="sourceLine" id="cb4-24" data-line-number="24"></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">/*** mdelegate.cpp ***/</span></a>
+<a class="sourceLine" id="cb4-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="pp">#include </span><span class="im">&quot;mdelegate.h&quot;</span></a>
+<a class="sourceLine" id="cb4-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb4-29" data-line-number="29">MDelegate::MDelegate()</a>
+<a class="sourceLine" id="cb4-30" data-line-number="30">{</a>
+<a class="sourceLine" id="cb4-31" data-line-number="31"></a>
+<a class="sourceLine" id="cb4-32" data-line-number="32">}</a>
+<a class="sourceLine" id="cb4-33" data-line-number="33"></a>
+<a class="sourceLine" id="cb4-34" data-line-number="34"><span class="ex">QWidget</span>* MDelegate::createEditor(<span class="ex">QWidget</span> *parent, <span class="at">const</span> <span class="ex">QStyleOptionViewItem</span> &amp;option, <span class="at">const</span> <span class="ex">QModelIndex</span> &amp;index) <span class="at">const</span></a>
+<a class="sourceLine" id="cb4-35" data-line-number="35">{</a>
+<a class="sourceLine" id="cb4-36" data-line-number="36">    <span class="cf">switch</span> (index.column()) {</a>
+<a class="sourceLine" id="cb4-37" data-line-number="37">    <span class="cf">case</span> <span class="dv">0</span>:</a>
+<a class="sourceLine" id="cb4-38" data-line-number="38">        <span class="cf">return</span> <span class="kw">new</span> <span class="ex">QLineEdit</span>(parent);</a>
+<a class="sourceLine" id="cb4-39" data-line-number="39">    <span class="cf">case</span> <span class="dv">1</span>:</a>
+<a class="sourceLine" id="cb4-40" data-line-number="40">        <span class="ex">QSlider</span>* slider = <span class="kw">new</span> <span class="ex">QSlider</span>(parent);</a>
+<a class="sourceLine" id="cb4-41" data-line-number="41">        slider-&gt;setOrientation(<span class="ex">Qt::</span>Horizontal);</a>
+<a class="sourceLine" id="cb4-42" data-line-number="42">        slider-&gt;setAutoFillBackground(<span class="kw">true</span>);</a>
+<a class="sourceLine" id="cb4-43" data-line-number="43">        slider-&gt;setMaximum(<span class="dv">255</span>);</a>
+<a class="sourceLine" id="cb4-44" data-line-number="44">        <span class="cf">return</span> slider;</a>
+<a class="sourceLine" id="cb4-45" data-line-number="45">    }</a>
+<a class="sourceLine" id="cb4-46" data-line-number="46">}</a>
+<a class="sourceLine" id="cb4-47" data-line-number="47"></a>
+<a class="sourceLine" id="cb4-48" data-line-number="48"><span class="dt">void</span> MDelegate::setEditorData(<span class="ex">QWidget</span> * editor, <span class="at">const</span> <span class="ex">QModelIndex</span> &amp; index) <span class="at">const</span></a>
+<a class="sourceLine" id="cb4-49" data-line-number="49">{</a>
+<a class="sourceLine" id="cb4-50" data-line-number="50">    <span class="cf">switch</span> (index.column()) {</a>
+<a class="sourceLine" id="cb4-51" data-line-number="51">    <span class="cf">case</span> <span class="dv">0</span>:</a>
+<a class="sourceLine" id="cb4-52" data-line-number="52">    {</a>
+<a class="sourceLine" id="cb4-53" data-line-number="53">        <span class="ex">QString</span> text = index.model()-&gt;data(index, <span class="ex">Qt::</span>EditRole).toString();</a>
+<a class="sourceLine" id="cb4-54" data-line-number="54">        <span class="ex">QLineEdit</span>* line = <span class="kw">static_cast</span>&lt;<span class="ex">QLineEdit</span>*&gt;(editor);</a>
+<a class="sourceLine" id="cb4-55" data-line-number="55">        line-&gt;setText(text);</a>
+<a class="sourceLine" id="cb4-56" data-line-number="56">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb4-57" data-line-number="57">    }</a>
+<a class="sourceLine" id="cb4-58" data-line-number="58">    <span class="cf">case</span> <span class="dv">1</span>:</a>
+<a class="sourceLine" id="cb4-59" data-line-number="59">    {</a>
+<a class="sourceLine" id="cb4-60" data-line-number="60">        <span class="dt">int</span> value = index.model()-&gt;data(index, <span class="ex">Qt::</span>EditRole).toInt();</a>
+<a class="sourceLine" id="cb4-61" data-line-number="61">        <span class="ex">QSlider</span>* slider = <span class="kw">static_cast</span>&lt;<span class="ex">QSlider</span>*&gt;(editor);</a>
+<a class="sourceLine" id="cb4-62" data-line-number="62">        slider-&gt;setValue(value);</a>
+<a class="sourceLine" id="cb4-63" data-line-number="63">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb4-64" data-line-number="64">    }</a>
+<a class="sourceLine" id="cb4-65" data-line-number="65">    }</a>
+<a class="sourceLine" id="cb4-66" data-line-number="66">}</a>
+<a class="sourceLine" id="cb4-67" data-line-number="67"></a>
+<a class="sourceLine" id="cb4-68" data-line-number="68"><span class="dt">void</span> MDelegate::setModelData(<span class="ex">QWidget</span> * editor, <span class="ex">QAbstractItemModel</span> * model, <span class="at">const</span> <span class="ex">QModelIndex</span> &amp; index) <span class="at">const</span></a>
+<a class="sourceLine" id="cb4-69" data-line-number="69">{</a>
+<a class="sourceLine" id="cb4-70" data-line-number="70">    <span class="cf">switch</span> (index.column()) {</a>
+<a class="sourceLine" id="cb4-71" data-line-number="71">    <span class="cf">case</span> <span class="dv">0</span>:</a>
+<a class="sourceLine" id="cb4-72" data-line-number="72">    {</a>
+<a class="sourceLine" id="cb4-73" data-line-number="73">        <span class="ex">QLineEdit</span>* line = <span class="kw">static_cast</span>&lt;<span class="ex">QLineEdit</span>*&gt;(editor);</a>
+<a class="sourceLine" id="cb4-74" data-line-number="74">        model-&gt;setData(index, line-&gt;text(), <span class="ex">Qt::</span>EditRole);</a>
+<a class="sourceLine" id="cb4-75" data-line-number="75">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb4-76" data-line-number="76">    }</a>
+<a class="sourceLine" id="cb4-77" data-line-number="77">    <span class="cf">case</span> <span class="dv">1</span>:</a>
+<a class="sourceLine" id="cb4-78" data-line-number="78">    {</a>
+<a class="sourceLine" id="cb4-79" data-line-number="79">        <span class="ex">QSlider</span> *slider = <span class="kw">static_cast</span>&lt;<span class="ex">QSlider</span>*&gt;(editor);</a>
+<a class="sourceLine" id="cb4-80" data-line-number="80">        model-&gt;setData(index, slider-&gt;value(), <span class="ex">Qt::</span>EditRole);</a>
+<a class="sourceLine" id="cb4-81" data-line-number="81">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb4-82" data-line-number="82">    }</a>
+<a class="sourceLine" id="cb4-83" data-line-number="83">    }</a>
+<a class="sourceLine" id="cb4-84" data-line-number="84">}</a>
+<a class="sourceLine" id="cb4-85" data-line-number="85"></a>
+<a class="sourceLine" id="cb4-86" data-line-number="86"><span class="dt">void</span> MDelegate::updateEditorGeometry(<span class="ex">QWidget</span> * editor, <span class="at">const</span> <span class="ex">QStyleOptionViewItem</span> &amp; option, <span class="at">const</span> <span class="ex">QModelIndex</span> &amp; index) <span class="at">const</span></a>
+<a class="sourceLine" id="cb4-87" data-line-number="87">{</a>
+<a class="sourceLine" id="cb4-88" data-line-number="88">    editor-&gt;setGeometry(option.rect);</a>
+<a class="sourceLine" id="cb4-89" data-line-number="89">}</a></code></pre></div>
 <p>Although this is a bit of code, it is pretty straight forward. If the editing happens in the first column, we just deal with a simple QLineEdit. If it is the second column, where the error codes are located, we use a QSlider. Lets see how well it works.</p>
-<div class="figure">
-<img src="images/qt-mvd-pattern-gui-delegate.png" alt="The slider nicely fits into the cell geometry">
-<p class="caption">The slider nicely fits into the cell geometry</p>
-</div>
+<figure>
+<img src="images/qt-mvd-pattern-gui-delegate.png" alt="The slider nicely fits into the cell geometry"><figcaption>The slider nicely fits into the cell geometry</figcaption>
+</figure>
 <p>Now, our model-view-delegate work is completely done. The only thing now left is calculating our checksum when the user clicks on the Build button. Although it is pretty irrelevant how this is done to this project, lets add that code as well.</p>
-<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">void</span> Dialog::on_btn_build_clicked()
-{
-    <span class="ot">QByteArray</span> bytes = ui-&gt;txt_msg-&gt;text().toLocal8Bit();
-    <span class="dt">int</span> index = ui-&gt;cmbx_error-&gt;currentIndex();
-    <span class="dt">int</span> error_code = model-&gt;data(model-&gt;index(index, <span class="dv">1</span>)).toInt();
-    bytes.append(error_code);
-
-    <span class="dt">uint8_t</span> sum = <span class="dv">0</span>;
-    <span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; bytes.count(); i++)
-    {
-        sum += bytes.at(i);
-    }
-    ui-&gt;txt_checksum-&gt;setText(<span class="ot">QString</span>(<span class="st">&quot;Modulo 256 Checksum = %1&quot;</span>).arg(sum));
-}</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="dt">void</span> Dialog::on_btn_build_clicked()</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">{</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">    <span class="ex">QByteArray</span> bytes = ui-&gt;txt_msg-&gt;text().toLocal8Bit();</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">    <span class="dt">int</span> index = ui-&gt;cmbx_error-&gt;currentIndex();</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="dt">int</span> error_code = model-&gt;data(model-&gt;index(index, <span class="dv">1</span>)).toInt();</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">    bytes.append(error_code);</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">    <span class="dt">uint8_t</span> sum = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">    <span class="cf">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; bytes.count(); i++)</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">    {</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">        sum += bytes.at(i);</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">    }</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">    ui-&gt;txt_checksum-&gt;setText(<span class="ex">QString</span>(<span class="st">&quot;Modulo 256 Checksum = %1&quot;</span>).arg(sum));</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">}</a></code></pre></div>
 <p>Hope you have enjoyed this article. To learn more about Model/View programming pattern using Qt, I recommend reading the official documentation as well. Here is the <a href="http://doc.qt.io/qt-5/model-view-programming.html">link</a> to the same.</p>
 
 		<div id="disqus_thread"></div>  

@@ -1,0 +1,121 @@
+<html>
+    <head>
+         <title>Napster&apos;s Experiments with Freedom</title>
+         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/xt256.min.css">
+         <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+         <script>hljs.initHighlightingOnLoad();</script>
+         <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+         <link rel="stylesheet" type="text/css" href="css/post.css">
+         <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-20813670-9', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </head>
+    <body><h1 id="ti-launchpad-development-boards">TI Launchpad Development Boards</h1>
+<p>Texas Instruments is one of the companies who has a lot of Launchpad development boards in their product portfolio. I recently started working on a project which uses TI micro-controllers in the design. To study the capabilities of these controllers, I decided to buy a couple of launchpads. Following are the launchpads I have access to at the moment.</p>
+<ul>
+<li>Tiva C Series - TM4C123GXL</li>
+<li>Tiva C Series - TM4C129EXL</li>
+<li>MSP430FR6989</li>
+</ul>
+<p>These boards are quite amazing and lot of design thought process has been put into their development for sure. They are easy to get started, as well as there is a lot of documentation provided by TI and other third-party companies to make the learning easier and exciting.</p>
+<h2 id="tm4c123gxl">TM4C123GXL</h2>
+<figure>
+<img src="images/tm4c123gxl.jpeg" alt="Pinout Diagram"><figcaption>Pinout Diagram</figcaption>
+</figure>
+<p>This is the simplest among all three boards in this article.</p>
+<p><em>The TM4C123G LaunchPad Evaluation Kit is a low-cost evaluation platform for ARM Cortex-M4F based microcontrollers from Texas Instruments. The design of the TM4C123G LaunchPad highlights the TM4C123GH6PM microcontroller with a USB 2.0 device interface and hibernation module. The EK-TM4C123GXL also features programmable user buttons and an RGB LED for custom applications. The stackable headers of the TM4C123G LaunchPad BoosterPack&#x2122; XL Interface make it easy and simple to expand the functionality of the TM4C123G LaunchPad when interfacing to other peripherals with Texas Instruments MCU BoosterPack.</em></p>
+<h5 id="features-as-described-on-ti-website">Features as described on TI website</h5>
+<p>The ARM Cortex-M4F Based MCU TM4C123G LaunchPad Evaluation Kit (EK-TM4C123GXL) offers these features:</p>
+<ul>
+<li><p>High Performance</p>
+<p>TM4C123GH6PM</p>
+<p>MCU:</p>
+<ul>
+<li>80MHz 32-bit <a href="http://www.ti.com/TM4C">ARM Cortex-M4-based microcontrollers</a> CPU</li>
+<li>256KB Flash, 32KB SRAM, 2KB EEPROM</li>
+<li>Two Controller Area Network (CAN) modules</li>
+<li>USB 2.0 Host/Device/OTG + PHY</li>
+<li>Dual 12-bit 2MSPS ADCs, motion control PWMs</li>
+<li>8 UART, 6 I2C, 4 SPI</li>
+</ul></li>
+<li><p>On-board In-Circuit Debug Interface (ICDI)</p></li>
+<li><p>USB Micro-B plug to USB-A plug cable</p></li>
+<li><p>Preloaded RGB quick-start application</p></li>
+<li><p>ReadMe First quick-start guide</p></li>
+</ul>
+<p>EK-TM4C123GXL <a href="http://www.ti.com/tool/sw-tm4c">TivaWare&#x2122; for C Series software</a> is available for free downloads.</p>
+<h2 id="tm4c129exl">TM4C129EXL</h2>
+<figure>
+<img src="images/tm4c129exl.jpeg" alt="Pinout Diagram"><figcaption>Pinout Diagram</figcaption>
+</figure>
+<p>This board includes CAN bus and many other features compared the TM4C123XX board. The micro controller is more rich and is the top of the line product in the category.</p>
+<p><em>Powered by hardware encryption accelerator-enabled MCUs, the Crypto Connected LaunchPad enables you to develop high performance, data protected, connected <a href="http://www.ti.com/ww/en/internet_of_things/iot-overview.html">IoT</a> applications from secure cloud connection, building/factory automation and smart grid to industrial controls.</em></p>
+<p><em>The TM4C129E Crypto Connected LaunchPad evaluation kit is a low-cost platform for ARM&#xAE; Cortex-M4-based microcontrollers. The kit design highlights the <a href="http://www.ti.com/product/TM4C129ENCPDT/samplebuy">TM4C129ENCPDT</a> MCU with on-chip Crypto acceleration hardware, 10/100 Ethernet MAC and PHY, USB 2.0, hibernation module, motion control pulse-width modulation and a multitude of simultaneous serial connectivity.</em></p>
+<p><em>The <a href="http://www.ti.com/tool/ek-tm4c129exl#software">out-of-box demo</a> for the Crypto Connected LaunchPad demonstrates the use of Transport Layer Security/Secure Sockets Layer (TLS/SSL) protocol to connect an <a href="http://www.ti.com/ww/en/internet_of_things/iot-overview.html">IoT</a> product to a cloud server securely. The TLS/SSL support is provided by WolfSSL library that uses the TM4C129E MCU&#x2019;s hardware crypto accelerators which enables the development of secure connected applications at relatively higher performance. This application runs on <a href="http://www.ti.com/tool/ti-rtos">TI-RTOS</a> and connects to the Exosite Cloud server using HTTPS packets.</em></p>
+<h5 id="features">Features</h5>
+<ul>
+<li>High performance TM4C129ENCPDT MCU:
+<ul>
+<li>120MHz 32-bit <a href="http://www.ti.com/TM4C">ARM&#xAE; Cortex&#xAE;-M4-based microcontrollers</a> CPU with floating point</li>
+<li>1MB Flash, 256KB SRAM, 6KB EEPROM</li>
+<li>Crypto acceleration hardware</li>
+<li>Integrated 10/100 Ethernet MAC+PHY, 8x 32-bit timers</li>
+<li>Dual 12-bit 2MSPS ADCs, motion control PWMs</li>
+<li>USB H/D/O, and many additional serial communication interfaces</li>
+</ul></li>
+<li>Dual, stackable <a href="http://www.ti.com/lsds/ti/tools-software/launchpads/boosterpacks/about/about.page">BoosterPack</a> XL connection sites</li>
+<li>On-board, in-circuit debug interface (ICDI)</li>
+<li>Secured cloud connection out-of-box demonstration with TI RTOS, WolfSSL and Exosite</li>
+<li>Intensive SW support with Tivaware &amp; TI RTOS and multiple tool chain support: <a href="http://www.ti.com/tool/ccstudio">CCS</a>, IAR, Keil, IAR, Mentor &amp; GCC</li>
+</ul>
+<h2 id="msp430fr6989">MSP430FR6989</h2>
+<figure>
+<img src="images/msp430fr6989.jpeg" alt="Pinout Diagram"><figcaption>Pinout Diagram</figcaption>
+</figure>
+<p>This board comes with an awesome onboard test application, which includes a stopwatch with split timing and a temperature monitor.</p>
+<p><em>The MSP-EXP430FR6989 LaunchPad Development Kit is an easy-to-use Evaluation Module (EVM) for the <a href="http://www.ti.com/product/msp430fr6989">MSP40FR6989</a> microcontroller (MCU). It contains everything needed to start developing on the <a href="http://www.ti.com/fram">ultra-low-power MSP430FRx FRAM microcontroller platform</a>, including on-board emulation for programming, debugging and energy measurements. The board features on-board buttons and LEDs for quick integration of a simple user interface as well as a Liquid Crystal Display (LCD) display which showcases the integrated driver that can drive up to 320 segments. It also offers direct access to the Extended Scan Interface, which is a dual analog front-end (AFE) created for low-power rotation detection. The MSP430FR6989 device features <a href="http://www.ti.com/lsds/ti/microcontrollers_16-bit_32-bit/msp/getting-started.page#lowestpower">ultra-low power consumption</a>, 128 KB of embedded FRAM (Ferroelectric Random Access Memory), a non-volatile memory known for its ultra-low power, high endurance and high speed write access.</em> <em>Rapid prototyping is simplified by the 40-pin BoosterPack&#x2122; Plug-in Module headers, which support a wide range of available BoosterPacks. You can quickly add features like wireless connectivity, graphical displays, environmental sensing, and much more. Design your own BoosterPack or choose among many already available from TI and third party developers.</em></p>
+<p><em>You can browse all documentation online with <a href="https://dev.ti.com/msp-exp430fr6989">TI Resource Explorer</a> and start development with the online <a href="https://dev.ti.com/ide">CCS Cloud IDE</a>. Other professional development environments are also available, such as TI&#x2019;s Eclipse-based <a href="http://www.ti.com/tool/ccstudio">Code Composer Studio</a> and <a href="http://www.ti.com/tool/iar-kickstart">IAR Embedded Workbench</a>.</em></p>
+<p><em>More information about the LaunchPad, as well as supported BoosterPacks, can be found at the <a href="http://www.ti.com/ww/en/launchpad/launchpad.html">TI LaunchPad website</a>.</em></p>
+<h5 id="features-1">Features</h5>
+<ul>
+<li>MSP ULP FRAM-based MSP430FR6989 16-bit MCU
+<ul>
+<li>100 uA/MHz active mode and 350 nA standby with RTC and 3.7 pF crystal</li>
+<li>Certified ULPBench score of 109</li>
+<li>128 KB FRAM</li>
+<li>16-Bit RISC architecture up to 8-MHz FRAM access/ 16MHz system clock speed</li>
+<li>320-segment LCD controller</li>
+<li>Extended Scan Interface</li>
+<li>16 channel 12-bit ADC</li>
+<li>Comparator</li>
+<li>5 Timers</li>
+<li>Direct memory access</li>
+<li>256-bit AES</li>
+<li>83 GPIO</li>
+</ul></li>
+<li>EnergyTrace++&#x2122; Technology available for ultra-low-power debugging</li>
+<li>40 pin LaunchPad standard leveraging the BoosterPack ecosystem</li>
+<li>Onboard eZ-FET emulation</li>
+<li>2 buttons and 2 LEDs for User Interaction</li>
+<li>Segmented LCD</li>
+<li>Pins for direct access to the Extended Scan Interface</li>
+</ul>
+<p>I will be doing a couple of projects with these boards in the coming days. I will try to create articles as and when I get a chance.</p>
+<p>Happy Hacking.</p>
+
+		<div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    </body>
+</html>

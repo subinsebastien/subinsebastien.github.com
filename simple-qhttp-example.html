@@ -18,106 +18,100 @@
     <body><h1 id="simple-qhttp-example">Simple QHTTP Example</h1>
 <p>Reading time : Less than 10 minutes Qt provides a very good class named Qhttp for doing http requests and to get response from the web. This class is thread safe and easy to use. To begin with, create a Qt console application and name it DoHttp, and add a reference about network usage in your project file.</p>
 <p>Now add a new class to the project to handle the Qhttp object. You have to inherit from QObject to implement signals and slots. So set QObject as base class.</p>
-<div class="figure">
-<img src="images/qthttp.png">
-
-</div>
+<p><img src="images/qthttp.png"></p>
 <p>Add a Qhttp object to your new class and declare a couple of slots to handle signals emitted by it. Take a look at the header file.</p>
-<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#ifndef HANDLER_H</span>
-<span class="ot">#define HANDLER_H</span>
-
-<span class="ot">#include &lt;QObject&gt;</span>
-<span class="ot">#include &lt;QHttp&gt;</span>
-<span class="ot">#include &lt;QDebug&gt;</span>
-
-<span class="kw">class</span> Handler : <span class="kw">public</span> <span class="ot">QObject</span>
-{
-    <span class="kw">Q_OBJECT</span>
-<span class="kw">public</span>:
-    <span class="kw">explicit</span> Handler(<span class="ot">QObject</span> *parent = <span class="dv">0</span>);
-    <span class="dt">void</span> doHttp();
-
-<span class="kw">signals</span>:
-
-<span class="kw">public</span> <span class="kw">slots</span>:
-    <span class="dt">void</span> stateChanged ( <span class="dt">int</span> state );
-    <span class="dt">void</span> responseHeaderReceived ( <span class="dt">const</span> QHttpResponseHeader &amp; resp );
-    <span class="dt">void</span> requestFinished ( <span class="dt">int</span> id, <span class="dt">bool</span> error );
-<span class="kw">private</span>:
-    QHttp *http;
-};
-
-<span class="ot">#endif </span><span class="co">// HANDLER_H</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="pp">#ifndef HANDLER_H</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="pp">#define HANDLER_H</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="pp">#include </span><span class="im">&lt;QObject&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="pp">#include </span><span class="im">&lt;QHttp&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="pp">#include </span><span class="im">&lt;QDebug&gt;</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw">class</span> Handler : <span class="kw">public</span> <span class="ex">QObject</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">{</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">    <span class="ex">Q_OBJECT</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">    <span class="kw">explicit</span> Handler(<span class="ex">QObject</span> *parent = <span class="dv">0</span>);</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">    <span class="dt">void</span> doHttp();</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="ex">signals</span>:</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="kw">public</span> <span class="ex">slots</span>:</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">    <span class="dt">void</span> stateChanged ( <span class="dt">int</span> state );</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">    <span class="dt">void</span> responseHeaderReceived ( <span class="at">const</span> QHttpResponseHeader &amp; resp );</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">    <span class="dt">void</span> requestFinished ( <span class="dt">int</span> id, <span class="dt">bool</span> error );</a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="kw">private</span>:</a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">    QHttp *http;</a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">};</a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="pp">#endif </span><span class="co">// HANDLER_H</span></a></code></pre></div>
 <p>Finally, expand all the methods. The responseHeaderRecieved() signal is emitted by the Qhttp object when it receives the header for the response. Headers contains a couple of data including this content type and size. Once the request is finished, the requestFinished() signal is emitted. Don&#x2019;t get confused with signals and slots. Our class implements all of the slots by the same name as the corresponding signal emitted by the Qhttp object. Take a look the source code.</p>
-<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &quot;handler.h&quot;</span>
-
-Handler::Handler(<span class="ot">QObject</span> *parent) :<span class="ot">QObject</span>(parent)  {
-    http = <span class="kw">new</span> QHttp(<span class="kw">this</span>);
-    <span class="fu">connect</span>(http, <span class="kw">SIGNAL</span>(stateChanged(<span class="dt">int</span>)), <span class="kw">this</span>, <span class="kw">SLOT</span>(stateChanged(<span class="dt">int</span>)));
-    <span class="fu">connect</span>(http, <span class="kw">SIGNAL</span>(responseHeaderReceived(QHttpResponseHeader)), <span class="kw">this</span>, <span class="kw">SLOT</span>(responseHeaderReceived(QHttpResponseHeader)));
-    <span class="fu">connect</span>(http, <span class="kw">SIGNAL</span>(requestFinished(<span class="dt">int</span>,<span class="dt">bool</span>)), <span class="kw">this</span>, <span class="kw">SLOT</span>(requestFinished(<span class="dt">int</span>,<span class="dt">bool</span>)));
-}
-
-<span class="dt">void</span> Handler::doHttp()  {
-    http-&gt;setHost(<span class="st">&quot;google.com&quot;</span>);
-    http-&gt;get(<span class="st">&quot;/&quot;</span>);
-}
-
-<span class="dt">void</span> Handler::stateChanged(<span class="dt">int</span> state)   {
-    <span class="kw">switch</span>(state)   {
-    <span class="kw">case</span> <span class="dv">0</span>:
-        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Unconnected&quot;</span>;
-        <span class="kw">break</span>;
-    <span class="kw">case</span> <span class="dv">1</span>:
-        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Host Lookup&quot;</span>;
-        <span class="kw">break</span>;
-    <span class="kw">case</span> <span class="dv">2</span>:
-        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Connecting&quot;</span>;
-        <span class="kw">break</span>;
-    <span class="kw">case</span> <span class="dv">3</span>:
-        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Sending&quot;</span>;
-        <span class="kw">break</span>;
-    <span class="kw">case</span> <span class="dv">4</span>:
-        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Reading&quot;</span>;
-        <span class="kw">break</span>;
-    <span class="kw">case</span> <span class="dv">5</span>:
-        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Connect&quot;</span>;
-        <span class="kw">break</span>;
-    <span class="kw">case</span> <span class="dv">6</span>:
-        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Closing&quot;</span>;
-        <span class="kw">break</span>;
-    }
-}
-
-<span class="dt">void</span> Handler::responseHeaderReceived(<span class="dt">const</span> QHttpResponseHeader &amp;resp)   {
-    <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Size : &quot;</span> &lt;&lt; resp.contentLength();
-    <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Type : &quot;</span> &lt;&lt; resp.contentType();
-    <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Status Code : &quot;</span> &lt;&lt; resp.statusCode();
-}
-
-<span class="dt">void</span> Handler::requestFinished(<span class="dt">int</span> id, <span class="dt">bool</span> error)   {
-    <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Request Id : &quot;</span> &lt;&lt; id;
-    <span class="kw">if</span>(error)   {
-        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Error&quot;</span>;
-    }   <span class="kw">else</span>    {
-        <span class="fu">qDebug</span>() &lt;&lt; http-&gt;readAll();
-    }
-}</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="pp">#include </span><span class="im">&quot;handler.h&quot;</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">Handler::Handler(<span class="ex">QObject</span> *parent) :<span class="ex">QObject</span>(parent)  {</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    http = <span class="kw">new</span> QHttp(<span class="kw">this</span>);</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="fu">connect</span>(http, <span class="ex">SIGNAL</span>(stateChanged(<span class="dt">int</span>)), <span class="kw">this</span>, <span class="ex">SLOT</span>(stateChanged(<span class="dt">int</span>)));</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="fu">connect</span>(http, <span class="ex">SIGNAL</span>(responseHeaderReceived(QHttpResponseHeader)), <span class="kw">this</span>, <span class="ex">SLOT</span>(responseHeaderReceived(QHttpResponseHeader)));</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="fu">connect</span>(http, <span class="ex">SIGNAL</span>(requestFinished(<span class="dt">int</span>,<span class="dt">bool</span>)), <span class="kw">this</span>, <span class="ex">SLOT</span>(requestFinished(<span class="dt">int</span>,<span class="dt">bool</span>)));</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="dt">void</span> Handler::doHttp()  {</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">    http-&gt;setHost(<span class="st">&quot;google.com&quot;</span>);</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">    http-&gt;get(<span class="st">&quot;/&quot;</span>);</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">}</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="dt">void</span> Handler::stateChanged(<span class="dt">int</span> state)   {</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">    <span class="cf">switch</span>(state)   {</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">    <span class="cf">case</span> <span class="dv">0</span>:</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Unconnected&quot;</span>;</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">    <span class="cf">case</span> <span class="dv">1</span>:</a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Host Lookup&quot;</span>;</a>
+<a class="sourceLine" id="cb2-22" data-line-number="22">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb2-23" data-line-number="23">    <span class="cf">case</span> <span class="dv">2</span>:</a>
+<a class="sourceLine" id="cb2-24" data-line-number="24">        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Connecting&quot;</span>;</a>
+<a class="sourceLine" id="cb2-25" data-line-number="25">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb2-26" data-line-number="26">    <span class="cf">case</span> <span class="dv">3</span>:</a>
+<a class="sourceLine" id="cb2-27" data-line-number="27">        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Sending&quot;</span>;</a>
+<a class="sourceLine" id="cb2-28" data-line-number="28">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb2-29" data-line-number="29">    <span class="cf">case</span> <span class="dv">4</span>:</a>
+<a class="sourceLine" id="cb2-30" data-line-number="30">        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Reading&quot;</span>;</a>
+<a class="sourceLine" id="cb2-31" data-line-number="31">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb2-32" data-line-number="32">    <span class="cf">case</span> <span class="dv">5</span>:</a>
+<a class="sourceLine" id="cb2-33" data-line-number="33">        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Connect&quot;</span>;</a>
+<a class="sourceLine" id="cb2-34" data-line-number="34">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb2-35" data-line-number="35">    <span class="cf">case</span> <span class="dv">6</span>:</a>
+<a class="sourceLine" id="cb2-36" data-line-number="36">        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Closing&quot;</span>;</a>
+<a class="sourceLine" id="cb2-37" data-line-number="37">        <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb2-38" data-line-number="38">    }</a>
+<a class="sourceLine" id="cb2-39" data-line-number="39">}</a>
+<a class="sourceLine" id="cb2-40" data-line-number="40"></a>
+<a class="sourceLine" id="cb2-41" data-line-number="41"><span class="dt">void</span> Handler::responseHeaderReceived(<span class="at">const</span> QHttpResponseHeader &amp;resp)   {</a>
+<a class="sourceLine" id="cb2-42" data-line-number="42">    <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Size : &quot;</span> &lt;&lt; resp.contentLength();</a>
+<a class="sourceLine" id="cb2-43" data-line-number="43">    <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Type : &quot;</span> &lt;&lt; resp.contentType();</a>
+<a class="sourceLine" id="cb2-44" data-line-number="44">    <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Status Code : &quot;</span> &lt;&lt; resp.statusCode();</a>
+<a class="sourceLine" id="cb2-45" data-line-number="45">}</a>
+<a class="sourceLine" id="cb2-46" data-line-number="46"></a>
+<a class="sourceLine" id="cb2-47" data-line-number="47"><span class="dt">void</span> Handler::requestFinished(<span class="dt">int</span> id, <span class="dt">bool</span> error)   {</a>
+<a class="sourceLine" id="cb2-48" data-line-number="48">    <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Request Id : &quot;</span> &lt;&lt; id;</a>
+<a class="sourceLine" id="cb2-49" data-line-number="49">    <span class="cf">if</span>(error)   {</a>
+<a class="sourceLine" id="cb2-50" data-line-number="50">        <span class="fu">qDebug</span>() &lt;&lt; <span class="st">&quot;Error&quot;</span>;</a>
+<a class="sourceLine" id="cb2-51" data-line-number="51">    }   <span class="cf">else</span>    {</a>
+<a class="sourceLine" id="cb2-52" data-line-number="52">        <span class="fu">qDebug</span>() &lt;&lt; http-&gt;readAll();</a>
+<a class="sourceLine" id="cb2-53" data-line-number="53">    }</a>
+<a class="sourceLine" id="cb2-54" data-line-number="54">}</a></code></pre></div>
 <p>Finally, include the class, make an object and run it.</p>
-<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;QtCore/QCoreApplication&gt;</span>
-<span class="ot">#include &quot;handler.h&quot;</span>
-
-<span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> *argv[])    {
-    <span class="ot">QCoreApplication</span> a(argc, argv);
-    Handler _handler;
-    _handler.doHttp();
-    <span class="kw">return</span> a.exec();
-}</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="pp">#include </span><span class="im">&lt;QtCore/QCoreApplication&gt;</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="pp">#include </span><span class="im">&quot;handler.h&quot;</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> *argv[])    {</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="ex">QCoreApplication</span> a(argc, argv);</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    Handler _handler;</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">    _handler.doHttp();</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">    <span class="cf">return</span> a.exec();</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">}</a></code></pre></div>
 <p>Take a look at the output.</p>
-<div class="figure">
-<img src="images/qthttp-output.png">
-
-</div>
+<p><img src="images/qthttp-output.png"></p>
 
 		<div id="disqus_thread"></div>  
         <script type="text/javascript">

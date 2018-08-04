@@ -17,7 +17,7 @@
     </head>
     <body><h1 id="usb-to-serial-adapters-comparison">USB to Serial Adapters Comparison</h1>
 <p>This article is to compare a set of USB-to-Serial adapters from different manufactures. I have personally purchased and used a couple of them and I think it would make sense to compare these and find out which is the best. The protocol adapters discussed in this article are the following. The host machine used for the comparison tests is a Late-2013 MacBook Pro.</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>CH340G</li>
 <li>PL2303</li>
 <li>CP2102</li>
@@ -25,28 +25,24 @@
 </ol>
 <p>All of these devices have some common traits. All have one 5v and 3v3 output along with the TX, RX and the ground.</p>
 <h3 id="ch340g">CH340G</h3>
-<div class="figure">
-<img src="images/usb-to-ttl-ch340g.jpg" alt="CH340G Based USB-Serial Adapter">
-<p class="caption"><em>CH340G Based USB-Serial Adapter</em></p>
-</div>
-<p>This chip comes from a chinese manufacturer named <a href="http://www.wch.cn">WCH</a>. The board is relatively big compared to other products available in the market. Thanks to its gold plating around the board. The board has not anything more than a few electronics apart from the chip itself. The board I have comes directly from china, and the build quality is very good. The only problem is that, <strong><em>it doesn&apos;t fucking work!</em></strong>. The driver (basically a kext on mac) broken something on my machine. Whenever this device is plugged into my USB port, either the mac restarts, or it does not boot at all. Looks like something is really wrong with this device. I have also noticed that a number of cheap Arduino clones comes with this chip, and I recommend not to buy any devices interfaced by this particular chip, if you are using a mac.</p>
+<figure>
+<img src="images/usb-to-ttl-ch340g.jpg" alt="CH340G Based USB-Serial Adapter"><figcaption><em>CH340G Based USB-Serial Adapter</em></figcaption>
+</figure>
+<p>This chip comes from a chinese manufacturer named <a href="http://www.wch.cn">WCH</a>. The board is relatively big compared to other products available in the market. Thanks to its gold plating around the board. The board has not anything more than a few electronics apart from the chip itself. The board I have comes directly from china, and the build quality is very good. The only problem is that, <strong><em>it doesn&#x2019;t fucking work!</em></strong>. The driver (basically a kext on mac) broken something on my machine. Whenever this device is plugged into my USB port, either the mac restarts, or it does not boot at all. Looks like something is really wrong with this device. I have also noticed that a number of cheap Arduino clones comes with this chip, and I recommend not to buy any devices interfaced by this particular chip, if you are using a mac.</p>
 <h3 id="pl2303">PL2303</h3>
-<div class="figure">
-<img src="images/usb-to-ttl-pl2303.jpg" alt="A USB to Serial adapter based on PL2303">
-<p class="caption"><em>A USB to Serial adapter based on PL2303</em></p>
-</div>
+<figure>
+<img src="images/usb-to-ttl-pl2303.jpg" alt="A USB to Serial adapter based on PL2303"><figcaption><em>A USB to Serial adapter based on PL2303</em></figcaption>
+</figure>
 <p>This built by <a href="http://www.prolific.com.tw">Prolific Technologies</a>, and it is a decent device. The board comes with 4, 5 or 6 pins. The one I have has 5 pins. This is a decently built device, and works perfectly well on most operating systems. Again, most of the electronics is within the chip itself. The board is often covered in a plastic enclosure, prevents dust and dirt accumulating. Prolific provides necessary drivers for this device, and works very well on mac platform. Some variants also provide flow control pins, but I have not used it.</p>
 <h3 id="cp2102">CP2102</h3>
-<div class="figure">
-<img src="images/usb-to-ttl-cp2102.jpg" alt="CP2102 Based USB-Serial Adapter">
-<p class="caption"><em>CP2102 Based USB-Serial Adapter</em></p>
-</div>
+<figure>
+<img src="images/usb-to-ttl-cp2102.jpg" alt="CP2102 Based USB-Serial Adapter"><figcaption><em>CP2102 Based USB-Serial Adapter</em></figcaption>
+</figure>
 <p>Out of all devices I tested, this one is the best because of the availability of technical support and documentation available online. This chip is produced by <a href="http://www.silabs.com">Silicon Labs</a>. The form factor of the chip is also very small and the boards also are very small because of the same reason. This device also needs a kext to function. But once the driver is installed, everything works as expected. I have mainly tried this for driving small serial devices and never faced an issue with CP2102 or PL2303. Both the devices are dead cheap also.</p>
 <h3 id="ft232rl">FT232RL</h3>
-<div class="figure">
-<img src="images/usb-to-ttl-ft232rl.jpg" alt="FT232RL based usb-serial adapter">
-<p class="caption"><em>FT232RL based usb-serial adapter</em></p>
-</div>
+<figure>
+<img src="images/usb-to-ttl-ft232rl.jpg" alt="FT232RL based usb-serial adapter"><figcaption><em>FT232RL based usb-serial adapter</em></figcaption>
+</figure>
 <p>This could be the oldest of all these USB-TTL chips. While it is still dead cheap, it is relatively expensive to the other devices discussed in this article. This chip is produced by <a href="usb-to-ttl-ft232rl.jpg">FTDI</a>, and drivers for all popular operating systems are available on their website. Once driver is installed correctly, this is a very reliable board to work with your electronics projects. The chip itself is relatively big, and most board comes with a USB-B-Mini connector. You should be able to find a cable for that pretty easily. I particularly like this design because, you can move around with your laptop, while all the electronics is connected to your machine through a flexible cable, unlike the other adapters discussed above.</p>
 <h3 id="drivers">DRIVERS</h3>
 <table>

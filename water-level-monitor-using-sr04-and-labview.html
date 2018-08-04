@@ -18,122 +18,117 @@
     <body><h1 id="water-level-monitor-using-hc-sr04-and-labview">Water Level Monitor using HC-SR04 and LabView</h1>
 <p>I have been working with ultrasonic range sensor HC-SR04 and got this wild idea to use it as a water level monitor from the internet. Despite having some concerns about using it for water level monitoring in a production environment, I decided to put together a prototype to experiment with it.</p>
 <h2 id="the-hc-sr04-ultrasonic-range-sensor">The HC-SR04 Ultrasonic Range Sensor</h2>
-<div class="figure">
-<img src="images/sr04.jpg" alt="HC-SR04 Sensor">
-<p class="caption"><em>HC-SR04 Sensor</em></p>
-</div>
-<p>The breakout board has 2 pins apart from the power supply pins. One is called <code>TRIGGER</code> and the other is <code>ECHO</code>. The sensor has two cylindrical shaped objects on one side. Apparently one of these is a ultrasound pulse sender, and the other is a receiver. They are relatively close to each other. But since these are two parts, instead of one combo sender/receiver, I&apos;m not sure how exactly does this device range objects. I think the concept is vaguely discussed in some blog posts on the internet. Lets assume that, it is very similar to SONAR. Electrically, the working is relatively simple as shown below.</p>
-<div class="figure">
-<img src="images/sr04-working.png" alt="HC-SR04 Working">
-<p class="caption"><em>HC-SR04 Working</em></p>
-</div>
+<figure>
+<img src="images/sr04.jpg" alt="HC-SR04 Sensor"><figcaption><em>HC-SR04 Sensor</em></figcaption>
+</figure>
+<p>The breakout board has 2 pins apart from the power supply pins. One is called <code>TRIGGER</code> and the other is <code>ECHO</code>. The sensor has two cylindrical shaped objects on one side. Apparently one of these is a ultrasound pulse sender, and the other is a receiver. They are relatively close to each other. But since these are two parts, instead of one combo sender/receiver, I&#x2019;m not sure how exactly does this device range objects. I think the concept is vaguely discussed in some blog posts on the internet. Lets assume that, it is very similar to SONAR. Electrically, the working is relatively simple as shown below.</p>
+<figure>
+<img src="images/sr04-working.png" alt="HC-SR04 Working"><figcaption><em>HC-SR04 Working</em></figcaption>
+</figure>
 <p>When we give it a <code>HIGH</code> on the <code>TRIGGER</code> pin for at least 10uS, the device gets triggered. It subsequently sends a 40KHz pulse from the sender, and receives reflections from nearby objects. Then depending on the measured distance, the board sends us back a <code>HIGH</code> on the <code>ECHO</code> pin. The length of this pulse will be directly proportional to the distance measured by the device.</p>
 <h2 id="programming-arduino-to-handle-hc-sr04">Programming Arduino to Handle HC-SR04</h2>
 <p>So, by this understanding about the sensor module, I have wired up the sensor with Arduino. The convenience here is that, since Arduino board itself acts as a serial port device, using the USB-to-TTL emulation, it becomes useful in the next stage.</p>
-<div class="figure">
-<img src="images/sr04-arduino.jpg" alt="HC-SR04 Wired up to the Arduino">
-<p class="caption"><em>HC-SR04 Wired up to the Arduino</em></p>
-</div>
+<figure>
+<img src="images/sr04-arduino.jpg" alt="HC-SR04 Wired up to the Arduino"><figcaption><em>HC-SR04 Wired up to the Arduino</em></figcaption>
+</figure>
 <p>Corresponding program is a reference program that I happen to find on the internet. I have modified it to simplify the serial communication on the LabView side.</p>
-<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c">
-<span class="co">/**</span>
-<span class="co"> * HC-SR04 Demo</span>
-<span class="co"> * Demonstration of the HC-SR04 Ultrasonic Sensor</span>
-<span class="co"> * Date: August 3, 2016</span>
-<span class="co"> * </span>
-<span class="co"> * Description:</span>
-<span class="co"> *  Connect the ultrasonic sensor to the Arduino as per the</span>
-<span class="co"> *  hardware connections below. Run the sketch and open a serial</span>
-<span class="co"> *  monitor. The distance read from the sensor will be displayed</span>
-<span class="co"> *  in centimeters and inches.</span>
-<span class="co"> * </span>
-<span class="co"> * Hardware Connections:</span>
-<span class="co"> *  Arduino | HC-SR04 </span>
-<span class="co"> *  -------------------</span>
-<span class="co"> *    5V    |   VCC     </span>
-<span class="co"> *    7     |   Trig     </span>
-<span class="co"> *    8     |   Echo     </span>
-<span class="co"> *    GND   |   GND</span>
-<span class="co"> *  </span>
-<span class="co"> * License:</span>
-<span class="co"> *  Public Domain</span>
-<span class="co"> */</span>
-
-<span class="co">// Pins</span>
-<span class="dt">const</span> <span class="dt">int</span> TRIG_PIN = <span class="dv">7</span>;
-<span class="dt">const</span> <span class="dt">int</span> ECHO_PIN = <span class="dv">8</span>;
-
-<span class="co">// Anything over 400 cm (23200 us pulse) is &quot;out of range&quot;</span>
-<span class="dt">const</span> <span class="dt">unsigned</span> <span class="dt">int</span> MAX_DIST = <span class="dv">23200</span>;
-
-<span class="dt">void</span> setup() {
-
-  <span class="co">// The Trigger pin will tell the sensor to range find</span>
-  pinMode(TRIG_PIN, OUTPUT);
-  digitalWrite(TRIG_PIN, LOW);
-
-  <span class="co">// We&apos;ll use the serial monitor to view the sensor output</span>
-  Serial.begin(<span class="dv">9600</span>);
-}
-
-<span class="dt">void</span> loop() {
-
-  <span class="dt">unsigned</span> <span class="dt">long</span> t1;
-  <span class="dt">unsigned</span> <span class="dt">long</span> t2;
-  <span class="dt">unsigned</span> <span class="dt">long</span> pulse_width;
-  <span class="dt">float</span> cm;
-
-  <span class="co">// Hold the trigger pin high for at least 10 us</span>
-  digitalWrite(TRIG_PIN, HIGH);
-  delayMicroseconds(<span class="dv">10</span>);
-  digitalWrite(TRIG_PIN, LOW);
-
-  <span class="co">// Wait for pulse on echo pin</span>
-  <span class="kw">while</span> ( digitalRead(ECHO_PIN) == <span class="dv">0</span> );
-
-  <span class="co">// Measure how long the echo pin was held high (pulse width)</span>
-  <span class="co">// Note: the micros() counter will overflow after ~70 min</span>
-  t1 = micros();
-  <span class="kw">while</span> ( digitalRead(ECHO_PIN) == <span class="dv">1</span>);
-  t2 = micros();
-  pulse_width = t2 - t1;
-
-  <span class="co">// Calculate distance in centimeters</span>
-  <span class="co">// are found in the datasheet, and calculated from the assumed speed </span>
-  <span class="co">//of sound in air at sea level (~340 m/s).</span>
-  cm = pulse_width / <span class="fl">58.0</span>;
-  
-  <span class="co">// Assuming when there is no water in the tank,</span>
-  <span class="co">// the distance measured will be at a maxima.</span>
-  <span class="co">// In this case, the depth of the tank : 300cm.</span>
-  cm = <span class="dv">300</span> - cm;
-  <span class="co">// Print out results</span>
-  <span class="kw">if</span> ( pulse_width &gt; MAX_DIST ) {
-    Serial.println(<span class="st">&quot;Out of range&quot;</span>);
-  } <span class="kw">else</span> {
-    Serial.print(cm);
-    Serial.print(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>);
-  }
-  
-  <span class="co">// Wait at least 60ms before next measurement</span>
-  delay(<span class="dv">300</span>);
-}</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co"> * HC-SR04 Demo</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"> * Demonstration of the HC-SR04 Ultrasonic Sensor</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co"> * Date: August 3, 2016</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"> * </span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"> * Description:</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co"> *  Connect the ultrasonic sensor to the Arduino as per the</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co"> *  hardware connections below. Run the sketch and open a serial</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co"> *  monitor. The distance read from the sensor will be displayed</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co"> *  in centimeters and inches.</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co"> * </span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co"> * Hardware Connections:</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co"> *  Arduino | HC-SR04 </span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co"> *  -------------------</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co"> *    5V    |   VCC     </span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co"> *    7     |   Trig     </span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co"> *    8     |   Echo     </span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co"> *    GND   |   GND</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co"> *  </span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co"> * License:</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co"> *  Public Domain</span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co"> */</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">// Pins</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="dt">const</span> <span class="dt">int</span> TRIG_PIN = <span class="dv">7</span>;</a>
+<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="dt">const</span> <span class="dt">int</span> ECHO_PIN = <span class="dv">8</span>;</a>
+<a class="sourceLine" id="cb1-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb1-29" data-line-number="29"><span class="co">// Anything over 400 cm (23200 us pulse) is &quot;out of range&quot;</span></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30"><span class="dt">const</span> <span class="dt">unsigned</span> <span class="dt">int</span> MAX_DIST = <span class="dv">23200</span>;</a>
+<a class="sourceLine" id="cb1-31" data-line-number="31"></a>
+<a class="sourceLine" id="cb1-32" data-line-number="32"><span class="dt">void</span> setup() {</a>
+<a class="sourceLine" id="cb1-33" data-line-number="33"></a>
+<a class="sourceLine" id="cb1-34" data-line-number="34">  <span class="co">// The Trigger pin will tell the sensor to range find</span></a>
+<a class="sourceLine" id="cb1-35" data-line-number="35">  pinMode(TRIG_PIN, OUTPUT);</a>
+<a class="sourceLine" id="cb1-36" data-line-number="36">  digitalWrite(TRIG_PIN, LOW);</a>
+<a class="sourceLine" id="cb1-37" data-line-number="37"></a>
+<a class="sourceLine" id="cb1-38" data-line-number="38">  <span class="co">// We&apos;ll use the serial monitor to view the sensor output</span></a>
+<a class="sourceLine" id="cb1-39" data-line-number="39">  Serial.begin(<span class="dv">9600</span>);</a>
+<a class="sourceLine" id="cb1-40" data-line-number="40">}</a>
+<a class="sourceLine" id="cb1-41" data-line-number="41"></a>
+<a class="sourceLine" id="cb1-42" data-line-number="42"><span class="dt">void</span> loop() {</a>
+<a class="sourceLine" id="cb1-43" data-line-number="43"></a>
+<a class="sourceLine" id="cb1-44" data-line-number="44">  <span class="dt">unsigned</span> <span class="dt">long</span> t1;</a>
+<a class="sourceLine" id="cb1-45" data-line-number="45">  <span class="dt">unsigned</span> <span class="dt">long</span> t2;</a>
+<a class="sourceLine" id="cb1-46" data-line-number="46">  <span class="dt">unsigned</span> <span class="dt">long</span> pulse_width;</a>
+<a class="sourceLine" id="cb1-47" data-line-number="47">  <span class="dt">float</span> cm;</a>
+<a class="sourceLine" id="cb1-48" data-line-number="48"></a>
+<a class="sourceLine" id="cb1-49" data-line-number="49">  <span class="co">// Hold the trigger pin high for at least 10 us</span></a>
+<a class="sourceLine" id="cb1-50" data-line-number="50">  digitalWrite(TRIG_PIN, HIGH);</a>
+<a class="sourceLine" id="cb1-51" data-line-number="51">  delayMicroseconds(<span class="dv">10</span>);</a>
+<a class="sourceLine" id="cb1-52" data-line-number="52">  digitalWrite(TRIG_PIN, LOW);</a>
+<a class="sourceLine" id="cb1-53" data-line-number="53"></a>
+<a class="sourceLine" id="cb1-54" data-line-number="54">  <span class="co">// Wait for pulse on echo pin</span></a>
+<a class="sourceLine" id="cb1-55" data-line-number="55">  <span class="cf">while</span> ( digitalRead(ECHO_PIN) == <span class="dv">0</span> );</a>
+<a class="sourceLine" id="cb1-56" data-line-number="56"></a>
+<a class="sourceLine" id="cb1-57" data-line-number="57">  <span class="co">// Measure how long the echo pin was held high (pulse width)</span></a>
+<a class="sourceLine" id="cb1-58" data-line-number="58">  <span class="co">// Note: the micros() counter will overflow after ~70 min</span></a>
+<a class="sourceLine" id="cb1-59" data-line-number="59">  t1 = micros();</a>
+<a class="sourceLine" id="cb1-60" data-line-number="60">  <span class="cf">while</span> ( digitalRead(ECHO_PIN) == <span class="dv">1</span>);</a>
+<a class="sourceLine" id="cb1-61" data-line-number="61">  t2 = micros();</a>
+<a class="sourceLine" id="cb1-62" data-line-number="62">  pulse_width = t2 - t1;</a>
+<a class="sourceLine" id="cb1-63" data-line-number="63"></a>
+<a class="sourceLine" id="cb1-64" data-line-number="64">  <span class="co">// Calculate distance in centimeters</span></a>
+<a class="sourceLine" id="cb1-65" data-line-number="65">  <span class="co">// are found in the datasheet, and calculated from the assumed speed </span></a>
+<a class="sourceLine" id="cb1-66" data-line-number="66">  <span class="co">//of sound in air at sea level (~340 m/s).</span></a>
+<a class="sourceLine" id="cb1-67" data-line-number="67">  cm = pulse_width / <span class="fl">58.0</span>;</a>
+<a class="sourceLine" id="cb1-68" data-line-number="68">  </a>
+<a class="sourceLine" id="cb1-69" data-line-number="69">  <span class="co">// Assuming when there is no water in the tank,</span></a>
+<a class="sourceLine" id="cb1-70" data-line-number="70">  <span class="co">// the distance measured will be at a maxima.</span></a>
+<a class="sourceLine" id="cb1-71" data-line-number="71">  <span class="co">// In this case, the depth of the tank : 300cm.</span></a>
+<a class="sourceLine" id="cb1-72" data-line-number="72">  cm = <span class="dv">300</span> - cm;</a>
+<a class="sourceLine" id="cb1-73" data-line-number="73">  <span class="co">// Print out results</span></a>
+<a class="sourceLine" id="cb1-74" data-line-number="74">  <span class="cf">if</span> ( pulse_width &gt; MAX_DIST ) {</a>
+<a class="sourceLine" id="cb1-75" data-line-number="75">    Serial.println(<span class="st">&quot;Out of range&quot;</span>);</a>
+<a class="sourceLine" id="cb1-76" data-line-number="76">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb1-77" data-line-number="77">    Serial.print(cm);</a>
+<a class="sourceLine" id="cb1-78" data-line-number="78">    Serial.print(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb1-79" data-line-number="79">  }</a>
+<a class="sourceLine" id="cb1-80" data-line-number="80">  </a>
+<a class="sourceLine" id="cb1-81" data-line-number="81">  <span class="co">// Wait at least 60ms before next measurement</span></a>
+<a class="sourceLine" id="cb1-82" data-line-number="82">  delay(<span class="dv">300</span>);</a>
+<a class="sourceLine" id="cb1-83" data-line-number="83">}</a></code></pre></div>
 <h2 id="stage-1-testing">Stage-1 Testing</h2>
-<p>The first stage testing is to make sure that the data send out by the Arduino reaches the target machine correctly. If you are running Arduino IDE on your target machine itself, it is relatively easy since your drivers are in place, as well as your IDE has a serial monitor. In my case, I&apos;m programming the Arduino from my Mac, and Windows-7 OS is running as a guest on VirtualBox. In that case, the first step is to install FTDI VCP (Virtual COM Port) drivers, since the Arduino Duemilanove I have, uses FT232RL chip. (I will blog about these chips PL2303, CH340G, CP2102 etc in detail in a future post) Once, this is done I fired up CoolTerm to check the virtual serial port, to make sure data from the sensor is coming correctly at the Windows end. You may use any program of your choice to do the same.</p>
+<p>The first stage testing is to make sure that the data send out by the Arduino reaches the target machine correctly. If you are running Arduino IDE on your target machine itself, it is relatively easy since your drivers are in place, as well as your IDE has a serial monitor. In my case, I&#x2019;m programming the Arduino from my Mac, and Windows-7 OS is running as a guest on VirtualBox. In that case, the first step is to install FTDI VCP (Virtual COM Port) drivers, since the Arduino Duemilanove I have, uses FT232RL chip. (I will blog about these chips PL2303, CH340G, CP2102 etc in detail in a future post) Once, this is done I fired up CoolTerm to check the virtual serial port, to make sure data from the sensor is coming correctly at the Windows end. You may use any program of your choice to do the same.</p>
 <h2 id="labview-program">LabView Program</h2>
-<div class="figure">
-<img src="images/labview-water-level-monitor.png" alt="Labview Block Diagram for the Water Level Monitor Project">
-<p class="caption"><em>Labview Block Diagram for the Water Level Monitor Project</em></p>
-</div>
-<p>The LabView program is also relatively simple. You will need VISA drivers to let LabView read from the serial devices. You may download it from the NI website. Fundamentally, the serial port is opened first, and the program reads 4 bytes from it at a time. This can be changed at the program level by constant widget, or at the runtime by using a control widget. My assumptions here is that, all the numbers coming from the sensor is less than 300 (Max depth of the tank). The read buffer from the VISA Reader is at the same time attached to an Indicator (so that we can see what data is being received on the front panel), as well as a String &#x2014;&gt; Decimal number converter. Note that, I have not added a divider to set the tank input between the tank&apos;s scale which is 0 - 100. It should be pretty straight forward to do. Finally, when the read operation is done, close the serial port. Note that, I have also connected the number output to a waveform chart. This is to monitor historical data.</p>
+<figure>
+<img src="images/labview-water-level-monitor.png" alt="Labview Block Diagram for the Water Level Monitor Project"><figcaption><em>Labview Block Diagram for the Water Level Monitor Project</em></figcaption>
+</figure>
+<p>The LabView program is also relatively simple. You will need VISA drivers to let LabView read from the serial devices. You may download it from the NI website. Fundamentally, the serial port is opened first, and the program reads 4 bytes from it at a time. This can be changed at the program level by constant widget, or at the runtime by using a control widget. My assumptions here is that, all the numbers coming from the sensor is less than 300 (Max depth of the tank). The read buffer from the VISA Reader is at the same time attached to an Indicator (so that we can see what data is being received on the front panel), as well as a String &#x2014;&gt; Decimal number converter. Note that, I have not added a divider to set the tank input between the tank&#x2019;s scale which is 0 - 100. It should be pretty straight forward to do. Finally, when the read operation is done, close the serial port. Note that, I have also connected the number output to a waveform chart. This is to monitor historical data.</p>
 <h2 id="front-panel">Front-Panel</h2>
-<div class="figure">
-<img src="images/labview-water-level-monitor-front-panel.png" alt="Water Level Monitor Running">
-<p class="caption"><em>Water Level Monitor Running</em></p>
-</div>
-<p>The front panel is very straight forward. It contains a tank and a waveform chart. (I&apos;ve a taste for classic controls, you may choose better widgets). The first 4 bytes of every new line printed by the Arduino program is displayed in the read buffer indicator. Once converted to a number, the tank widget is redrawn with appropriate progress. Paralelly, the same data is used to draw the waveform.</p>
+<figure>
+<img src="images/labview-water-level-monitor-front-panel.png" alt="Water Level Monitor Running"><figcaption><em>Water Level Monitor Running</em></figcaption>
+</figure>
+<p>The front panel is very straight forward. It contains a tank and a waveform chart. (I&#x2019;ve a taste for classic controls, you may choose better widgets). The first 4 bytes of every new line printed by the Arduino program is displayed in the read buffer indicator. Once converted to a number, the tank widget is redrawn with appropriate progress. Paralelly, the same data is used to draw the waveform.</p>
 <h2 id="caveats">Caveats</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>As this is a prototype project, I have omitted many details. Say for example, the block diagram does a very minimal job in reading data from the serial device. If there is no data coming in from the device for 20 seconds, the program simply crashes.</li>
 <li>Only the first 4 bytes of incoming data is read. Ideally, the reading should be fully captured, and appropriate error handling should be done when the received data cannot be converted to a number.</li>
 <li>The LabView read loop looks a little slow for some reason. I personally have no idea why this is so. Needs investigation.</li>

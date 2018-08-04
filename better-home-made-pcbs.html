@@ -18,21 +18,16 @@
     <body><h1 id="better-home-made-printed-circuit-boards">Better Home-Made Printed Circuit Boards</h1>
 <p>Many of us develop PCBs at home for different hobby projects. In most of the cases, without following a proper process, chances are that, you end up with a totally unusable board, or something that requires many hacks before it starts working. This article contains some information I have acquired over my experiments in the PCB making process. Without professional capabilities like chemical processing system or other tools/machinery, it is quite difficult to obtain decent results, compared to a commercially made PCB.</p>
 <p><strong>Always start with the Simulation</strong></p>
-<div class="figure">
-<img src="images/pcb-process-flow.png">
-
-</div>
+<p><img src="images/pcb-process-flow.png"></p>
 <p>A professional simulation software can give you an overview of the expected output/working of any circuits. In my case I found, NI&#x2019;s&#xA0;<a href="http://www.ni.com/multisim/">Multisim</a>&#xA0;extremely useful. The component inventory is not be very rich. Say for example, very basic components like&#xA0;<a href="https://www.fairchildsemi.com/datasheets/LM/LM317.pdf">LM317 adjustable regulator</a>&#xA0;was not found in the component library.</p>
-<div class="figure">
-<img src="images/pcb-multisim.png" alt="NI&apos;s Multisim runs a simulation">
-<p class="caption">NI&apos;s Multisim runs a simulation</p>
-</div>
+<figure>
+<img src="images/pcb-multisim.png" alt="NI&#x2019;s Multisim runs a simulation"><figcaption>NI&#x2019;s Multisim runs a simulation</figcaption>
+</figure>
 <p>Also, you can find custom parts library for Multisim on the internet, or you can even create parts on your own. A recent trend is with these online simulators like&#xA0;<a href="https://www.circuitlab.com/">CircuitLab</a>&#xA0;or Digikey&#x2019;s&#xA0;<a href="http://www.partsim.com/">PartSim</a>. But these solutions does not bundle a good database of electronic components either. Another such nice and simple tool is <a href="http://everycircuit.com/">EveryCircuit</a>. I personally suggest being a license for this software, it is worth every penny.</p>
 <p><strong>Breadboard Prototypes</strong></p>
-<div class="figure">
-<img src="images/breadboard_prototype.jpg" alt="Preparing BOM from a breadboard is easier.">
-<p class="caption"><em>Preparing BOM from a breadboard is easier.</em></p>
-</div>
+<figure>
+<img src="images/breadboard_prototype.jpg" alt="Preparing BOM from a breadboard is easier."><figcaption><em>Preparing BOM from a breadboard is easier.</em></figcaption>
+</figure>
 <p>Once a simulation looks pretty good, the next step is to put it together on a breadboard. You are not at all wasting time on it. Rather, that cheap piece of plastic and metal could literally save a lot of time and it can produce better results once you are done with your project. Major reason is that you can quickly prepare a bill of materials from it. Good quality jumper wires are an absolute must if you are using a breadboard. Makeshift jumpers from stripped copper wires always tend be loose and problematic. Buying shrink tubed jumper wires is a good investment. Afterall, with breadboard prototypes, you can try equivalent parts in your circuit, in case if some parts in your project is unavailable in your local shops. It is also a good place to do a little bit of thermal testing, although you might not have the necessary tool to do it like in a professional setup.</p>
 <p><strong>Eagle for Schematics and Layouts</strong></p>
 <p>A broad discussion about EDA tools in general, and <a href="https://cadsoft.io/">Eagle</a> in particular,&#xA0;is definitely enough content for a future blog post. So I don&#x2019;t really want to add more information about using Eagle here. Making schematics and PCB layout files is a bit tricky and difficult in Eagle to be honest. But, once the learning curve is behind, it becomes a great tool to work with. Some general findings when using Eagle to avoid copper errors follows.</p>
@@ -44,26 +39,23 @@
 <li>Do manual routing first. Place the components appropriately such that there are minimum number of jumpers and vias. Once components are placed correctly, do an autorouting. This will give an idea about where each traces can possible go. Once autorouted, manually separate traces from each other and pads. Change placing of components if required. Make sure each traces have enough room between them eventhough we end up with some minor copper errors while etching.</li>
 <li>If using Eagle, print out the layout with all components inside the board area before starting the actual routing. Then compare the print with the actual component footprints. It is not easy to change package footprints once you complete routing. At this point, you could also inspect pad sizes and trace widths. If required, edit specific component package footprints and increase the pad size and shapes.</li>
 </ul>
-<div class="figure">
-<img src="images/eagle_layout.jpg" alt="Better traces, good isolation and 10mil thermal separation to pads connected to the ground pour.">
-<p class="caption"><em>Better traces, good isolation and 10mil thermal separation to pads connected to the ground pour.</em></p>
-</div>
+<figure>
+<img src="images/eagle_layout.jpg" alt="Better traces, good isolation and 10mil thermal separation to pads connected to the ground pour."><figcaption><em>Better traces, good isolation and 10mil thermal separation to pads connected to the ground pour.</em></figcaption>
+</figure>
 <p>Afterall, it is not not necessary to use Eagle itself. There are better routing software like&#xA0;<a href="http://www.toporouter.com/">TopoR</a>, which doesn&#x2019;t insist trace shapes to be even, or programs like&#xA0;<a href="http://www.ni.com/ultiboard/">Ultiboard</a>&#xA0;from NI works fine.</p>
 <p><strong>Toner Transfer</strong></p>
 <p>This is the only method I used so far. There are more professional methods like photo resistant clad board etching, but it is a bit more expensive and involves a bit more process. Probably, I will be doing it next week or so, and will post something about it as well. Toner is some chemical that requires very high temperatures to melt. With a photo paper, a laser printer can only make it hold on to the surface, and by using an iron box it is easy to transfer the toner to the copper clad board. You can see how to do the toner transfer&#xA0;<a href="https://www.youtube.com/watch?v=wKEe3otWstM">here</a>.</p>
 <p><strong>Chemical Etching</strong></p>
-<p>The chemical used in the etching process is expensive and not very easy to handle. Ferric Chloride cannot etch copper forever. In a 100ml solution, I was able to etch about 3 PCB with an average size of 3x4&quot;. To reuse the same solution, you need to reduce the amount of copper etched off each time. That simply means, you need to use copper pours whenever it is possible. The lesser the exposed copper, the faster will be the etching.</p>
-<div class="figure">
-<img src="images/good_bad_etche_pcbs.jpg" alt="An overly etched PCB along with a properly etched PCB. In the first case, the toner was not completely transferred to the copper, and thus some portion of the copper pour got etched by the solution. Although it looked ugly, it was still usable after a few hacks. The second PCB was etched after correcting some minor errors in the layout file.">
-<p class="caption"><em>An overly etched PCB along with a properly etched PCB. In the first case, the toner was not completely transferred to the copper, and thus some portion of the copper pour got etched by the solution. Although it looked ugly, it was still usable after a few hacks. The second PCB was etched after correcting some minor errors in the layout file.</em></p>
-</div>
+<p>The chemical used in the etching process is expensive and not very easy to handle. Ferric Chloride cannot etch copper forever. In a 100ml solution, I was able to etch about 3 PCB with an average size of 3x4&#x201C;. To reuse the same solution, you need to reduce the amount of copper etched off each time. That simply means, you need to use copper pours whenever it is possible. The lesser the exposed copper, the faster will be the etching.</p>
+<figure>
+<img src="images/good_bad_etche_pcbs.jpg" alt="An overly etched PCB along with a properly etched PCB. In the first case, the toner was not completely transferred to the copper, and thus some portion of the copper pour got etched by the solution. Although it looked ugly, it was still usable after a few hacks. The second PCB was etched after correcting some minor errors in the layout file."><figcaption><em>An overly etched PCB along with a properly etched PCB. In the first case, the toner was not completely transferred to the copper, and thus some portion of the copper pour got etched by the solution. Although it looked ugly, it was still usable after a few hacks. The second PCB was etched after correcting some minor errors in the layout file.</em></figcaption>
+</figure>
 <p>It is preferred to use a high concentrated Ferric Chloride solution to etch off the unwanted copper from your board. From my experience, dipping the board in the solution for a very long time could rip off the toner as well. So use a concentrated, and if possible a preheated solution of ferric chloride for proper results. If the toner transfer was not proper, you might overly etch some portion of the circuit.</p>
 <p><strong>Hacking up Copper Errors</strong></p>
 <p>Even if we do all the necessary, it is quite possible to make errors. But in most cases, you can fix up the board by little hacks like using jumpers or cutting off some copper joints.</p>
-<div class="figure">
-<img src="images/copper_errors.jpg" alt="Multiple copper errors on a single PCB. Since the isolation is too low, copper pour is not completely etched off from the traces and it remains connected. The error inside the red circle is cut using a blade.">
-<p class="caption"><em>Multiple copper errors on a single PCB. Since the isolation is too low, copper pour is not completely etched off from the traces and it remains connected. The error inside the red circle is cut using a blade.</em></p>
-</div>
+<figure>
+<img src="images/copper_errors.jpg" alt="Multiple copper errors on a single PCB. Since the isolation is too low, copper pour is not completely etched off from the traces and it remains connected. The error inside the red circle is cut using a blade."><figcaption><em>Multiple copper errors on a single PCB. Since the isolation is too low, copper pour is not completely etched off from the traces and it remains connected. The error inside the red circle is cut using a blade.</em></figcaption>
+</figure>
 <p>To cut off copper joints, use a sharp blade or something. You can hold the board against a light bulb and see if any unwanted connections remains. Use a DMM continuity check if required.</p>
 <p><em>Happy Hacking&#x2026; :)</em></p>
 
