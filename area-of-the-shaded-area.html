@@ -1,0 +1,160 @@
+<html>
+    <head>
+         <title>Napster&apos;s Experiments with Freedom</title>
+         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/xt256.min.css">
+         <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+         <script>hljs.initHighlightingOnLoad();</script>
+         <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+         <link rel="stylesheet" type="text/css" href="css/post.css">
+         <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-20813670-9', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </head>
+    <body><h1 id="find-the-area-of-the-shaded-part-of-the-image">Find the area of the shaded part of the image</h1>
+<p><img src="images/area.jpeg"></p>
+<p>I have came across this mathematical problem a few days back on youtube, and decided to find a solution my own way. The fundamental concept of my solution is to find the area of the following shaded area first,</p>
+<p><img src="images/lense.jpeg"></p>
+<p>I call the above shape a <strong>Lens</strong> for simplicity. and then subtract the area of the shaded region below, which I call a <strong>Leaf</strong>.</p>
+<p><img src="images/leaf.jpeg"></p>
+<p>So, our final area that we want to find out is <br><span class="math display">$$
+\begin{align}
+\mathcal A_{Final}&amp;=A_{Lens}-A_{Leaf}\tag1
+\end{align}
+$$</span><br> To start with, lets find out the area of the <strong>Leaf</strong> shape in the above image.</p>
+<p><img src="images/leaf-area-calc.jpeg"></p>
+<p>If you subtract the area of the triangle with base <code>b = a</code> and height <code>h = a/2</code>, from the half circle with radius <code>r = a/2</code>, you will get the area of the green segments, which are essentially half-leaves, which together is equal to the area of one leaf area. <br><span class="math display">$$
+\begin{align}
+\mathcal A_{Triangle} &amp; = \frac{bh}{2}
+\\&amp;=\frac{a*a/2}{2}
+\\&amp;=\frac{a^2}{4}\tag2
+\\
+\mathcal A_{Half-Circle}&amp;=\frac{\pi{r^2}}{2}
+\\&amp;=\frac{\pi*{(a/2)}^2}{2}
+\\&amp;=\frac{\pi*(a^2/4)}{2}
+\\&amp;=\frac{\pi*a^2}{8}\tag3
+\\
+\\
+\mathcal A_{Leaf}&amp;=A_{Half-Circle}-A_{Triangle}
+\\&amp;=\frac{\pi{a^2}}{8}-\frac{a^2}{4}\tag4
+\end{align}
+$$</span><br></p>
+<p>That was easy. Now, lets try to find the area of the Lens shape.</p>
+<p><img src="images/lens-area-calc.jpeg"></p>
+<p>Our Lens shape is essentially a combination of two circular segments added side by side. The green circular segment is cut out from the bigger quarter circle, and the red one is from the smaller half circle. Area of such a circular segment is the sector area minus, the triangle area. <br><span class="math display">$$
+\begin{align}
+\mathcal A_{Circular-Segment}&amp;=A_{Sector}-A_{Triangle}
+\\&amp;=\frac{r^2}{2}(\theta-sin\theta)\tag5
+\end{align}
+$$</span><br> To start with this, we need to find the angles of sweep for both the sectors, ie, the sector angle for the small half-circle, as well as the sector angle for the larger quarter circle. And for that, consider the following right angled triangle in blue colour. &#x3B8;1 is half of the the angle of the quarter-circle sector, and &#x3B8;2 is half of the sector angle of the half-circle.</p>
+<p><img src="images/triangle-angle-calc.jpeg"> <br><span class="math display">$$
+\begin{align}
+\mathcal \theta_1&amp;=tan^{-1}\left(\frac{a/2}{a}\right)
+\\&amp;=tan^{-1}\left(\frac{a}{2a}\right)
+\\&amp;=tan^{-1}\left(\frac{1}{2}\right)
+\\
+\\\theta_{Sector-of-Quarter-Circle} &amp;= 2*\theta_1
+\\&amp;=2*tan^{-1}\left(\frac{1}{2}\right)\tag6
+\\
+\\Similarly,
+\\
+\theta_2&amp;=tan^{-1}\left(\frac{a}{a/2}\right)
+\\&amp;=tan^{-1}\left(\frac{2a}{a}\right)
+\\&amp;=tan^{-1}(2)
+\\
+\\\theta_{Sector-of-Half-Circle} &amp;= 2*\theta_1
+\\&amp;=2*tan^{-1}(2)\tag7
+\end{align}
+$$</span><br></p>
+<p>Supply equations (6) and (7) into equation (5) to find the areas of each circular segments. <br><span class="math display">$$
+\begin{align}
+\mathcal A_{Green-Circular-Segment}&amp;=\frac{r^2}{2}(\theta-sin\theta)
+\\&amp;=\frac{a^2}{2}\left[2*tan^{-1}\left(\frac{1}{2}\right) -sin\left(2*tan^{-1}\left(\frac{1}{2}\right)\right)\right] 
+\\&amp;=\frac{a^2}{2}\left[2*tan^{-1}\left(\frac{1}{2}\right) - 2*sin\left(tan^{-1}\left(\frac{1}{2}\right)\right)*cos\left(tan^{-1}\left(\frac{1}{2}\right)\right)\right]
+\\&amp;=
+\frac{a^2}{2}
+\left
+[2*tan^{-1}\left(\frac{1}{2}\right)
+-2
+*\left(\frac{|x|}{\sqrt{1+x^2}}\right)
+*\left(\frac{1}{\sqrt{1+x^2}}\right)
+\right]
+\\&amp;=
+\frac{a^2}{2}
+\left
+[2*tan^{-1}\left(\frac{1}{2}\right)
+-
+\left(\frac{2|x|}{1+x^2}\right)
+\right]
+\\&amp;=
+\frac{a^2}{2}
+\left
+[2*tan^{-1}\left(\frac{1}{2}\right)
+-
+\left(\frac{2*1/2}{1+(1/2)^2}\right)
+\right]
+\\&amp;=
+\frac{a^2}{2}
+\left
+[2*tan^{-1}\left(\frac{1}{2}\right)
+-
+\left(\frac{1}{1+(1/4)}\right)
+\right]
+\\&amp;=
+\frac{a^2}{2}
+\left
+[2*tan^{-1}\left(\frac{1}{2}\right)
+-
+\left(\frac{1}{(5/4)}\right)
+\right]
+\\&amp;=
+\frac{a^2}{2}
+\left
+[2*tan^{-1}\left(\frac{1}{2}\right)
+-
+\left(\frac{4}{5}\right)
+\right]\tag8
+\\
+\\Similarly,
+\\A_{Red-Circular-Segment}&amp;=\frac{r^2}{2}(\theta-sin\theta)
+\\&amp;=\frac{(a/2)^2}{2}\left[2*tan^{-1}(2) -sin(2*tan^{-1}(2))\right]
+\\&amp;=\frac{a^2}{8}\left[2*tan^{-1}(2) -sin(2*tan^{-1}(2))\right]
+\\&amp;=\frac{a^2}{8}\left[2*tan^{-1}(2) - 2*sin(tan^{-1}(2))*cos(tan^{-1}(2))\right]
+\\&amp;=\frac{a^2}{8}\left[2*tan^{-1}(2) - 2* \left(\frac{|x|}{\sqrt{1+x^2}}\right)*\left(\frac{1}{\sqrt{1+x^2}}\right) \right]
+\\&amp;=\frac{a^2}{8}\left[2*tan^{-1}(2) - 2* \left(\frac{2|x|}{1+x^2}\right)\right]
+\\&amp;=\frac{a^2}{8}\left[2*tan^{-1}(2) - 2* \left(\frac{2|2|}{1+2^2}\right)\right]
+\\&amp;=\frac{a^2}{8}\left[2*tan^{-1}(2) - 2* \left(\frac{4}{1+4}\right)\right]
+\\&amp;=\frac{a^2}{8}\left[2*tan^{-1}(2) - 2* \left(\frac{4}{5}\right)\right]
+\\&amp;=\frac{a^2}{8}\left[2*tan^{-1}(2) - \left(\frac{8}{5}\right)\right]\tag9
+\end{align}
+$$</span><br> The sum of these two areas give us the total area of the Lens. <br><span class="math display">$$
+\begin{align}
+\mathcal A_{Lens}&amp;=A_{Green-Circular-Segment}+A_{Red-Circular-Segment}
+\\&amp;=\frac{a^2}{2}\left[2*tan^{-1}\left(\frac{1}{2}\right) -\left(\frac{4}{5}\right)\right]+\frac{a^2}{8}\left[2*tan^{-1}(2) -\left(\frac{8}{5}\right)\right]
+\\&amp;=\frac{a^2}{2}*2*tan^{-1}\left(\frac{1}{2}\right)-\frac{a^2}{2}*\left(\frac{4}{5}\right)+\frac{a^2}{8}*2*tan^{-1}(2)-\frac{a^2}{8}*\left(\frac{8}{5}\right)
+\\&amp;=a^2*tan^{-1}\left(\frac{1}{2}\right)-\frac{2a^2}{5}+\frac{a^2}{4}*tan^{-1}(2)-\frac{a^2}{5}
+\\&amp;=a^2*tan^{-1}\left(\frac{1}{2}\right)+\frac{a^2}{4}*tan^{-1}(2)-\frac{3a^2}{5} \tag{10}
+\end{align}
+$$</span><br> Now if we supply equations (4) and (10) back to equation (1), we have the final area in question. <br><span class="math display">$$
+\begin{align}
+\mathcal A_{Final}&amp;=A_{Lens}-A_{Leaf}
+\\&amp;=a^2*tan^{-1}\left(\frac{1}{2}\right)
++\frac{a^2}{4}*tan^{-1}(2)-\frac{3a^2}{5}- \left[\frac{\pi{a^2}}{8}\right] + \left[\frac{a^2}{4}\right]
+\end{align}
+$$</span><br> This is the final answer.</p>
+
+		<div id="disqus_thread"></div>  
+        <script type="text/javascript">
+            var disqus_shortname = 'subinsebastien';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+    </body>
+</html>
