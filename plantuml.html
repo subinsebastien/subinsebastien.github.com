@@ -16,7 +16,7 @@
 
         textarea {
             width: 90%;
-            height: 200px;
+            height: 400px;
             margin-bottom: 20px;
             font-family: monospace;
             padding: 10px;
@@ -24,29 +24,42 @@
             border-radius: 5px;
         }
 
+        .button-container {
+            display: flex;
+            gap: 10px;
+        }
+
         button {
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
             border: none;
             border-radius: 5px;
+            color: white;
         }
 
-        button:hover {
+        button.generate {
+            background-color: #4CAF50;
+        }
+
+        button.generate:hover {
             background-color: #45a049;
         }
 
-        #diagram {
-            margin-top: 20px;
-            width: 90%;
-            text-align: center;
+        button.new-tab {
+            background-color: #2196F3;
         }
 
-        #diagram img {
-            max-width: 100%;
-            height: auto;
+        button.new-tab:hover {
+            background-color: #0b7dda;
+        }
+
+        button.copy {
+            background-color: #f44336;
+        }
+
+        button.copy:hover {
+            background-color: #da190b;
         }
 
         pre {
@@ -70,14 +83,25 @@ Alice -> Bob: Hello
 Bob --> Alice: Hi
 @enduml</textarea>
 
-    <button onclick="generateDiagram()">Generate Diagram</button>
-
-    <div id="diagram"></div>
+    <div class="button-container">
+        <button class="generate" onclick="generateUrl()">Generate Diagram URL</button>
+        <button class="new-tab" onclick="openInNewTab()">Open in New Tab</button>
+        
+    </div>
 
     <h2>Generated PlantUML URL</h2>
     <pre id="umlUrl"></pre>
+    <button class="copy" onclick="copyURL()">Copy URL</button>
 
     <script>
+        let diagramURL = '';
+
+        // Clear URL when the UML code is changed
+        document.getElementById('umlCode').addEventListener('input', function() {
+            diagramURL = '';  // Clear the generated URL
+            document.getElementById('umlUrl').textContent = '';  // Clear displayed URL
+        });
+
         // Taken from PlantUML sample code
         function encode64(data) {
             let r = "";
@@ -130,31 +154,33 @@ Bob --> Alice: Hi
 
         // UTF8 encode + Deflate compression function
         function compress(s) {
-            // Encode the string as UTF-8 and compress using Deflate
-            s = unescape(encodeURIComponent(s));
-            const compressed = deflate(s, 9);
-            return encode64(compressed);
+            s = unescape(encodeURIComponent(s));  // Encode the string as UTF-8
+            const compressed = deflate(s, 9);    // Compress using Deflate
+            return encode64(compressed);         // Return base64-like encoding
         }
 
-        // Generate the PlantUML diagram
-        function generateDiagram() {
+        // Generate the PlantUML diagram URL
+        function generateUrl() {
             const umlCode = document.getElementById('umlCode').value;
             const encodedUML = compress(umlCode);
-            const diagramURL = "https://www.plantuml.com/plantuml/svg/" + encodedUML;
-
-            // Display the generated URL
+            diagramURL = "https://www.plantuml.com/plantuml/svg/" + encodedUML;
             document.getElementById('umlUrl').textContent = diagramURL;
+        }
 
-            // Fetch and display the diagram
-            fetch(diagramURL)
-                .then(response => response.text())
-                .then(svgData => {
-                    document.getElementById('diagram').innerHTML = svgData;
-                })
-                .catch(error => {
-                    console.error('Error generating diagram:', error);
-                    document.getElementById('diagram').innerHTML = '<p>Error generating diagram. Please try again.</p>';
-                });
+        // Open in a new tab
+        function openInNewTab() {
+            if (!diagramURL) generateUrl();  // Auto-generate URL if not already generated
+            window.open(diagramURL, '_blank');
+        }
+
+        // Copy URL to clipboard
+        function copyURL() {
+            if (!diagramURL) generateUrl();  // Auto-generate URL if not already generated
+            navigator.clipboard.writeText(diagramURL).then(() => {
+                alert('URL copied to clipboard!');
+            }).catch(err => {
+                console.error('Error copying URL:', err);
+            });
         }
     </script>
 
