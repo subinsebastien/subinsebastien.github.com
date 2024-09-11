@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator with Fixed Input and Equal Margins</title>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #eee;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .input-section {
+            position: sticky;
+            top: 0;
+            background-color: #eee;
+            z-index: 100;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            /* Space between input and button */
+        }
+
+        input[type="text"] {
+            flex: 1;
+            /* Make the input expand to fill available space */
+            padding: 10px;
+            font-size: 1.2rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            /* Includes padding and border in width */
+            font-family: monospace;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .history {
+            margin-top: 20px;
+        }
+
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .history-item {
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Calculator</h1>
+    <div class="container">
+
+        <div class="input-section">
+            <input type="text" id="expression" placeholder="Enter arithmetic expression" />
+            <button id="evaluate">=</button>
+        </div>
+        <div id="history" class="history"></div>
+    </div>
+    <script>
+        document.getElementById('evaluate').addEventListener('click', evaluateExpression);
+        document.getElementById('expression').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                evaluateExpression();
+            }
+        });
+        function evaluateExpression() {
+            const input = document.getElementById('expression').value;
+            let result;
+            try {
+                result = eval(input); // Be cautious with eval
+            } catch (error) {
+                result = 'Error: Invalid Expression';
+            }
+            // Add the expression and result to the history
+            if (input.trim() !== "") {
+                addToHistory(input, result);
+            }
+            // Clear the input field
+            document.getElementById('expression').value = '';
+        }
+        function addToHistory(expression, result) {
+            const historyDiv = document.getElementById('history');
+            const historyItem = document.createElement('div');
+            historyItem.classList.add('history-item');
+            historyItem.innerHTML = `<pre>${expression} = ${result}</pre>`;
+            historyDiv.prepend(historyItem); // Add the new history item at the top
+        }
+    </script>
+</body>
+
+</html>
