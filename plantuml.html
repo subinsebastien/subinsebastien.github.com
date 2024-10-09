@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,12 +73,55 @@
             word-wrap: break-word;
         }
 
+
+        /* Radio buttons container */
         .toggle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-bottom: 20px;
+            gap: 10px;
         }
 
+        /* Styling the radio buttons */
+        input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #717171;
+            border-radius: 50%;
+            outline: none;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+            position: relative;
+        }
+
+        input[type="radio"]:checked {
+            background-color: #525252;
+            border-color: #888888;
+        }
+
+        input[type="radio"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #333;
+        }
     </style>
 </head>
+
 <body>
 
     <h1>PlantUML Diagram Generator</h1>
@@ -88,11 +132,11 @@ Bob --> Alice: Hi
 @enduml</textarea>
 
     <div class="toggle-container">
-        <label for="formatToggle">Select Format: </label>
+        <label for="formatToggle">Format: </label>
         <input type="radio" id="svg" name="format" value="svg" checked>
-        <label for="svg">SVG</label>
+        <label for="svg" class="radio-label">SVG</label>
         <input type="radio" id="png" name="format" value="png">
-        <label for="png">PNG</label>
+        <label for="png" class="radio-label">PNG</label>
     </div>
 
     <div class="button-container">
@@ -107,7 +151,7 @@ Bob --> Alice: Hi
     <script>
         let diagramURL = '';
 
-        document.getElementById('umlCode').addEventListener('input', function() {
+        document.getElementById('umlCode').addEventListener('input', function () {
             diagramURL = '';
             document.getElementById('umlUrl').textContent = '';
         });
@@ -162,9 +206,9 @@ Bob --> Alice: Hi
         }
 
         function compress(s) {
-            s = unescape(encodeURIComponent(s));  
+            s = unescape(encodeURIComponent(s));
             const compressed = deflate(s, 9);
-            return encode64(compressed);         
+            return encode64(compressed);
         }
 
         function generateUrl() {
@@ -191,6 +235,7 @@ Bob --> Alice: Hi
     </script>
 
     <script src="./plantuml/rawdeflate.js"></script>
- 
+
 </body>
+
 </html>
