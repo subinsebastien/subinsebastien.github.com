@@ -72,6 +72,10 @@
             word-wrap: break-word;
         }
 
+        .toggle-container {
+            margin-bottom: 20px;
+        }
+
     </style>
 </head>
 <body>
@@ -83,10 +87,17 @@ Alice -> Bob: Hello
 Bob --> Alice: Hi
 @enduml</textarea>
 
+    <div class="toggle-container">
+        <label for="formatToggle">Select Format: </label>
+        <input type="radio" id="svg" name="format" value="svg" checked>
+        <label for="svg">SVG</label>
+        <input type="radio" id="png" name="format" value="png">
+        <label for="png">PNG</label>
+    </div>
+
     <div class="button-container">
         <button class="generate" onclick="generateUrl()">Generate Diagram URL</button>
         <button class="new-tab" onclick="openInNewTab()">Open in New Tab</button>
-        
     </div>
 
     <h2>Generated PlantUML URL</h2>
@@ -96,13 +107,11 @@ Bob --> Alice: Hi
     <script>
         let diagramURL = '';
 
-        // Clear URL when the UML code is changed
         document.getElementById('umlCode').addEventListener('input', function() {
-            diagramURL = '';  // Clear the generated URL
-            document.getElementById('umlUrl').textContent = '';  // Clear displayed URL
+            diagramURL = '';
+            document.getElementById('umlUrl').textContent = '';
         });
 
-        // Taken from PlantUML sample code
         function encode64(data) {
             let r = "";
             for (let i = 0; i < data.length; i += 3) {
@@ -152,30 +161,27 @@ Bob --> Alice: Hi
             return '?';
         }
 
-        // UTF8 encode + Deflate compression function
         function compress(s) {
-            s = unescape(encodeURIComponent(s));  // Encode the string as UTF-8
-            const compressed = deflate(s, 9);    // Compress using Deflate
-            return encode64(compressed);         // Return base64-like encoding
+            s = unescape(encodeURIComponent(s));  
+            const compressed = deflate(s, 9);
+            return encode64(compressed);         
         }
 
-        // Generate the PlantUML diagram URL
         function generateUrl() {
             const umlCode = document.getElementById('umlCode').value;
+            const format = document.querySelector('input[name="format"]:checked').value;
             const encodedUML = compress(umlCode);
-            diagramURL = "https://www.plantuml.com/plantuml/svg/" + encodedUML;
+            diagramURL = `https://www.plantuml.com/plantuml/${format}/` + encodedUML;
             document.getElementById('umlUrl').textContent = diagramURL;
         }
 
-        // Open in a new tab
         function openInNewTab() {
-            if (!diagramURL) generateUrl();  // Auto-generate URL if not already generated
+            generateUrl();
             window.open(diagramURL, '_blank');
         }
 
-        // Copy URL to clipboard
         function copyURL() {
-            if (!diagramURL) generateUrl();  // Auto-generate URL if not already generated
+            if (!diagramURL) generateUrl();
             navigator.clipboard.writeText(diagramURL).then(() => {
                 alert('URL copied to clipboard!');
             }).catch(err => {
@@ -184,7 +190,6 @@ Bob --> Alice: Hi
         }
     </script>
 
-    <!-- Include deflate.js -->
     <script src="./plantuml/rawdeflate.js"></script>
  
 </body>
